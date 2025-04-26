@@ -13,5 +13,7 @@ public class CharacterModel : MonoBehaviour
 
     public float attackInterval = 1f;
 
+    public float hp = 100;
+
     public LayerMask enemyLayer;
 }

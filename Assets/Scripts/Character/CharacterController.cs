@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using System.Threading;
 
 public enum CharacterState { Idle, Move, Detect, Attack }
 
-public class CharacterController : MonoBehaviour, IDamageble
+public class CharacterController : MonoBehaviour, IDamageable
 {
     public CharacterModel _model;
 
@@ -17,7 +18,6 @@ public class CharacterController : MonoBehaviour, IDamageble
         switch (currentState)
         {
             case CharacterState.Idle:
-                Move();
                 SearchForEnemies();
                 break;
 
@@ -45,8 +45,7 @@ public class CharacterController : MonoBehaviour, IDamageble
 
     void Move()
     {
-        // 단순 이동 로직 (예: 플레이어 입력, AI 이동 가능)
-        transform.Translate(Vector2.right * _model.moveSpeed * Time.deltaTime);
+        
     }
 
     IEnumerator AttackEnemy()
@@ -55,8 +54,8 @@ public class CharacterController : MonoBehaviour, IDamageble
 
         while (monster != null)
         {
-            monster.GetComponent<IDamageble>().TakeDamage(_model.attackDamage);
-            monster.DOShakePosition(0.3f, 0.2f);
+            monster.GetComponent<IDamageable>().TakeDamage(_model.attackDamage);
+            monster.transform.DOShakePosition(0.3f, 0.2f);
 
             yield return new WaitForSeconds(_model.attackInterval);
 
@@ -74,6 +73,7 @@ public class CharacterController : MonoBehaviour, IDamageble
 
     public void TakeDamage(float Damage)
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"{Damage}의 피해를 몬스터에게 주었다!");
+
     }
 }
