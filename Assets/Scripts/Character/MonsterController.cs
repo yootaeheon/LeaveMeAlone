@@ -56,7 +56,6 @@ public class MonsterController : MonoBehaviour, IDamageable
         while (character != null)
         {
             character.GetComponent<IDamageable>().TakeDamage(_model.attackDamage);
-            character.transform.DOShakePosition(0.3f, 0.2f);
 
             yield return new WaitForSeconds(_model.attackInterval);
 
@@ -75,5 +74,6 @@ public class MonsterController : MonoBehaviour, IDamageable
     public void TakeDamage(float Damage)
     {
         Debug.Log($"{Damage}의 피해를 캐릭터에게 주었다!");
+        transform.DOShakePosition(0.3f, 0.2f);
     }
 }
