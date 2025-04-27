@@ -4,9 +4,10 @@ using DG.Tweening;
 
 public enum MonsterState { Idle, Move, Detect, Attack }
 
-public class MonsterController : MonoBehaviour, IDamageable
+public class MonsterController : Monster, IDamageable
 {
-    public MonsterModel _model;
+    [Header("")]
+    public Monster _model;
 
     private Transform character;
 
@@ -45,7 +46,7 @@ public class MonsterController : MonoBehaviour, IDamageable
 
     void SearchForEnemies()
     {
-        Collider2D enemy = Physics2D.OverlapCircle(transform.position, _model.attackRange, _model.enemyLayer);
+        Collider2D enemy = Physics2D.OverlapCircle(transform.position, _model.AttackRange, _model.EnemyLayer);
         if (enemy != null)
         {
             character = enemy.transform;
@@ -56,7 +57,7 @@ public class MonsterController : MonoBehaviour, IDamageable
     void Move()
     {
         // 단순 이동 로직 (예: 플레이어 입력, AI 이동 가능)
-        transform.Translate(Vector2.left * _model.moveSpeed * Time.deltaTime);
+        transform.Translate(Vector2.left * _model.MoveSpeed * Time.deltaTime);
     }
 
     IEnumerator AttackEnemy()
@@ -65,9 +66,9 @@ public class MonsterController : MonoBehaviour, IDamageable
 
         while (character != null)
         {
-            character.GetComponent<IDamageable>().TakeDamage(_model.attackDamage);
+            character.GetComponent<IDamageable>().TakeDamage(_model.AttackDamage);
 
-            yield return new WaitForSeconds(_model.attackInterval);
+            yield return new WaitForSeconds(_model.AttackInterval);
 
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
@@ -78,7 +79,7 @@ public class MonsterController : MonoBehaviour, IDamageable
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _model.attackRange); // 공격 범위 표시
+        Gizmos.DrawWireSphere(transform.position, _model.AttackRange); // 공격 범위 표시
     }
 
     public void TakeDamage(float Damage)

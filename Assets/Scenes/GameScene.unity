@@ -792,7 +792,6 @@ GameObject:
   - component: {fileID: 915863165}
   - component: {fileID: 915863164}
   - component: {fileID: 915863169}
-  - component: {fileID: 915863168}
   m_Layer: 6
   m_Name: Monster
   m_TagString: Untagged
@@ -929,26 +928,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &915863168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915863161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc4d837432a673c46b54e8c31fbb8f83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 1
-  attackRange: 2
-  attackDamage: 10
-  attackInterval: 1
-  hp: 100
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &915863169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,7 +940,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a85eecc9c36e454998ff7d831a83314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _model: {fileID: 915863168}
+  _curHp: 0
+  _maxHp: 500
+  _moveSpeed: 1
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _attackRange: 2.5
+  _attackDamage: 10
+  _attackInterval: 2
+  _model: {fileID: 915863169}
 --- !u!1 &1048525591
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,14 +1208,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30429a70eb30f6f4486766ab4e0d1f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  attackRange: 2
-  attackDamage: 10
-  attackInterval: 1
-  hp: 10
-  enemyLayer:
+  _curHp: 0
+  _maxHp: 1000
+  _enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  _attackRange: 2.5
+  _attackDamage: 10
+  _attackInterval: 1.5
+  _skillDamage: 50
+  _skillInterval: 20
 --- !u!1 &1818510994
 GameObject:
   m_ObjectHideFlags: 0

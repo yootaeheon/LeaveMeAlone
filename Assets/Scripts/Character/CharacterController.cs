@@ -40,7 +40,7 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     void SearchForEnemies()
     {
-        Collider2D enemy = Physics2D.OverlapCircle(transform.position, _model.attackRange, _model.enemyLayer);
+        Collider2D enemy = Physics2D.OverlapCircle(transform.position, _model.AttackRange, _model.EnemyLayer);
         if (enemy != null)
         {
             monster = enemy.transform;
@@ -60,9 +60,9 @@ public class CharacterController : MonoBehaviour, IDamageable
 
         while (monster != null)
         {
-            monster.GetComponent<IDamageable>().TakeDamage(_model.attackDamage);
+            monster.GetComponent<IDamageable>().TakeDamage(_model.AttackDamage);
 
-            yield return new WaitForSeconds(_model.attackInterval);
+            yield return new WaitForSeconds(_model.AttackInterval);
 
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
@@ -74,7 +74,7 @@ public class CharacterController : MonoBehaviour, IDamageable
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _model.attackRange); // 공격 범위 표시
+        Gizmos.DrawWireSphere(transform.position, _model.AttackRange); // 공격 범위 표시
     }
 
     public void TakeDamage(float Damage)
