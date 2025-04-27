@@ -497,6 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layerMoveSpeed: []
+  _characterController: {fileID: 1440494105}
 --- !u!1 &506469494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,7 +1239,7 @@ GameObject:
   - component: {fileID: 1818510996}
   - component: {fileID: 1818510995}
   m_Layer: 0
-  m_Name: StageManager
+  m_Name: ChapterManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
