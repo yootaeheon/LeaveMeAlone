@@ -10,7 +10,17 @@ public class MonsterController : MonoBehaviour, IDamageable
 
     private Transform character;
 
+    private SpriteRenderer _spriteRenderer;
+
+    private Color _originColor;
+
     private MonsterState currentState = MonsterState.Idle;
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _originColor = _spriteRenderer.color;
+    }
 
     void Update()
     {
@@ -75,5 +85,7 @@ public class MonsterController : MonoBehaviour, IDamageable
     {
         Debug.Log($"{Damage}의 피해를 캐릭터에게 주었다!");
         transform.DOShakePosition(0.3f, 0.2f);
+        _spriteRenderer.DOColor(Color.red, 0.1f).OnComplete(()=> _spriteRenderer.DOColor(_originColor, 0.1f));
+
     }
 }
