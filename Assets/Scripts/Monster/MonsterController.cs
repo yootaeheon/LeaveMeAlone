@@ -68,7 +68,7 @@ public class MonsterController : Monster, IDamageable
         {
             character.GetComponent<IDamageable>().TakeDamage(_model.AttackDamage);
 
-            yield return new WaitForSeconds(_model.AttackInterval);
+            yield return Util.GetDelay(_model.AttackInterval);
 
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
@@ -84,9 +84,35 @@ public class MonsterController : Monster, IDamageable
 
     public void TakeDamage(float Damage)
     {
-        Debug.Log($"{Damage}의 피해를 캐릭터에게 주었다!");
+        _model.CurHp -= Damage;
+        Debug.Log($"{Damage}만큼 피해 입음");
+
         transform.DOShakePosition(0.3f, 0.2f);
+
         _spriteRenderer.DOColor(Color.red, 0.1f).OnComplete(()=> _spriteRenderer.DOColor(_originColor, 0.1f));
 
+        if (_model.CurHp <= 0)
+        {
+            CurHp = 0;
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        // DoTween을 사용하여 몬스터가 사라지는 애니메이션
+        Sequence deathSequence = DOTween.Sequence();
+
+        // 페이드아웃(투명화)
+        deathSequence.Append(_spriteRenderer.DOFade(0, 0.5f));
+
+        // 크기 축소
+        deathSequence.Join(transform.DOScale(Vector3.zero, 0.5f));
+
+        // 애니메이션 완료 후 오브젝트 삭제
+        deathSequence.OnComplete(() =>
+        {
+            Destroy(gameObject);
+        });
     }
 }

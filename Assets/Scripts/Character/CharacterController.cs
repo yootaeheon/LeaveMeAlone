@@ -79,7 +79,8 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     public void TakeDamage(float Damage)
     {
-        Debug.Log($"{Damage}의 피해를 몬스터에게 주었다!");
+        _model.CurHp -= Damage;
+
         transform.DOShakePosition(0.3f, 0.2f);
     }
 }
