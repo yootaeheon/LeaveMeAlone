@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ParallaxBackground : MonoBehaviour
 {
 
 
     [SerializeField] float[] layerMoveSpeed;         // z 값이 다른 배경 레이어 별 이동 속도
+
+    [SerializeField] CharacterController _characterController;
 
     private int backgroundCount;                     // Layer 수
 
@@ -29,7 +32,20 @@ public class ParallaxBackground : MonoBehaviour
 
         SetLayerMoveSpeed();
     }
-   
+
+    private void OnEnable()
+    {
+        _characterController.OnEncounterMonster += ResetLayerMoveSpeed;
+        _characterController.OnKillMonster += SetLayerMoveSpeed;
+    }
+
+    private void OnDisable()
+    {
+        _characterController.OnEncounterMonster -= ResetLayerMoveSpeed;
+        _characterController.OnKillMonster -= SetLayerMoveSpeed;
+
+    }
+
     /// <summary>
     /// 각 Layer 스크롤
     /// </summary>

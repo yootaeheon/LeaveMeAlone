@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using System.Threading;
+using System;
 
 public enum CharacterState { Idle, Move, Detect, Attack }
 
@@ -12,6 +13,10 @@ public class CharacterController : MonoBehaviour, IDamageable
     private Transform monster;
 
     private CharacterState currentState = CharacterState.Idle;
+
+    public Action OnEncounterMonster;                                    // 몬스터 조우 시, 발생하는 이벤트 (맵 스크롤링 정지)
+    public Action OnKillMonster;                                         // 몬스터 처치 시, 발생하는 이벤트 (맵 스크롤링 진행)
+
 
     void Update()
     {
@@ -40,6 +45,7 @@ public class CharacterController : MonoBehaviour, IDamageable
         {
             monster = enemy.transform;
             currentState = CharacterState.Detect;
+            OnEncounterMonster?.Invoke();
         }
     }
 
@@ -62,6 +68,7 @@ public class CharacterController : MonoBehaviour, IDamageable
         }
 
         currentState = CharacterState.Idle;
+        OnKillMonster?.Invoke();
     }
 
     void OnDrawGizmos()
