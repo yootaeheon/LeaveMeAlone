@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ParallaxBackground : MonoBehaviour
+public class ParallaxBackground_X : MonoBehaviour
 {
     [SerializeField] Transform _target;            // 현재 배경과 이어지는 배경
 

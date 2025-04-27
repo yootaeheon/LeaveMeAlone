@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class ParallaxBackground_02 : MonoBehaviour
+public class ParallaxBackground : MonoBehaviour
 {
+
+
     [SerializeField] float[] layerMoveSpeed;         // z 값이 다른 배경 레이어 별 이동 속도
 
     private int backgroundCount;                     // Layer 수
@@ -27,20 +29,7 @@ public class ParallaxBackground_02 : MonoBehaviour
 
         SetLayerMoveSpeed();
     }
-
-    /// <summary>
-    /// 각 Layer의 moveSpeed 설정
-    /// </summary>
-    private void SetLayerMoveSpeed()
-    {
-        float stackSpeed = 0.01f;
-        for (int i = 1; i < backgroundCount; i++)
-        {
-            layerMoveSpeed[i] = stackSpeed;
-            stackSpeed += 0.01f;
-        }
-    }
-
+   
     /// <summary>
     /// 각 Layer 스크롤
     /// </summary>
@@ -51,4 +40,26 @@ public class ParallaxBackground_02 : MonoBehaviour
             materials[i].SetTextureOffset("_MainTex", Vector2.right * layerMoveSpeed[i] * Time.time);
         }
     }
+
+    /// <summary>
+    /// 각 Layer의 moveSpeed 설정
+    /// </summary>
+    public void SetLayerMoveSpeed()
+    {
+        float stackSpeed = 0.01f;
+        for (int i = 1; i < backgroundCount; i++)
+        {
+            layerMoveSpeed[i] = stackSpeed;
+            stackSpeed += 0.01f;
+        }
+    }
+
+    public void ResetLayerMoveSpeed()
+    {
+        for (int i = 1; i < backgroundCount; i++)
+        {
+            layerMoveSpeed[i] = 0;
+        }
+    }
+
 }
