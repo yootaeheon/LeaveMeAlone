@@ -20,6 +20,5 @@ public static class CameraUtil
     public static void CameraFadeOut()
     {
         Camera.main.GetComponent<Animator>().SetTrigger("FadeOut");
-
     }
 }

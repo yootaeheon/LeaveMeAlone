@@ -1426,6 +1426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backGround: {fileID: 207560734}
+  _characterController: {fileID: 578851557}
 --- !u!4 &1818510996
 Transform:
   m_ObjectHideFlags: 0

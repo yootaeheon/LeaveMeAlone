@@ -7,6 +7,8 @@ public class ChapterManager : MonoBehaviour
 
     [SerializeField] ParallaxBackground _backGround;
 
+    [SerializeField] CharacterController _characterController;
+
     public StageInfo[] StageInfos { get; private set; }
 
 
@@ -15,7 +17,27 @@ public class ChapterManager : MonoBehaviour
         SetSingleton();
     }
 
-    
+    /// <summary>
+    /// 스테이지 클리어 시 FadeIn 필요 없을 시 구독 삭제할 것
+    /// </summary>
+   /* private void OnEnable()
+    {
+        _characterController.OnKillMonster += ClearStage;
+    }
+
+    private void OnDisable()
+    {
+        _characterController.OnKillMonster -= ClearStage;
+    }*/
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Debug.Log("1");
+            ClearChapter();
+        }
+    }
 
 
     private void SetSingleton()
@@ -54,6 +76,7 @@ public class ChapterManager : MonoBehaviour
     /// 딜레이 주고 LayerMoveSpeed 초기화
     /// </summary>
     /// <returns></returns>
+    Coroutine DelayLayerMoveSpeedRoutine;
     IEnumerator DelayLayerMoveSpeed()
     {
         yield return Util.GetDelay(2f);

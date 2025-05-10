@@ -1,11 +1,12 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class ParallaxBackground : MonoBehaviour
 {
-
-
     [SerializeField] float[] layerMoveSpeed;         // z 값이 다른 배경 레이어 별 이동 속도
+
+    private Vector2[] layerOffsets;
 
     [SerializeField] CharacterController _characterController;
 
@@ -15,6 +16,8 @@ public class ParallaxBackground : MonoBehaviour
 
     private void Awake()
     {
+      
+
         // 배경의 개수를 구하고, 배경 정보를 저장할 GameObject 배열 선언
         backgroundCount = transform.childCount;
         GameObject[] backgrounds = new GameObject[backgroundCount];
@@ -23,6 +26,7 @@ public class ParallaxBackground : MonoBehaviour
         materials = new Material[backgroundCount];
         layerMoveSpeed = new float[backgroundCount];
 
+        layerOffsets = new Vector2[backgroundCount];
 
         for (int i = 0; i < backgroundCount; ++i)
         {
@@ -43,7 +47,6 @@ public class ParallaxBackground : MonoBehaviour
     {
         _characterController.OnEncounterMonster -= ResetLayerMoveSpeed;
         _characterController.OnKillMonster -= SetLayerMoveSpeed;
-
     }
 
     /// <summary>
@@ -53,7 +56,8 @@ public class ParallaxBackground : MonoBehaviour
     {
         for (int i = 1; i < materials.Length; ++i)
         {
-            materials[i].SetTextureOffset("_MainTex", Vector2.right * layerMoveSpeed[i] * Time.time);
+            layerOffsets[i] += Vector2.right * layerMoveSpeed[i] * Time.deltaTime;
+            materials[i].SetTextureOffset("_MainTex", layerOffsets[i]);
         }
     }
 
@@ -66,6 +70,7 @@ public class ParallaxBackground : MonoBehaviour
         for (int i = 1; i < backgroundCount; i++)
         {
             layerMoveSpeed[i] = stackSpeed;
+            /*DOTween.To(() => layerMoveSpeed[i], x => layerMoveSpeed[i] = x, stackSpeed, 1f);*/
             stackSpeed += 0.01f;
         }
     }
@@ -74,7 +79,9 @@ public class ParallaxBackground : MonoBehaviour
     {
         for (int i = 1; i < backgroundCount; i++)
         {
-            layerMoveSpeed[i] = 0;
+            /* layerMoveSpeed[i] = 0;*/
+            int index = i; // 클로저 캡처 방지용 로컬 변수
+            DOTween.To(() => layerMoveSpeed[index], x => layerMoveSpeed[index] = x, 0f, 0.2f);
         }
     }
 
