@@ -79,9 +79,9 @@ public class ParallaxBackground : MonoBehaviour
     {
         for (int i = 1; i < backgroundCount; i++)
         {
-            /* layerMoveSpeed[i] = 0;*/
-            int index = i; // 클로저 캡처 방지용 로컬 변수
-            DOTween.To(() => layerMoveSpeed[index], x => layerMoveSpeed[index] = x, 0f, 0.2f);
+            layerMoveSpeed[i] = 0;
+            /* int index = i; // 클로저 캡처 방지용 로컬 변수
+             DOTween.To(() => layerMoveSpeed[index], x => layerMoveSpeed[index] = x, 0f, 0.2f);*/
         }
     }
 
