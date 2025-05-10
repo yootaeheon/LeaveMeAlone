@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public enum MonsterState { Idle, Move, Detect, Attack }
 
@@ -15,7 +16,7 @@ public class MonsterController : Monster, IDamageable
 
     private Color _originColor;
 
-    private MonsterState currentState = MonsterState.Idle;
+    private MonsterState currentState = MonsterState.Move;
 
     private void Awake()
     {
@@ -28,7 +29,6 @@ public class MonsterController : Monster, IDamageable
         switch (currentState)
         {
             case MonsterState.Idle:
-                Move();
                 SearchForEnemies();
                 break;
 
@@ -39,7 +39,7 @@ public class MonsterController : Monster, IDamageable
 
             case MonsterState.Detect:
                 if (character != null)
-                    StartCoroutine(AttackEnemy());
+                    StartCoroutine(AttackRoutine());
                 break;
         }
     }
@@ -60,20 +60,25 @@ public class MonsterController : Monster, IDamageable
         transform.Translate(Vector2.left * _model.MoveSpeed * Time.deltaTime);
     }
 
-    IEnumerator AttackEnemy()
+    IEnumerator AttackRoutine()
     {
         currentState = MonsterState.Attack;
 
         while (character != null)
         {
-            character.GetComponent<IDamageable>().TakeDamage(_model.AttackDamage);
+            Attack();
 
             yield return Util.GetDelay(_model.AttackInterval);
 
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
 
-        currentState = MonsterState.Idle;
+        currentState = MonsterState.Move;
+    }
+
+    public void Attack()
+    {
+        character.GetComponent<IDamageable>().TakeDamage(_model.AttackDamage);
     }
 
     void OnDrawGizmos()

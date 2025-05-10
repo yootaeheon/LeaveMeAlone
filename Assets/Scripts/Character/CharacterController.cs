@@ -12,12 +12,12 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     private Transform _monster;
 
-    private CharacterState _currentState = CharacterState.Idle;
+    private CharacterState _currentState = CharacterState.Move;
 
     private Animator _animator;
 
-    public Action OnEncounterMonster;             // 몬스터 조우 시, 발생하는 이벤트 (맵 스크롤링 정지)
-    public Action OnKillMonster;                  // 몬스터 처치 시, 발생하는 이벤트 (맵 스크롤링 진행)
+    public Action OnEncounterMonster { get; set; }       // 몬스터 조우 시, 발생하는 이벤트 (맵 스크롤링 정지)
+    public Action OnKillMonster { get; set; }                 // 몬스터 처치 시, 발생하는 이벤트 (맵 스크롤링 진행)
 
     private void Awake()
     {
@@ -34,12 +34,11 @@ public class CharacterController : MonoBehaviour, IDamageable
         switch (_currentState)
         {
             case CharacterState.Idle:
-                _animator.SetBool("1_Move", true);
+                _animator.SetBool("1_Move", false);
                 SearchForEnemies();
                 break;
 
             case CharacterState.Move:
-                Move();
                 _animator.SetBool("1_Move", true);
                 SearchForEnemies();
                 break;
@@ -78,7 +77,7 @@ public class CharacterController : MonoBehaviour, IDamageable
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
 
-        _currentState = CharacterState.Idle;
+        _currentState = CharacterState.Move;
         OnKillMonster?.Invoke();
     }
 
