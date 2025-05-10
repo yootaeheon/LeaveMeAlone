@@ -10,30 +10,46 @@ public class CharacterController : MonoBehaviour, IDamageable
 {
     public CharacterModel _model;
 
-    private Transform monster;
+    private Transform _monster;
 
-    private CharacterState currentState = CharacterState.Idle;
+    private CharacterState _currentState = CharacterState.Idle;
 
-    public Action OnEncounterMonster;                                    // 몬스터 조우 시, 발생하는 이벤트 (맵 스크롤링 정지)
-    public Action OnKillMonster;                                         // 몬스터 처치 시, 발생하는 이벤트 (맵 스크롤링 진행)
+    private Animator _animator;
 
+    public Action OnEncounterMonster;             // 몬스터 조우 시, 발생하는 이벤트 (맵 스크롤링 정지)
+    public Action OnKillMonster;                  // 몬스터 처치 시, 발생하는 이벤트 (맵 스크롤링 진행)
+
+    private void Awake()
+    {
+        Init();
+    }
+
+    public void Init()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
-        switch (currentState)
+        switch (_currentState)
         {
             case CharacterState.Idle:
+                _animator.SetBool("1_Move", true);
                 SearchForEnemies();
                 break;
 
             case CharacterState.Move:
                 Move();
+                _animator.SetBool("1_Move", true);
                 SearchForEnemies();
                 break;
 
             case CharacterState.Detect:
-                if (monster != null)
-                    StartCoroutine(AttackEnemy());
+                if (_monster != null)
+                {
+                    _animator.SetBool("1_Move", false);
+                    StartCoroutine(AttackRoutine());
+                }
                 break;
         }
     }
@@ -43,32 +59,32 @@ public class CharacterController : MonoBehaviour, IDamageable
         Collider2D enemy = Physics2D.OverlapCircle(transform.position, _model.AttackRange, _model.EnemyLayer);
         if (enemy != null)
         {
-            monster = enemy.transform;
-            currentState = CharacterState.Detect;
+            _monster = enemy.transform;
+            _currentState = CharacterState.Detect;
             OnEncounterMonster?.Invoke();
         }
     }
 
-    void Move()
+    IEnumerator AttackRoutine()
     {
-        
-    }
+        _currentState = CharacterState.Attack;
 
-    IEnumerator AttackEnemy()
-    {
-        currentState = CharacterState.Attack;
-
-        while (monster != null)
+        while (_monster != null)
         {
-            monster.GetComponent<IDamageable>().TakeDamage(_model.AttackDamage);
+            _animator.SetTrigger("2_Attack");
 
             yield return new WaitForSeconds(_model.AttackInterval);
 
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
 
-        currentState = CharacterState.Idle;
+        _currentState = CharacterState.Idle;
         OnKillMonster?.Invoke();
+    }
+
+    public void Attack()
+    {
+        _monster.GetComponent<IDamageable>().TakeDamage(_model.AttackDamage);
     }
 
     void OnDrawGizmos()
@@ -81,6 +97,6 @@ public class CharacterController : MonoBehaviour, IDamageable
     {
         _model.CurHp -= Damage;
 
-        transform.DOShakePosition(0.3f, 0.2f);
+        transform.DOShakePosition(0.2f, 0.1f);
     }
 }
