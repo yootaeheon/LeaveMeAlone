@@ -14,14 +14,40 @@ public class MonsterController : Monster, IDamageable
 
     private SpriteRenderer _spriteRenderer;
 
+    private PooledObject _pooledObject;
+
     private Color _originColor;
 
     private MonsterState currentState = MonsterState.Move;
 
+    private CharacterController _characterController;
+
+    private MonsterSpawner _spawner;
+
     private void Awake()
+    {
+        Init();
+    }
+
+    public void Init()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _originColor = _spriteRenderer.color;
+        _pooledObject = GetComponent<PooledObject>();
+        _characterController = FindAnyObjectByType<CharacterController>();
+        _spawner = FindObjectOfType<MonsterSpawner>();
+    }
+
+    private void OnEnable()
+    {
+        IsDead = false;
+        CurHp = MaxHp;
+        currentState = MonsterState.Move;
+    }
+
+    private void OnDisable()
+    {
+        IsDead = true;
     }
 
     void Update()
@@ -114,10 +140,14 @@ public class MonsterController : Monster, IDamageable
         // 크기 축소
         deathSequence.Join(transform.DOScale(Vector3.zero, 0.5f));
 
-        // 애니메이션 완료 후 오브젝트 삭제
+        // 애니메이션 완료 후 비활성화 후 재초기화
         deathSequence.OnComplete(() =>
         {
-            Destroy(gameObject);
+            _pooledObject.CallReturnPool();
+            _characterController._monster = null;
+            transform.localScale = Vector3.one;
+            _spriteRenderer.DOFade(1, 0f);
+            _spawner.Spawn();
         });
     }
 }

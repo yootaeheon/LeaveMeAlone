@@ -147,8 +147,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.34877422}
-  m_Size: {x: 1, y: 2.356525}
+  m_Offset: {x: -0.031869173, y: -0.3487742}
+  m_Size: {x: 0.4263587, y: 2.356525}
   m_Direction: 0
 --- !u!114 &2870889765086621333
 MonoBehaviour:
@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a85eecc9c36e454998ff7d831a83314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isDead: 0
   _curHp: 0
   _maxHp: 100
   _moveSpeed: 1

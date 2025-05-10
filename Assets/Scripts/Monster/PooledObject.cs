@@ -6,11 +6,18 @@ public class PooledObject : MonoBehaviour
 {
     public ObjectPool _returnPool;
 
-    private void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            _returnPool.RetrunPool(this);
-        }
+        Init();
+    }
+
+    public void Init()
+    {
+        _returnPool = GetComponentInParent<ObjectPool>();
+    }
+
+    public void CallReturnPool()
+    {
+        _returnPool.RetrunPool(this);
     }
 }

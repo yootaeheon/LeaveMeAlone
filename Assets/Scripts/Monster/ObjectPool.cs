@@ -13,16 +13,25 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField] int _size;
 
+    private Transform _poolTransform;
+
     private void Awake()
     {
+        Init();
         for (int i = 0; i < _size; i++)
         {
             PooledObject instance = Instantiate(_prefab);
             instance.gameObject.SetActive(false);
             instance._returnPool = this;
-            instance.transform.parent = transform;
+            instance.transform.parent = _poolTransform;
             _pool.Add(instance);
         }
+    }
+
+    public void Init()
+    {
+        _poolTransform = transform.GetChild(1);
+        Debug.Log(transform.GetChild(1).name);
     }
 
     public PooledObject GetPool(Vector3 position, Quaternion rotation)
@@ -32,7 +41,7 @@ public class ObjectPool : MonoBehaviour
             PooledObject instance = _pool[_pool.Count - 1];
             instance.transform.position = position;
             instance.transform.rotation = rotation;
-            instance.transform.parent = null;
+            /*instance.transform.parent = null;*/
             instance.gameObject.SetActive(true);
 
             _pool.RemoveAt(_pool.Count - 1);
@@ -42,6 +51,7 @@ public class ObjectPool : MonoBehaviour
         else
         {
             PooledObject instance = Instantiate(_prefab, position, rotation);
+            instance.transform.parent = _poolTransform;
             instance._returnPool = this;
             _pool.Add(instance);
             return instance;
@@ -51,7 +61,8 @@ public class ObjectPool : MonoBehaviour
     public void RetrunPool(PooledObject instance)
     {
         instance.gameObject.SetActive(false);
-        instance.transform.parent = transform;
+        /* instance.transform.parent = _poolTransform;*/
+        instance.transform.position = _poolTransform.transform.position;
         _pool.Add(instance);
     }
 }

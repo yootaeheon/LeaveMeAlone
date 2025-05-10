@@ -5,18 +5,15 @@ using UnityEngine;
 /// <summary>
 /// Instantiate 대신 GetPool을 통해 대여해옴
 /// </summary>
-public class Test_Pooler : MonoBehaviour
+public class MonsterSpawner : MonoBehaviour
 {
     [SerializeField] ObjectPool _pool;
 
     [SerializeField] Transform _spawnPoint;
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Spawn();
-        }
+        Spawn();
     }
 
     public void Spawn()

@@ -7,6 +7,9 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     [Header("Monster Status")]
+    [SerializeField] bool _isDead;
+    public bool IsDead { get { return _isDead; } set { _isDead = value; } }
+
     [SerializeField] float _curHp;
     public float CurHp { get { return _curHp; } set { _curHp = value; } }
 
@@ -30,8 +33,8 @@ public class Monster : MonoBehaviour
     [SerializeField] float _attackInterval;
     public float AttackInterval { get { return _attackInterval; } set { _attackInterval = value; } }
 
-    void Start()
+    /*void Start()
     {
         CurHp = MaxHp; // 초기 HP 설정
-    }
+    }*/
 }

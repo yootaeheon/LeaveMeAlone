@@ -10,7 +10,7 @@ public class CharacterController : MonoBehaviour, IDamageable
 {
     public CharacterModel _model;
 
-    private Transform _monster;
+    public Transform _monster;
 
     private CharacterState _currentState = CharacterState.Move;
 
@@ -58,6 +58,10 @@ public class CharacterController : MonoBehaviour, IDamageable
         Collider2D enemy = Physics2D.OverlapCircle(transform.position, _model.AttackRange, _model.EnemyLayer);
         if (enemy != null)
         {
+            if (enemy.GetComponent<Monster>().IsDead)
+            {
+                return;
+            }
             _monster = enemy.transform;
             _currentState = CharacterState.Detect;
             OnEncounterMonster?.Invoke();
