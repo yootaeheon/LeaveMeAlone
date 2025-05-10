@@ -736,7 +736,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -1.21, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1866,7 +1866,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _attackRange
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _attackDamage
@@ -1946,7 +1946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8163784223623235559, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.12
+      value: -1.23
       objectReference: {fileID: 0}
     - target: {fileID: 8163784223623235559, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: m_AnchoredPosition.y
