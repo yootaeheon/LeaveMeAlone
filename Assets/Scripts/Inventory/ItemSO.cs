@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemSO : MonoBehaviour
+[CreateAssetMenu]
+public class ItemSO : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [field: SerializeField] public bool IsStackable {  get; set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int ID => GetInstanceID();
+
+    [field: SerializeField] public int MaxStackSize { get; set; } = 1;
+
+    [field: SerializeField] public string Name { get; set; }
+
+    [field: SerializeField] public string Description { get; set; }
+
+    [field: SerializeField] public Sprite ItemImage { get; set; }
 }
