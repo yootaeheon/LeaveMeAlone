@@ -9,7 +9,20 @@ public class UIInventoryPage : MonoBehaviour
 
     [SerializeField] RectTransform _contentPanel;
 
+    [SerializeField] UIInventoryDescription _itemDescription;
+
     List<UIInventoryItem> listOfUIItems = new List<UIInventoryItem>();
+
+    public Sprite Image;
+    public int Quantity;
+    public string Title;
+    public string Description;
+
+
+    private void Awake()
+    {
+        _itemDescription.ResetDescription();
+    }
 
     public void InityInventoryUI(int inventorySize)
     {
@@ -31,6 +44,9 @@ public class UIInventoryPage : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+        _itemDescription.ResetDescription();
+
+        listOfUIItems[0].SetData(Image, Quantity);
     }
 
     public void Hide()
@@ -41,7 +57,8 @@ public class UIInventoryPage : MonoBehaviour
     #region Execute Method
     public void HandleItemSelection(UIInventoryItem item)
     {
-        Debug.Log(item.name);
+        _itemDescription.SetDescription(Image, Title, Description);
+        listOfUIItems[0].Select();
     }
 
     private void HandleBegingDrag(UIInventoryItem item)

@@ -31,7 +31,6 @@ public class ObjectPool : MonoBehaviour
     public void Init()
     {
         _poolTransform = transform.GetChild(1);
-        Debug.Log(transform.GetChild(1).name);
     }
 
     public PooledObject GetPool(Vector3 position, Quaternion rotation)
