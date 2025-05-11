@@ -11,6 +11,8 @@ public class UIInventoryPage : MonoBehaviour
 
     [SerializeField] UIInventoryDescription _itemDescription;
 
+    [SerializeField] MouseFollower _mouseFollower;
+
     List<UIInventoryItem> listOfUIItems = new List<UIInventoryItem>();
 
     public Sprite Image;
@@ -21,6 +23,8 @@ public class UIInventoryPage : MonoBehaviour
 
     private void Awake()
     {
+        Hide();
+        _mouseFollower.Toggle(false);
         _itemDescription.ResetDescription();
     }
 
@@ -41,11 +45,13 @@ public class UIInventoryPage : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void Show()
     {
         gameObject.SetActive(true);
         _itemDescription.ResetDescription();
-
         listOfUIItems[0].SetData(Image, Quantity);
     }
 
@@ -63,7 +69,8 @@ public class UIInventoryPage : MonoBehaviour
 
     private void HandleBegingDrag(UIInventoryItem item)
     {
-        
+        _mouseFollower.Toggle(true);
+        _mouseFollower.SetData(Image, Quantity);
     }
 
     private void HandleSwap(UIInventoryItem item)
@@ -73,7 +80,7 @@ public class UIInventoryPage : MonoBehaviour
 
     private void HandleEndDrag(UIInventoryItem item)
     {
-        
+        _mouseFollower.Toggle(false);
     }
 
     private void HandleShowItemActions(UIInventoryItem item)
