@@ -30,14 +30,14 @@ public class ChapterManager : MonoBehaviour
         _characterController.OnKillMonster -= ClearStage;
     }*/
 
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Debug.Log("1");
             ClearChapter();
         }
-    }
+    }*/
 
 
     private void SetSingleton()
