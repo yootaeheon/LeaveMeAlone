@@ -15,11 +15,14 @@ public class UIInventoryPage : MonoBehaviour
 
     List<UIInventoryItem> listOfUIItems = new List<UIInventoryItem>();
 
-    public Sprite Image;
-    public int Quantity;
-    public string Title;
-    public string Description;
+    private int curDraggedIndex = -1;
 
+    public event Action<int>
+        OnDescriptionRequested,
+        OnItemActionRequested,
+        OnStartDragging;
+
+    public event Action<int, int> OnSwapItems;
 
     private void Awake()
     {
@@ -51,36 +54,83 @@ public class UIInventoryPage : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
-        _itemDescription.ResetDescription();
-        listOfUIItems[0].SetData(Image, Quantity);
+        ResetSelection();
     }
 
     public void Hide()
     {
         gameObject?.SetActive(false);
+        ResetDraggedItem();
+    }
+
+    private void ResetSelection()
+    {
+        _itemDescription.ResetDescription();
+        DeselectAllItems();
+    }
+
+    private void DeselectAllItems()
+    {
+        foreach (UIInventoryItem item in listOfUIItems)
+        {
+            item.Deselect();
+        }
+    }
+
+    public void UpdateData(int itemIndex, Sprite itemImage, int itemQuantity)
+    {
+        if (listOfUIItems.Count > itemIndex)
+        {
+            listOfUIItems[itemIndex].SetData(itemImage, itemQuantity);
+        }
     }
 
     #region Execute Method
     public void HandleItemSelection(UIInventoryItem item)
     {
-        _itemDescription.SetDescription(Image, Title, Description);
-        listOfUIItems[0].Select();
+        int index = listOfUIItems.IndexOf(item);
+        if (index == -1)
+            return;
+
+        OnDescriptionRequested?.Invoke(index);
     }
 
     private void HandleBegingDrag(UIInventoryItem item)
     {
+        int index = listOfUIItems.IndexOf(item);
+        if (index == -1)
+            return;
+
+        curDraggedIndex = index;
+        HandleItemSelection(item);
+        OnStartDragging?.Invoke(index);
+    }
+
+    public void CreateDraggedItem(Sprite sprite, int quantity)
+    {
         _mouseFollower.Toggle(true);
-        _mouseFollower.SetData(Image, Quantity);
+        _mouseFollower.SetData(sprite, quantity);
     }
 
     private void HandleSwap(UIInventoryItem item)
     {
-        
+        int index = listOfUIItems.IndexOf(item);
+        if (index == -1)
+        {
+            return;
+        }
+        OnSwapItems?.Invoke(curDraggedIndex, index);
+    }
+
+    private void ResetDraggedItem()
+    {
+        _mouseFollower.Toggle(false);
+        curDraggedIndex = -1;
     }
 
     private void HandleEndDrag(UIInventoryItem item)
     {
-        _mouseFollower.Toggle(false);
+        ResetDraggedItem();
     }
 
     private void HandleShowItemActions(UIInventoryItem item)

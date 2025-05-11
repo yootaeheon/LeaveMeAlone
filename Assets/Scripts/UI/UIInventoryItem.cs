@@ -6,7 +6,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIInventoryItem : MonoBehaviour
+public class UIInventoryItem : 
+    MonoBehaviour, 
+    IPointerClickHandler,
+    IBeginDragHandler,
+    IEndDragHandler,
+    IDropHandler,
+    IDragHandler
 {
     [SerializeField] Image _itemImage; // 아이템 이미지
 
@@ -65,30 +71,8 @@ public class UIInventoryItem : MonoBehaviour
     }
 
     #region Call Event Method
-    public void OnBeginDrag()
+    public void OnPointerClick(PointerEventData pointerData)
     {
-        if(_empty)
-            return;
-
-        OnItemBeginDrag?.Invoke(this);
-    }
-
-    public void OnItemDrop()
-    {
-        OnItemDroppedOn?.Invoke(this);
-    }
-
-    public void OnEndDrag()
-    {
-        OnItemEndDrag?.Invoke(this);
-    }
-
-    public void OnPointerClick(BaseEventData data)
-    {
-        if (_empty)
-            return;
-
-        PointerEventData pointerData = (PointerEventData)data;
         if (pointerData.button == PointerEventData.InputButton.Right)
         {
             OnRightMouseButtonClick?.Invoke(this);
@@ -97,6 +81,30 @@ public class UIInventoryItem : MonoBehaviour
         {
             OnItemClicked?.Invoke(this);
         }
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (_empty)
+            return;
+
+        OnItemBeginDrag?.Invoke(this);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        OnItemEndDrag?.Invoke(this);
+
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        OnItemDroppedOn?.Invoke(this);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        
     }
     #endregion
 }
