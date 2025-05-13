@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
     [SerializeField] UIInventoryPage _inventoryUI;
 
-    //추후 Inventory Model 만들어 뺄것
-    public int InventorySize = 10;
-
+    [SerializeField] InventorySO _inventoryData;
 
     private void Start()
     {
-        _inventoryUI.InityInventoryUI(InventorySize);
+        _inventoryUI.InityInventoryUI(_inventoryData.Size);
+        /*_inventoryData.Init();*/
     }
 
     public void Update()
@@ -22,6 +19,10 @@ public class InventoryController : MonoBehaviour
             if (_inventoryUI.isActiveAndEnabled == false)
             {
                 _inventoryUI.Show();
+                foreach (var item in _inventoryData.GetCurInventoryState())
+                {
+                    _inventoryUI.UpdateData(item.Key, item.Value.Item.ItemImage, item.Value.Quantity);
+                }
             }
             else
             {
