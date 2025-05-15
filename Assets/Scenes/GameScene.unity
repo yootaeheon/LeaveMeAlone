@@ -3964,9 +3964,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 311476420}
-        m_TargetAssemblyTypeName: UIInventoryPage, Assembly-CSharp
-        m_MethodName: Show
+      - m_Target: {fileID: 2103235728}
+        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+        m_MethodName: OnInventory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

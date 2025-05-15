@@ -73,6 +73,11 @@ public class InventorySO : ScriptableObject
         // 현재 아이템이 있는 슬롯만 포함된 딕셔너리 반환
         return returnValue;
     }
+
+    public InventoryItem GetItemAt(int itemIndex)
+    {
+        return _inventoryItems[itemIndex];
+    }
 }
 
 /// <summary>

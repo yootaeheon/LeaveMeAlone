@@ -63,7 +63,7 @@ public class UIInventoryPage : MonoBehaviour
         ResetDraggedItem();
     }
 
-    private void ResetSelection()
+    public void ResetSelection()
     {
         _itemDescription.ResetDescription();
         DeselectAllItems();
@@ -83,6 +83,13 @@ public class UIInventoryPage : MonoBehaviour
         {
             listOfUIItems[itemIndex].SetData(itemImage, itemQuantity);
         }
+    }
+
+    public void UpdateDescription(int itemIndex, Sprite itemImage, string name, string description)
+    {
+        _itemDescription.SetDescription(itemImage, name, description);
+        DeselectAllItems();
+        listOfUIItems[itemIndex].Select();
     }
 
     #region Execute Method
@@ -137,5 +144,7 @@ public class UIInventoryPage : MonoBehaviour
     {
         
     }
+
+    
     #endregion
 }
