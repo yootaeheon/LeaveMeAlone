@@ -45,7 +45,14 @@ public class InventoryController : MonoBehaviour
     #region InventoryUI에 문의하여 모델 데이터 접근
     private void HandleDescriptionRequest(int itemIndex)
     {
-      
+        InventoryItem inventoryItem = _inventoryData.GetItemAt(itemIndex);
+        if (inventoryItem.IsEmpty)
+        {
+            _inventoryUI.ResetSelection();
+            return;
+        }
+        ItemSO item = inventoryItem.Item;
+        _inventoryUI.UpdateDescription(itemIndex, item.ItemImage, item.name, item.Description);
     }
     private void HandleSwapItems(int itemIndex_1, int itemIndex_2)
     {
