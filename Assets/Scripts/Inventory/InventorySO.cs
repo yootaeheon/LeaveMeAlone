@@ -1,7 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
+
 namespace Inventory.Model
 {
     [CreateAssetMenu]
@@ -33,24 +35,88 @@ namespace Inventory.Model
         /// </summary>
         /// <param name="item"></param>
         /// <param name="quantity"></param>
-        public void AddItem(ItemSO item, int quantity)
+        public int AddItem(ItemSO item, int quantity)
         {
-            // 인벤토리의 각 슬롯을 확인
-            for (int i = 0; i < _inventoryItems.Count; i++)
+            if (item.IsStackable == false)
             {
-                // 비어 있는 슬롯을 찾으면
-                if (_inventoryItems[i].IsEmpty)
+                // 인벤토리의 각 슬롯을 확인
+                for (int i = 0; i < _inventoryItems.Count; i++)
                 {
-                    // 해당 슬롯에 아이템을 추가
-                    _inventoryItems[i] = new InventoryItem()
+                    while (quantity > 0 && IsInventoryFull() == false)
                     {
-                        Item = item,
-                        Quantity = quantity
-                    };
-                    // 아이템을 한 번 추가한 뒤 반복문 종료 (중복 추가 방지)
-                    break;
+                        quantity -= AddItemToFirstSlot(item, 1);
+                    }
+                    return quantity;
+
                 }
             }
+            quantity = AddStackableItem(item, quantity);
+            InformAboutChange();
+            return quantity;
+        }
+
+        private int AddItemToFirstSlot(ItemSO item, int quantity)
+        {
+            InventoryItem newItem = new InventoryItem()
+            {
+                Item = item,
+                Quantity = quantity
+            };
+
+            for (int i = 0; i < _inventoryItems.Count; i++)
+            {
+                if (_inventoryItems[i].IsEmpty)
+                {
+                    _inventoryItems[i] = newItem;
+                    return quantity;
+                }
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 인벤토리가 가득찼는지 확인
+        /// </summary>
+        /// <returns></returns>
+        private bool IsInventoryFull()
+            => _inventoryItems.Where(item => item.IsEmpty).Any() == false;
+
+        private int AddStackableItem(ItemSO item, int quantity)
+        {
+            for (int i = 0; i < _inventoryItems.Count; i++)
+            {
+                if (_inventoryItems[i].IsEmpty)
+                    continue;
+
+                if (_inventoryItems[i].Item.ID == item.ID)
+                {
+                    int amountPossibleToTake = _inventoryItems[i].Item.MaxStackSize - _inventoryItems[i].Quantity;
+
+                    if (quantity > amountPossibleToTake)
+                    {
+                        _inventoryItems[i] = _inventoryItems[i].ChangeQuantity(_inventoryItems[i].Item.MaxStackSize);
+                        quantity -= amountPossibleToTake;
+                    }
+                    else
+                    {
+                        _inventoryItems[i] = _inventoryItems[i].ChangeQuantity(_inventoryItems[i].Quantity + quantity);
+                        InformAboutChange();
+                        return 0;
+                    }
+                }
+            }
+            while (quantity > 0 && IsInventoryFull() == false)
+            {
+                int newQuantity = Mathf.Clamp(quantity, 0, item.MaxStackSize);
+                quantity -= newQuantity;
+                AddItemToFirstSlot(item, newQuantity);
+            }
+            return quantity;
+        }
+
+        private void InformAboutChange()
+        {
+            
         }
 
         /// <summary>
@@ -80,6 +146,9 @@ namespace Inventory.Model
             return _inventoryItems[itemIndex];
         }
     }
+
+
+
 
     /// <summary>
     /// 인벤토리에 들어가는 개별 아이템 구조체

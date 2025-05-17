@@ -1,4 +1,4 @@
-using Inventory.UI;
+using Inventory.View;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

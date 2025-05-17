@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Inventory
+namespace Inventory.View
 {
     public class UIInventoryDescription : MonoBehaviour
     {

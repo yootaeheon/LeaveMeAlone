@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Inventory.UI
+namespace Inventory.View
 {
     public class UIInventoryItem :
         MonoBehaviour,

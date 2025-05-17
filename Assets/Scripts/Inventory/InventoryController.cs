@@ -2,6 +2,7 @@ using Inventory.Model;
 using System;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using Inventory.View;
 
 namespace Inventory
 {
