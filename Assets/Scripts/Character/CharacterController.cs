@@ -76,7 +76,7 @@ public class CharacterController : MonoBehaviour, IDamageable
         {
             _animator.SetTrigger("2_Attack");
 
-            yield return new WaitForSeconds(_model.AttackInterval);
+            yield return new WaitForSeconds(_model.AttackSpeed);
 
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
@@ -87,7 +87,7 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     public void Attack()
     {
-        _monster.GetComponent<IDamageable>().TakeDamage(_model.AttackDamage);
+        _monster.GetComponent<IDamageable>().TakeDamage(_model.AttackPower);
     }
 
     void OnDrawGizmos()

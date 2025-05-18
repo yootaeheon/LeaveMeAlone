@@ -13,19 +13,29 @@ public class CharacterModel : MonoBehaviour
     [SerializeField] float _maxHp;
     public float MaxHp { get { return _maxHp; } set { _maxHp = value; } }
 
+    [SerializeField] float _recoverHpPerSecond;
+    public float RerecoverHpPerSecond { get { return RerecoverHpPerSecond; } set { RerecoverHpPerSecond = value; } }
+
+    [SerializeField] float _defensePower;
+    public float DefensePower { get { return _defensePower; } set { _defensePower = value; } }
+
+
 
     [Header("Attack")]
-    [SerializeField] LayerMask _enemyLayer;
+    [SerializeField] LayerMask _enemyLayer = 1 << 6;
     public LayerMask EnemyLayer { get { return _enemyLayer; } set { _enemyLayer = value; } }
 
     [SerializeField] float _attackRange;
     public float AttackRange { get { return _attackRange; } set { _attackRange = value; } }
 
-    [SerializeField] float _attackDamage;
-    public float AttackDamage { get { return _attackDamage; } set { _attackDamage = value; } }
+    [SerializeField] float _attackPower;
+    public float AttackPower { get { return _attackPower; } set { _attackPower = value; } }
 
-    [SerializeField] float _attackInterval;
-    public float AttackInterval { get { return _attackInterval; } set { _attackInterval = value; } }
+    [SerializeField] float _attackSpeed;
+    public float AttackSpeed { get { return _attackSpeed; } set { _attackSpeed = value; } }
+
+    [SerializeField] float _criticalChance;
+    public float CriticalChacnce {  get { return _criticalChance; } set { _criticalChance = value; } }
 
 
     [Header("Skill")]
@@ -38,7 +48,7 @@ public class CharacterModel : MonoBehaviour
   /*  [Header("Equip")]
     [SerializeField] EquippableItemSO */
 
-    private void Start()
+    private void Awake()
     {
         CurHp = MaxHp; // 초기 HP 설정
     }
