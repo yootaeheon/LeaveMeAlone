@@ -30,15 +30,13 @@ namespace Inventory.Model
         public float CriticalChance { get { return _criticalChance; } set { _criticalChance = value; } }
 
         [Header("Armor & Helmet & Back")]
-        [SerializeField] float _plusHp; // 추가 Hp
-        public float PlusHp { get { return _plusHp; } set { _plusHp = value; } }
+        [SerializeField] float _plusMaxHp; // 추가 Hp
+        public float PlusMaxHp { get { return _plusMaxHp; } set { _plusMaxHp = value; } }
 
         [SerializeField] float _recoverHpPerSecond; // 초당 Hp 회복량
         public float RecoverHpPerSecond { get { return _recoverHpPerSecond; } set { _recoverHpPerSecond = value; } }
 
         [SerializeField] float _defensePower;
         public float DefensePower { get { return _defensePower; } set { _defensePower = value; } }
-
-
     }
 }

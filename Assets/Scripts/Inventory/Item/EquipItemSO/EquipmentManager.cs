@@ -11,15 +11,18 @@ using UnityEngine;
 /// </summary>
 public class EquipmentManager : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer _helmet;
-    [SerializeField] SpriteRenderer _armor;
-    [SerializeField] SpriteRenderer _back;
-    [SerializeField] SpriteRenderer _Weapon;
+    [SerializeField] CharacterModel _model;
+
+    [SerializeField] Sprite _helmetSprite;
+    [SerializeField] Sprite _armorSprite;
+    [SerializeField] Sprite _backSprite;
+    [SerializeField] Sprite _WeaponSprite;
 
     /// <summary>
     /// 현재 장착중인 아이템들 저장하는 딕셔너리
     /// 키 : 장비 타입 (Ex> Aromor, Weapon 등)
     /// 값 : 해당 타입에 장착한 EquipItemSO
+    /// 장착할 장비의 스탯만큼 플러스
     /// </summary>
     private Dictionary<EquipmentType, EquipItemSO> _equippedItems = new();
 
@@ -29,19 +32,72 @@ public class EquipmentManager : MonoBehaviour
     /// <param name="item"></param>
     public void EquipItem(EquipItemSO item)
     {
+        if (_equippedItems.TryGetValue(item.EquipmentType, out var equipped))
+        {
+            UnEquipItem(item.EquipmentType);
+        }
+
         _equippedItems[item.EquipmentType] = item;
-        // 스탯 반영 로직 등...
+
+        switch (item.EquipmentType)
+        {
+            case EquipmentType.Helmet:
+                _helmetSprite = item.ItemImage;
+                _model.MaxHp += item.PlusMaxHp;
+                _model.CurHp += item.PlusMaxHp; // HP는 그대로 유지하면서 Max 증가분만큼 회복
+                _model.DefensePower += item.DefensePower;
+                _model.RerecoverHpPerSecond += item.RecoverHpPerSecond;
+                break;
+            case EquipmentType.Armor:
+                _armorSprite = item.ItemImage;
+                _model.MaxHp += item.PlusMaxHp;
+                _model.CurHp += item.PlusMaxHp; // HP는 그대로 유지하면서 Max 증가분만큼 회복
+                _model.DefensePower += item.DefensePower;
+                _model.RerecoverHpPerSecond += item.RecoverHpPerSecond;
+                break;
+            case EquipmentType.Back:
+                _backSprite = item.ItemImage;
+                _model.MaxHp += item.PlusMaxHp;
+                _model.CurHp += item.PlusMaxHp; // HP는 그대로 유지하면서 Max 증가분만큼 회복
+                _model.DefensePower += item.DefensePower;
+                _model.RerecoverHpPerSecond += item.RecoverHpPerSecond;
+                break;
+            case EquipmentType.Weapon:
+                _WeaponSprite = item.ItemImage;
+                _model.AttackPower += item.AttackPower;
+                _model.AttackSpeed += item.AttackSpeed;
+                _model.CriticalChacnce += item.CriticalChance;
+                break;
+        };
     }
 
     /// <summary>
     /// 장비 장착 해제 메서드
+    /// 장착중인 장비의 스탯 마이너스
     /// 장착중인 장비 딕셔너리에서 제거
     /// </summary>
     /// <param name="type"></param>
-    public void UnequipItem(EquipmentType type)
+    public void UnEquipItem(EquipmentType type)
     {
-        if (_equippedItems.ContainsKey(type))
+        if (_equippedItems.TryGetValue(type, out var item))
+        {
+            // 스탯 제거
+            if (item.EquipmentType == EquipmentType.Weapon)
+            {
+                _model.AttackPower -= item.AttackPower;
+                _model.AttackSpeed -= item.AttackSpeed;
+                _model.CriticalChacnce -= item.CriticalChance;
+            }
+            else
+            {
+                _model.MaxHp -= item.PlusMaxHp;
+                _model.CurHp = Mathf.Min(_model.CurHp, _model.MaxHp); // MaxHp보다 큰 경우 조정
+
+                _model.DefensePower -= item.DefensePower;
+                _model.RerecoverHpPerSecond -= item.RecoverHpPerSecond;
+            }
             _equippedItems.Remove(type);
+        }
     }
 
     /// <summary>

@@ -11,7 +11,7 @@ public class CharacterController : MonoBehaviour, IDamageable
 {
     public CharacterModel _model;
 
-    public Transform _monster;
+    [HideInInspector] public Transform _monster;
 
     private CharacterState _currentState = CharacterState.Move;
 
