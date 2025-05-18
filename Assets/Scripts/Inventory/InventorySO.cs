@@ -122,7 +122,7 @@ namespace Inventory.Model
             return quantity;
         }
 
-        private void InformAboutChange()
+        public void InformAboutChange()
         {
             Debug.Log("InformAboutChange called");
             OnInventoryUpdated?.Invoke(GetCurInventoryDic());

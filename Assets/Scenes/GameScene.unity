@@ -7172,6 +7172,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3408643732853638363, guid: 920f0f4ed848e604cbe431c691f925c8, type: 3}
   m_PrefabInstance: {fileID: 1353465746}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2021044469 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -9118442731494089625, guid: 920f0f4ed848e604cbe431c691f925c8, type: 3}
+  m_PrefabInstance: {fileID: 1353465746}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48323e7987166994ab79258ccef4978d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2045515667
 GameObject:
   m_ObjectHideFlags: 0
@@ -8111,6 +8122,7 @@ GameObject:
   - component: {fileID: 1948733861811391629}
   - component: {fileID: 6488604901944605026}
   - component: {fileID: 6808273554543039254}
+  - component: {fileID: 6808273554543039255}
   m_Layer: 5
   m_Name: CurEuqip
   m_TagString: Untagged
@@ -8718,6 +8730,29 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &6808273554543039255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131169834784097477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e8df9b5c496aa74aa5de1917306e031, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _equipManager: {fileID: 613916439}
+  _inventorySO: {fileID: 11400000, guid: e9192f40c9ddd9142a4f138c8803e920, type: 2}
+  _parentTransform: {fileID: 2930255064975715517}
+  _prefab: {fileID: 2021044469}
+  helmetSlot: {fileID: 0}
+  armorSlot: {fileID: 0}
+  backSlot: {fileID: 0}
+  weaponSlot: {fileID: 0}
+  emptySlotSprite: {fileID: 0}
+  _equipItems: []
+  <Size>k__BackingField: 4
 --- !u!224 &6825796803135502667
 RectTransform:
   m_ObjectHideFlags: 0
