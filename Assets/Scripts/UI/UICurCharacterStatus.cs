@@ -2,14 +2,17 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class CurCharacterStatus : UIBinder
+public class UICurCharacterStatus : UIBinder
 {
     [SerializeField] CharacterModel _characterModel;
 
     private void Awake()
     {
         BindAll();
+    }
 
+    private void OnEnable()
+    {
         Subscribe();
     }
 
@@ -18,6 +21,12 @@ public class CurCharacterStatus : UIBinder
         UnSubscribe();
     }
 
+    private void Start()
+    {
+        Init();
+    }
+
+    #region Subscrigbe/UnSubscribe/Init
     public void Subscribe()
     {
         _characterModel.CurHpChanged += UpdateCurHp;
@@ -40,14 +49,8 @@ public class CurCharacterStatus : UIBinder
         _characterModel.AttackPowerChanged -= UpdateAttackPower;
         _characterModel.AttackSpeedChanged -= UpdateAttackSpeed;
         _characterModel.CriticalChacnceChanged -= UpdateCriticalChance;
-            //_characterModel.SkillDamageChanged -= 
+        //_characterModel.SkillDamageChanged -= 
         //_characterModel.SkillIntervalChanged -=
-    }
-
-    private void Start()
-    {
-        /*_characterModel = FindAnyObjectByType<CharacterModel>();*/
-        Init();
     }
 
     public void Init()
@@ -62,6 +65,7 @@ public class CurCharacterStatus : UIBinder
         GetUI<TMP_Text>("AttackSpeedText").text = Util.GetText($"AttackSpeed : {_characterModel.AttackSpeed}").ToString();
         GetUI<TMP_Text>("CriticalChanceText").text = Util.GetText($"Critical : {_characterModel.CriticalChacnce}").ToString();
     }
+    #endregion
 
     #region CallBack Method
     public void UpdateCurHp() => GetUI<TMP_Text>("CurHPText").text = Util.GetText($"{_characterModel.CurHp}").ToString();

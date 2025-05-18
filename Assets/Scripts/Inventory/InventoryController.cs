@@ -70,7 +70,7 @@ namespace Inventory
         /// 인벤토리 열기/닫기 메서드
         /// 인벤토리 버튼에 연결
         /// </summary>
-        public void OnInventory()
+        public void OnOffInventory()
         {
             if (_inventoryUI.isActiveAndEnabled == false)
             {

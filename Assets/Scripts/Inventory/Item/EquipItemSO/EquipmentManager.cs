@@ -13,10 +13,10 @@ public class EquipmentManager : MonoBehaviour
 {
     [SerializeField] CharacterModel _model;
 
-    [SerializeField] Sprite _helmetSprite;
-    [SerializeField] Sprite _armorSprite;
-    [SerializeField] Sprite _backSprite;
-    [SerializeField] Sprite _WeaponSprite;
+    [SerializeField] SpriteRenderer _helmetSpriteRenderer;
+    [SerializeField] SpriteRenderer _armorSpriteRenderer;
+    [SerializeField] SpriteRenderer _backSpriteRenderer;
+    [SerializeField] SpriteRenderer _weaponSpriteRenderer;
 
     /// <summary>
     /// 현재 장착중인 아이템들 저장하는 딕셔너리
@@ -42,28 +42,28 @@ public class EquipmentManager : MonoBehaviour
         switch (item.EquipmentType)
         {
             case EquipmentType.Helmet:
-                _helmetSprite = item.ItemImage;
+                _helmetSpriteRenderer.sprite = item.ItemImage;
                 _model.MaxHp += item.PlusMaxHp;
                 _model.CurHp += item.PlusMaxHp; // HP는 그대로 유지하면서 Max 증가분만큼 회복
                 _model.DefensePower += item.DefensePower;
                 _model.RerecoverHpPerSecond += item.RecoverHpPerSecond;
                 break;
             case EquipmentType.Armor:
-                _armorSprite = item.ItemImage;
+                _armorSpriteRenderer.sprite = item.ItemImage;
                 _model.MaxHp += item.PlusMaxHp;
                 _model.CurHp += item.PlusMaxHp; // HP는 그대로 유지하면서 Max 증가분만큼 회복
                 _model.DefensePower += item.DefensePower;
                 _model.RerecoverHpPerSecond += item.RecoverHpPerSecond;
                 break;
             case EquipmentType.Back:
-                _backSprite = item.ItemImage;
+                _backSpriteRenderer.sprite = item.ItemImage;
                 _model.MaxHp += item.PlusMaxHp;
                 _model.CurHp += item.PlusMaxHp; // HP는 그대로 유지하면서 Max 증가분만큼 회복
                 _model.DefensePower += item.DefensePower;
                 _model.RerecoverHpPerSecond += item.RecoverHpPerSecond;
                 break;
             case EquipmentType.Weapon:
-                _WeaponSprite = item.ItemImage;
+                _weaponSpriteRenderer.sprite = item.ItemImage;
                 _model.AttackPower += item.AttackPower;
                 _model.AttackSpeed += item.AttackSpeed;
                 _model.CriticalChacnce += item.CriticalChance;
