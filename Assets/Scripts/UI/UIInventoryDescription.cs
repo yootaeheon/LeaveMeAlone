@@ -31,7 +31,7 @@ namespace Inventory.View
         }
 
         /// <summary>
-        /// 아이템 스프라이트, 이름, 설명 초기화
+        /// 아이템 정보를 받아 UI 업데이트
         /// </summary>
         /// <param name="sprite"></param>
         /// <param name="itemName"></param>
