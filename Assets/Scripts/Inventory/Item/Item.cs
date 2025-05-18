@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+
+    [SerializeField] InventorySO InventoryData;
+
     [field : SerializeField] public ItemSO InventoryItem { get; private set; }
     [field: SerializeField] public int Quantity { get; set; } = 1;
 
@@ -45,5 +48,22 @@ public class Item : MonoBehaviour
     public void Move()
     {
         transform.Translate(Vector2.left * 1f * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Item"))
+        {
+            Item item = collision.gameObject.GetComponent<Item>();
+            if (item != null)
+            {
+                int reminder = InventoryData.AddItem(item.InventoryItem, item.Quantity);
+
+                if (reminder == 0)
+                    item.DestroyItem();
+                else
+                    item.Quantity = reminder;
+            }
+        }
     }
 }
