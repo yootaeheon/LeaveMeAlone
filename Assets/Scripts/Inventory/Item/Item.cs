@@ -9,9 +9,14 @@ public class Item : MonoBehaviour
     [field : SerializeField] public ItemSO InventoryItem { get; private set; }
     [field: SerializeField] public int Quantity { get; set; } = 1;
 
-    [SerializeField] AudioSource _audioSource;
+    private AudioSource _audioSource;
 
-    [SerializeField] float _duration = 0.3f;
+    [SerializeField] float _animDuration = 0.3f;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
@@ -33,7 +38,7 @@ public class Item : MonoBehaviour
     {
         _audioSource.Play();
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOScale(Vector3.zero, _duration));
+        sequence.Append(transform.DOScale(Vector3.zero, _animDuration));
         sequence.OnComplete(()=>Destroy(gameObject));
     }
 

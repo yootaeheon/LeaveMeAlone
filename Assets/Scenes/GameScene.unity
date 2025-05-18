@@ -1796,11 +1796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventoryUI: {fileID: 311476420}
   _inventoryData: {fileID: 11400000, guid: e9192f40c9ddd9142a4f138c8803e920, type: 2}
-  _initItems:
-  - Quantity: 5
-    Item: {fileID: 11400000, guid: 09b5de414f2758c429dc981db3875333, type: 2}
-  - Quantity: 5
-    Item: {fileID: 11400000, guid: 09b5de414f2758c429dc981db3875333, type: 2}
+  _initItems: []
 --- !u!114 &613916437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5882,9 +5878,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8468218258638690902, guid: 9108f21538f63cb418625183490844b4, type: 3}
+      propertyPath: <Quantity>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8468218258638690902, guid: 9108f21538f63cb418625183490844b4, type: 3}
       propertyPath: <InventoryItem>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 09b5de414f2758c429dc981db3875333, type: 2}
+      objectReference: {fileID: 11400000, guid: 722fd684ebc376a42979b45d4a6bb764, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
