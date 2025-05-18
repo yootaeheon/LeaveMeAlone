@@ -3,6 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Threading;
 using System;
+using Unity.Mathematics;
 
 public enum CharacterState { Idle, Move, Detect, Attack }
 
@@ -27,6 +28,11 @@ public class CharacterController : MonoBehaviour, IDamageable
     public void Init()
     {
         _animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        recoveryHpRoutine = StartCoroutine(RecoveryHpRoutine());
     }
 
     void Update()
@@ -101,5 +107,24 @@ public class CharacterController : MonoBehaviour, IDamageable
         _model.CurHp -= Damage;
 
         transform.DOShakePosition(0.2f, 0.1f);
+    }
+
+    Coroutine recoveryHpRoutine;
+    private IEnumerator RecoveryHpRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+
+            if (_model.CurHp <= 0) 
+                yield break;
+
+            _model.CurHp += _model.RerecoverHpPerSecond;
+
+            if (_model.CurHp > _model.MaxHp)
+            {
+                _model.CurHp = _model.MaxHp;
+            }
+        }
     }
 }

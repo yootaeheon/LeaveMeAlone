@@ -2854,6 +2854,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InventoryData: {fileID: 11400000, guid: e9192f40c9ddd9142a4f138c8803e920, type: 2}
+--- !u!114 &613916438 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+  m_PrefabInstance: {fileID: 2131224687}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613916429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30429a70eb30f6f4486766ab4e0d1f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &644711148
 GameObject:
   m_ObjectHideFlags: 0
@@ -7827,12 +7838,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: _attackPower
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _attackRange
       value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: _attackSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _attackDamage
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: _recoverHpPerSecond
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6052675301243119923, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: m_Constraints
@@ -8798,6 +8821,7 @@ GameObject:
   - component: {fileID: 7539652535633708817}
   - component: {fileID: 641355465798123038}
   - component: {fileID: 7705841707815418916}
+  - component: {fileID: 7705841707815418917}
   m_Layer: 5
   m_Name: CurEquip
   m_TagString: Untagged
@@ -8831,6 +8855,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &7705841707815418917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7705841707815418915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6ec6fa06cbfe14aa5f9f56a942aab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterModel: {fileID: 613916438}
 --- !u!114 &8123064035657448421
 MonoBehaviour:
   m_ObjectHideFlags: 0
