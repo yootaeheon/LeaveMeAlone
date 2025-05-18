@@ -1,3 +1,4 @@
+using Inventory.Model;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,10 @@ public class CharacterModel : MonoBehaviour
     [SerializeField] float _skillInterval;
     public float SkillInterval { get { return _skillInterval; } set { _skillInterval = value; } }
 
-    void Start()
+  /*  [Header("Equip")]
+    [SerializeField] EquippableItemSO */
+
+    private void Start()
     {
         CurHp = MaxHp; // 초기 HP 설정
     }
