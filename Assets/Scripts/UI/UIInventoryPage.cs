@@ -1,3 +1,4 @@
+using Inventory.Model;
 using Inventory.View;
 using System;
 using System.Collections;
@@ -6,8 +7,9 @@ using UnityEngine;
 
 namespace Inventory.View
 {
-    // UI → InventoryController → InventorySO → UI 의 흐름으로 움직이며,
-    // 이벤트를 통해 UI와 데이터 모델 간 데이터 요청, 변경, 갱신이 이루어집니다.
+    // UIInventoryPage(UI) → InventoryController → InventorySO(Data) → UIInventoryPage(UI) 의 흐름으로 움직이며,
+    // { Event - Handle - Call - Method }
+    // 이벤트를 통해 UI와 데이터 모델 간 데이터 요청, 변경, 갱신이 이루어짐
 
     /// <summary>
     /// 인벤토리 UI 한 페이지 전체 관리 클래스
@@ -27,7 +29,7 @@ namespace Inventory.View
 
         [SerializeField] MouseFollower _mouseFollower;
 
-        List<UIInventoryItem> listOfUIItems = new List<UIInventoryItem>();    // 현재 페이지 내 아이템 UI 슬로 리스트
+        List<UIInventoryItem> _listOfUIItems = new List<UIInventoryItem>();    // 현재 페이지 내 아이템 UI 슬로 리스트
 
         private int curDraggedIndex = -1; // 현재 드래그 중인 아이템 인덱스
 
@@ -53,20 +55,20 @@ namespace Inventory.View
         /// 인벤토리 UI 슬롯 초기화 및 생성
         /// </summary>
         /// <param name="inventorySize"></param>
-        public void InityInventoryUI(int inventorySize)
+        public void InitInventoryUI(int inventorySize)
         {
             for (int i = 0; i < inventorySize; i++)
             {
                 UIInventoryItem uiItem = Instantiate(_itemPrefab, Vector2.zero, Quaternion.identity);
                 uiItem.transform.SetParent(_contentPanel);
                 uiItem.transform.localScale = Vector2.one;
-                listOfUIItems.Add(uiItem);
+                _listOfUIItems.Add(uiItem);
 
-                uiItem.OnItemClicked += SelectItem;
-                uiItem.OnItemBeginDrag += BegingDrag;
-                uiItem.OnItemDroppedOn += Swap;
-                uiItem.OnItemEndDrag += EndDrag;
-                uiItem.OnRightMouseButtonClick += ShowItemActions;
+                uiItem.OnItemClicked += HandleSelectItem;
+                uiItem.OnItemBeginDrag += HandleBeginDrag;
+                uiItem.OnItemDroppedOn += HandleSwap;
+                uiItem.OnItemEndDrag += HandleEndDrag;
+                uiItem.OnRightMouseButtonClick += HandleShowItemActions;
             }
         }
 
@@ -102,8 +104,17 @@ namespace Inventory.View
         /// </summary>
         private void DeselectAllItems()
         {
-            foreach (UIInventoryItem item in listOfUIItems)
+            foreach (UIInventoryItem item in _listOfUIItems)
             {
+                item.Deselect();
+            }
+        }
+
+        internal void ResetAllItems()
+        {
+            foreach (var item in _listOfUIItems)
+            {
+                item.ResetData();
                 item.Deselect();
             }
         }
@@ -116,9 +127,9 @@ namespace Inventory.View
         /// <param name="itemQuantity">아이템 수량</param>
         public void UpdateData(int itemIndex, Sprite itemImage, int itemQuantity)
         {
-            if (listOfUIItems.Count > itemIndex)
+            if (_listOfUIItems.Count > itemIndex)
             {
-                listOfUIItems[itemIndex].SetData(itemImage, itemQuantity);
+                _listOfUIItems[itemIndex].SetData(itemImage, itemQuantity);
             }
         }
 
@@ -133,7 +144,7 @@ namespace Inventory.View
         {
             _itemDescription.SetDescription(itemImage, name, description);
             DeselectAllItems();
-            listOfUIItems[itemIndex].Select();
+            _listOfUIItems[itemIndex].Select();
         }
 
         #region Execute Method
@@ -142,9 +153,9 @@ namespace Inventory.View
         /// 선택한 아이템 인덱스를 찾아 아이템 설명 요청
         /// </summary>
         /// <param name="item"></param>
-        public void SelectItem(UIInventoryItem item)
+        public void HandleSelectItem(UIInventoryItem item)
         {
-            int index = listOfUIItems.IndexOf(item);
+            int index = _listOfUIItems.IndexOf(item);
             if (index == -1)
                 return;
 
@@ -158,34 +169,54 @@ namespace Inventory.View
         /// 드래그 중 이벤트 발생
         /// </summary>
         /// <param name="item"></param>
-        private void BegingDrag(UIInventoryItem item)
+        private void HandleBeginDrag(UIInventoryItem item)
         {
-            int index = listOfUIItems.IndexOf(item);
+            int index = _listOfUIItems.IndexOf(item);
             if (index == -1)
                 return;
 
             curDraggedIndex = index;
-            SelectItem(item);
+            HandleSelectItem(item);
             OnStartDragging?.Invoke(index);
         }
-
-        
 
         /// <summary>
         /// 아이템 드래그 앤 드롭을 통한 자리바꿈 이벤트 발생하는 메서드
         /// </summary>
         /// <param name="item"></param>
-        private void Swap(UIInventoryItem item)
+        private void HandleSwap(UIInventoryItem item)
         {
-            int index = listOfUIItems.IndexOf(item);
+            int index = _listOfUIItems.IndexOf(item);
             if (index == -1)
-            {
                 return;
-            }
+          
             OnSwapItems?.Invoke(curDraggedIndex, index);
+            HandleSelectItem(item);
+        }
+
+        private void HandleEndDrag(UIInventoryItem item)
+        {
+            ResetDraggedItem();
         }
 
 
+
+        /// <summary>
+        /// 아이템 우클릭 액션 요청 시 이벤트 발생
+        /// 우클릭 기능 삭제 예정
+        /// </summary>
+        /// <param name="item"></param>
+        private void HandleShowItemActions(UIInventoryItem item)
+        {
+            int index = _listOfUIItems.IndexOf(item);
+            if (index == -1)
+                return;
+            
+            OnItemActionRequested?.Invoke(index);
+        }
+        #endregion
+
+        #region 마우스 팔로워
         /// <summary>
         /// MouseFollower 활성화 후,
         /// 마우스 위치에 똑같이 복사
@@ -208,26 +239,6 @@ namespace Inventory.View
             _mouseFollower.Toggle(false);
             curDraggedIndex = -1;
         }
-
-        private void EndDrag(UIInventoryItem item)
-        {
-            ResetDraggedItem();
-        }
-
-        /// <summary>
-        /// 아이템 우클릭 액션 요청 시 이벤트 발생
-        /// 우클릭 기능 삭제 예정
-        /// </summary>
-        /// <param name="item"></param>
-        private void ShowItemActions(UIInventoryItem item)
-        {
-            int index = listOfUIItems.IndexOf(item);
-            if (index == -1)
-            {
-                return;
-            }
-            OnItemActionRequested?.Invoke(index);
-        }
-        #endregion
     }
+    #endregion
 }

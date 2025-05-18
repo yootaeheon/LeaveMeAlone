@@ -30,9 +30,10 @@ namespace Inventory.Model
             {
                 _inventoryItems.Add(InventoryItem.GetEmptyItem());
             }
+            InformAboutChange();
         }
 
-        public void AddItem(InventoryItem item)
+        internal void AddItem(InventoryItem item)
         {
             AddItem(item.Item, item.Quantity);
         }
@@ -53,8 +54,8 @@ namespace Inventory.Model
                     {
                         quantity -= AddItemToFirstSlot(item, 1);
                     }
+                    InformAboutChange();
                     return quantity;
-
                 }
             }
             quantity = AddStackableItem(item, quantity);
@@ -121,10 +122,9 @@ namespace Inventory.Model
             return quantity;
         }
 
-       
-
         private void InformAboutChange()
         {
+            Debug.Log("InformAboutChange called");
             OnInventoryUpdated?.Invoke(GetCurInventoryDic());
         }
 
@@ -181,12 +181,11 @@ namespace Inventory.Model
             InventoryItem item1 = _inventoryItems[itemIndex_1];
             _inventoryItems[itemIndex_1] = _inventoryItems[itemIndex_2];
             _inventoryItems[itemIndex_2] = item1;
+
+            Debug.Log("SwapItems called");
             InformAboutChange();
         }
     }
-
-
-
 
     /// <summary>
     /// 인벤토리에 들어가는 개별 아이템 구조체
