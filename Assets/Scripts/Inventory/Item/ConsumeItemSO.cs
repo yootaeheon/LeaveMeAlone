@@ -11,7 +11,7 @@ namespace Inventory.Model
     }
 
     [CreateAssetMenu]
-    public class ConsumableSO : ItemSO
+    public class ConsumeItemSO : ItemSO
     {
         [field: SerializeField] public int Value {  get; set; }
 
