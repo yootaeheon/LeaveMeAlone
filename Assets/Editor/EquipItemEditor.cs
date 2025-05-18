@@ -22,7 +22,7 @@ public class EquipItemSOEditor : Editor
         DrawPropertiesExcluding(serializedObject,
             "_equipmetnType",
             "_attackPower", "_attackSpeed", "_criticalChance",
-            "_plusHp", "_recoverHpPerSecond"
+            "_plusHp", "_recoverHpPerSecond", "_defensePower"
         );
 
         EditorGUILayout.Space();
@@ -51,6 +51,7 @@ public class EquipItemSOEditor : Editor
             EditorGUILayout.LabelField("Armor & Helmet Stats", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_plusHp"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_recoverHpPerSecond"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("_defensePower"));
         }
 
         serializedObject.ApplyModifiedProperties();

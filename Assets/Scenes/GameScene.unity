@@ -2841,19 +2841,6 @@ MonoBehaviour:
   _inventoryUI: {fileID: 311476420}
   _inventoryData: {fileID: 11400000, guid: e9192f40c9ddd9142a4f138c8803e920, type: 2}
   _initItems: []
---- !u!114 &613916437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613916429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 367f270bb46724344925fc3c48ca5b6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InventoryData: {fileID: 11400000, guid: e9192f40c9ddd9142a4f138c8803e920, type: 2}
 --- !u!114 &613916438 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
@@ -2865,6 +2852,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30429a70eb30f6f4486766ab4e0d1f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &613916439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613916429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02679f79340aa64eac73365ef5f028f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _helmet: {fileID: 0}
+  _armor: {fileID: 0}
+  _back: {fileID: 0}
+  _Weapon: {fileID: 0}
 --- !u!1 &644711148
 GameObject:
   m_ObjectHideFlags: 0
@@ -7837,6 +7840,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2020773770952064754, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2792606791867966216, guid: d24756e433435b249be5737019648d69, type: 3}
+    - target: {fileID: 4774178475754423786, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: m_Size.x
+      value: 0.71875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774178475754423786, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: m_Size.y
+      value: 0.8125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774178475754423786, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774178475754423786, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _attackPower
       value: 50
@@ -7852,6 +7875,10 @@ PrefabInstance:
     - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _attackDamage
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: _enemyLayer.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _recoverHpPerSecond
@@ -7959,10 +7986,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6933188203834436974, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 613916437}
+      addedObject: {fileID: 613916436}
     - targetCorrespondingSourceObject: {fileID: 6933188203834436974, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 613916436}
+      addedObject: {fileID: 613916439}
   m_SourcePrefab: {fileID: 100100000, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
 --- !u!1 &2134184449
 GameObject:
@@ -8526,7 +8553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7780339126943360319, guid: 7cd8cb569c59d204e835e004f92d8160, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 399.99997
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 7780339126943360319, guid: 7cd8cb569c59d204e835e004f92d8160, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -8685,6 +8712,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8468218258638690902, guid: 9108f21538f63cb418625183490844b4, type: 3}
+      propertyPath: InventoryData
+      value: 
+      objectReference: {fileID: 11400000, guid: e9192f40c9ddd9142a4f138c8803e920, type: 2}
     - target: {fileID: 8468218258638690902, guid: 9108f21538f63cb418625183490844b4, type: 3}
       propertyPath: <Quantity>k__BackingField
       value: 10

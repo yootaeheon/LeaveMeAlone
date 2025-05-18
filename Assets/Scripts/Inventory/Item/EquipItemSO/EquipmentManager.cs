@@ -1,7 +1,9 @@
 using Inventory.Model;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+//Back, BodyArmor, 12_Helmet2, R_Weapon을 바꿔야 에셋 바뀜
+
 
 /// <summary>
 /// 장비 아이템 장착/해제/조회 관리하는 클래스
@@ -9,6 +11,11 @@ using UnityEngine;
 /// </summary>
 public class EquipmentManager : MonoBehaviour
 {
+    [SerializeField] SpriteRenderer _helmet;
+    [SerializeField] SpriteRenderer _armor;
+    [SerializeField] SpriteRenderer _back;
+    [SerializeField] SpriteRenderer _Weapon;
+
     /// <summary>
     /// 현재 장착중인 아이템들 저장하는 딕셔너리
     /// 키 : 장비 타입 (Ex> Aromor, Weapon 등)

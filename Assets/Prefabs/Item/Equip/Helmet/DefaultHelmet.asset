@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DefaultHelmet
   m_EditorClassIdentifier: 
   <MaxStackSize>k__BackingField: 1
-  <Name>k__BackingField: Cap
+  <Name>k__BackingField: DefaultHelmet
   <Description>k__BackingField: 'MaxHp + 10;
 
-    Recovery Hp / S + 5;
+    Recovery Hp / S + 1;
 
     Defense
     Power + 1;'
@@ -26,5 +26,6 @@ MonoBehaviour:
   _attackPower: 0
   _attackSpeed: 0
   _criticalChance: 0
-  _plusHp: 0
-  _recoverHpPerSecond: 0
+  _plusHp: 10
+  _recoverHpPerSecond: 1
+  _defensePower: 1
