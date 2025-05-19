@@ -21,6 +21,8 @@ namespace Inventory.View
     /// </summary>
     public class UIInventoryPage : MonoBehaviour
     {
+        [SerializeField] EquipmentManager _equipmentManager;
+
         [SerializeField] UIInventoryItem _itemPrefab;
 
         [SerializeField] RectTransform _contentPanel;
@@ -145,6 +147,15 @@ namespace Inventory.View
             _itemDescription.SetDescription(itemImage, name, description);
             DeselectAllItems();
             _listOfUIItems[itemIndex].Select();
+        }
+
+        /// <summary>
+        /// 호출되는 장착 버튼 메서드
+        /// </summary>
+        /// <param name="selectedItem"></param>
+        public void OnEquipButtonClicked(EquipItemSO selectedItem)
+        {
+            _equipmentManager.EquipItem(selectedItem);
         }
 
         #region Execute Method
