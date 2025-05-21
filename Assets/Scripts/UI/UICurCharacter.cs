@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UICurCharacter : MonoBehaviour
 {
-    public void OnOffPanel()
+    public void OnOffCanvas()
     {
         if (gameObject.activeSelf == false)
         {
