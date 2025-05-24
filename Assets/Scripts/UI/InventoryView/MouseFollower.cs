@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 드래그 앤 드롭 시 아이템 UI 프리팹을 마우스 위치에 띄워주고, 드래그한 아이템 정보를 복사함
+/// 드래그 앤 드롭 시 아이템 UI_Progress 프리팹을 마우스 위치에 띄워주고, 드래그한 아이템 정보를 복사함
 /// </summary>
 public class MouseFollower : MonoBehaviour
 {
     [SerializeField] Canvas _canvas; // 연결된 캔버스
-    [SerializeField] UIInventoryItem _item; // 드래그 중 표시할 아이템 UI
+    [SerializeField] UIInventoryItem _item; // 드래그 중 표시할 아이템 UI_Progress
 
     private void Awake()
     {
@@ -47,7 +47,7 @@ public class MouseFollower : MonoBehaviour
     }
 
     /// <summary>
-    /// 마우스 따라다니는 UI 표시 토글
+    /// 마우스 따라다니는 UI_Progress 표시 토글
     /// </summary>
     public void Toggle(bool value)
     {

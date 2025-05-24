@@ -50,7 +50,7 @@ public class UIBinder : MonoBehaviour
         }
     }
 
-    // 이름이 name인 UI 게임오브젝트 가져오기
+    // 이름이 name인 UI_Progress 게임오브젝트 가져오기
     // GetUI("Key") : Key 이름의 게임오브젝트 가져오기
     public GameObject GetUI(in string name)
     {

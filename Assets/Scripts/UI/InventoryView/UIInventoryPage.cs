@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Inventory.View
 {
-    // UIInventoryPage(UI) → InventoryController → InventorySO(Data) → UIInventoryPage(UI) 의 흐름으로 움직이며,
+    // UIInventoryPage(UI_Progress) → InventoryController → InventorySO(Data) → UIInventoryPage(UI_Progress) 의 흐름으로 움직이며,
     // { Event - Handle - Call - Method }
     // 이벤트를 통해 UI와 데이터 모델 간 데이터 요청, 변경, 갱신이 이루어짐
 
@@ -31,7 +31,7 @@ namespace Inventory.View
 
         [SerializeField] MouseFollower _mouseFollower;
 
-        List<UIInventoryItem> _listOfUIItems = new List<UIInventoryItem>();    // 현재 페이지 내 아이템 UI 슬로 리스트
+        List<UIInventoryItem> _listOfUIItems = new List<UIInventoryItem>();    // 현재 페이지 내 아이템 UI_Progress 슬로 리스트
 
         private int curDraggedIndex = -1; // 현재 드래그 중인 아이템 인덱스
 
@@ -54,7 +54,7 @@ namespace Inventory.View
         }
 
         /// <summary>
-        /// 인벤토리 UI 슬롯 초기화 및 생성
+        /// 인벤토리 UI_Progress 슬롯 초기화 및 생성
         /// </summary>
         /// <param name="inventorySize"></param>
         public void InitInventoryUI(int inventorySize)
@@ -75,7 +75,7 @@ namespace Inventory.View
         }
 
         /// <summary>
-        /// 인벤토리 UI 활성화 및 선택 초기화
+        /// 인벤토리 UI_Progress 활성화 및 선택 초기화
         /// </summary>
         public void Show()
         {
@@ -84,7 +84,7 @@ namespace Inventory.View
         }
 
         /// <summary>
-        /// 인벤토리 UI 비활성화 및 드래그 상태 초기화
+        /// 인벤토리 UI_Progress 비활성화 및 드래그 상태 초기화
         /// </summary>
         public void Hide()
         {
@@ -102,7 +102,7 @@ namespace Inventory.View
         }
 
         /// <summary>
-        /// 모든 아이템 UI 슬롯의 선택 해제 처리
+        /// 모든 아이템 UI_Progress 슬롯의 선택 해제 처리
         /// </summary>
         private void DeselectAllItems()
         {
@@ -122,7 +122,7 @@ namespace Inventory.View
         }
 
         /// <summary>
-        /// 특정 인덱스의 아이템 UI 데이터를 갱신한다.
+        /// 특정 인덱스의 아이템 UI_Progress 데이터를 갱신한다.
         /// </summary>
         /// <param name="itemIndex">아이템 인덱스</param>
         /// <param name="itemImage">아이템 이미지</param>
@@ -136,7 +136,7 @@ namespace Inventory.View
         }
 
         /// <summary>
-        /// 특정 인덱스 아이템 설명 UI 갱신
+        /// 특정 인덱스 아이템 설명 UI_Progress 갱신
         /// </summary>
         /// <param name="itemIndex"></param>
         /// <param name="itemImage"></param>

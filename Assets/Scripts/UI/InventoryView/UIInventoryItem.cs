@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace Inventory.View
 {
     /// <summary>
-    /// 인벤토리 내 아이템 UI 한 칸을 관리하는 클래스
+    /// 인벤토리 내 아이템 UI_Progress 한 칸을 관리하는 클래스
     // 클릭, 드래그, 드롭 등 마우스 이벤트를 처리
     /// </summary>
     public class UIInventoryItem :

@@ -8,11 +8,11 @@ using System.Collections.Generic;
 namespace Inventory
 {
     /// <summary>
-    /// InventoryPage(UI)와 InventorySO(데이터 모델)를 중개하는 컨트롤러 역할
+    /// InventoryPage(UI_Progress)와 InventorySO(데이터 모델)를 중개하는 컨트롤러 역할
     /// </summary>
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] UIInventoryPage _inventoryUI;       // UI
+        [SerializeField] UIInventoryPage _inventoryUI;       // UI_Progress
                                                           
         [SerializeField] InventorySO _inventoryData;         // Data
 
@@ -37,7 +37,7 @@ namespace Inventory
 
         private void PrepareUI()
         {
-            _inventoryUI.InitInventoryUI(_inventoryData.Size);               // UI 슬롯 개수 초기화
+            _inventoryUI.InitInventoryUI(_inventoryData.Size);               // UI_Progress 슬롯 개수 초기화
 
             _inventoryUI.OnDescriptionRequested += CallRequestDescription;  // 설명 요청 이벤트 구독
             _inventoryUI.OnSwapItems += CallSwapItems;                      // 아이템 교환 이벤트 구독

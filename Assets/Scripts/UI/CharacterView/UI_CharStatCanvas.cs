@@ -19,7 +19,7 @@ public class UI_CharStatCanvas : MonoBehaviour
     }
 
     /// <summary>
-    /// 스탯창 Canvas UI 활성화
+    /// 스탯창 Canvas UI_Progress 활성화
     /// </summary>
     public void Show()
     {
@@ -27,7 +27,7 @@ public class UI_CharStatCanvas : MonoBehaviour
     }
 
     /// <summary>
-    /// 스탯창 Canvas UI 비활성화
+    /// 스탯창 Canvas UI_Progress 비활성화
     /// </summary>
     public void Hide()
     {

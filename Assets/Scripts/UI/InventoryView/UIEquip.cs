@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 현재 장착 중인 장비를 보여주는 UI
+/// 현재 장착 중인 장비를 보여주는 UI_Progress
 /// </summary>
 public class UIEquip : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class UIEquip : MonoBehaviour
 
     [SerializeField] UIInventoryItem _prefab;
  
-    [Header("UI Slot Images")]
+    [Header("UI_Progress Slot Images")]
     [SerializeField] private Image helmetSlot;
     [SerializeField] private Image armorSlot;
     [SerializeField] private Image backSlot;
@@ -33,7 +33,7 @@ public class UIEquip : MonoBehaviour
     // 인벤토리 슬롯 개수
     [field: SerializeField] public int Size { get; private set; } = 4;
 
-    List<UIInventoryItem> _listOfUIEquip = new List<UIInventoryItem>();    // 현재 페이지 내 아이템 UI 슬로 리스트
+    List<UIInventoryItem> _listOfUIEquip = new List<UIInventoryItem>();    // 현재 페이지 내 아이템 UI_Progress 슬로 리스트
 
     public void Initialize()
     {

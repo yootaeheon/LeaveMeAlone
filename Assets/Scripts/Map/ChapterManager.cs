@@ -17,6 +17,7 @@ public class ChapterManager : MonoBehaviour
 
 
     private void Awake() => SetSingleton();
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
