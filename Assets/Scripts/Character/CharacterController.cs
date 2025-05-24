@@ -1,18 +1,20 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
-using System.Threading;
 using System;
-using Unity.Mathematics;
 
 public enum CharacterState { Idle, Move, Detect, Attack }
 
 public class CharacterController : MonoBehaviour, IDamageable
 {
-    public CharacterModel _model;
+    [Header("Model")]
+    public CharacterModel Model;
 
-    public CharcaterView _view;
+    [Header("View")]
+    public CharcaterView View;
+    [SerializeField] UI_HealthBar _healthBar;
 
+    [Header("Presenter")]
     [HideInInspector] public Transform _monster;
 
     private CharacterState _currentState = CharacterState.Move;
@@ -20,7 +22,7 @@ public class CharacterController : MonoBehaviour, IDamageable
     private Animator _animator;
 
     public Action OnEncounterMonster { get; set; }       // 몬스터 조우 시, 발생하는 이벤트 (맵 스크롤링 정지)
-    public Action OnKillMonster { get; set; }                 // 몬스터 처치 시, 발생하는 이벤트 (맵 스크롤링 진행)
+    public Action OnKillMonster { get; set; }            // 몬스터 처치 시, 발생하는 이벤트 (맵 스크롤링 진행)
 
     private void Awake()
     {
@@ -35,28 +37,30 @@ public class CharacterController : MonoBehaviour, IDamageable
     #region Subscribe/Unsubscribe
     public void Subscribe()
     {
-        _model.CurHpChanged += _view.UpdateCurHp;
-        _model.MaxHpChanged += _view.UpdateMaxHp;
-        _model.RerecoverHpPerSecondChanged += _view.UpdateRerecoverHpPerSecond;
-        _model.DefensePowerChanged += _view.UpdateDefensePower;
-        _model.AttackPowerChanged += _view.UpdateAttackPower;
-        _model.AttackSpeedChanged += _view.UpdateAttackSpeed;
-        _model.CriticalChacnceChanged += _view.UpdateCriticalChance;
-        //_model.SkillDamageChanged += _view
-        //_model.SkillIntervalChanged +=_view
+        Model.CurHpChanged += View.UpdateCurHp;
+        Model.CurHpChanged += () => _healthBar.UpdateHealthBar(Model.CurHp, Model.MaxHp);
+        Model.MaxHpChanged += View.UpdateMaxHp;
+        Model.RerecoverHpPerSecondChanged += View.UpdateRerecoverHpPerSecond;
+        Model.DefensePowerChanged += View.UpdateDefensePower;
+        Model.AttackPowerChanged += View.UpdateAttackPower;
+        Model.AttackSpeedChanged += View.UpdateAttackSpeed;
+        Model.CriticalChacnceChanged += View.UpdateCriticalChance;
+        //Model.SkillDamageChanged += View
+        //Model.SkillIntervalChanged +=View
     }
 
     public void UnSubscribe()
     {
-        _model.CurHpChanged -= _view.UpdateCurHp;
-        _model.MaxHpChanged -= _view.UpdateMaxHp;
-        _model.RerecoverHpPerSecondChanged -= _view.UpdateRerecoverHpPerSecond;
-        _model.DefensePowerChanged -= _view.UpdateDefensePower;
-        _model.AttackPowerChanged -= _view.UpdateAttackPower;
-        _model.AttackSpeedChanged -= _view.UpdateAttackSpeed;
-        _model.CriticalChacnceChanged -= _view.UpdateCriticalChance;
-        //_model.SkillDamageChanged -= _view
-        //_model.SkillIntervalChanged -=_view
+        Model.CurHpChanged -= View.UpdateCurHp;
+        Model.CurHpChanged -= () => _healthBar.UpdateHealthBar(Model.CurHp, Model.MaxHp);
+        Model.MaxHpChanged -= View.UpdateMaxHp;
+        Model.RerecoverHpPerSecondChanged -= View.UpdateRerecoverHpPerSecond;
+        Model.DefensePowerChanged -= View.UpdateDefensePower;
+        Model.AttackPowerChanged -= View.UpdateAttackPower;
+        Model.AttackSpeedChanged -= View.UpdateAttackSpeed;
+        Model.CriticalChacnceChanged -= View.UpdateCriticalChance;
+        //Model.SkillDamageChanged -= View
+        //Model.SkillIntervalChanged -=View
     }
     #endregion
 
@@ -72,6 +76,9 @@ public class CharacterController : MonoBehaviour, IDamageable
         UnSubscribe();
     }
 
+    /// <summary>
+    /// FSM 적용하여 상태 별 행동 실행
+    /// </summary>
     void Update()
     {
         switch (_currentState)
@@ -98,7 +105,7 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     void SearchForEnemies()
     {
-        Collider2D enemy = Physics2D.OverlapCircle(transform.position, _model.AttackRange, _model.EnemyLayer);
+        Collider2D enemy = Physics2D.OverlapCircle(transform.position, Model.AttackRange, Model.EnemyLayer);
         if (enemy != null)
         {
             if (enemy.GetComponent<Monster>().IsDead)
@@ -119,7 +126,7 @@ public class CharacterController : MonoBehaviour, IDamageable
         {
             _animator.SetTrigger("2_Attack");
 
-            yield return new WaitForSeconds(_model.AttackSpeed);
+            yield return new WaitForSeconds(Model.AttackSpeed);
 
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
@@ -130,18 +137,18 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     public void Attack()
     {
-        _monster.GetComponent<IDamageable>().TakeDamage(_model.AttackPower);
+        _monster.GetComponent<IDamageable>().TakeDamage(Model.AttackPower);
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _model.AttackRange); // 공격 범위 표시
+        Gizmos.DrawWireSphere(transform.position, Model.AttackRange); // 공격 범위 표시
     }
 
     public void TakeDamage(float Damage)
     {
-        _model.CurHp -= Damage;
+        Model.CurHp -= Damage;
 
         transform.DOShakePosition(0.2f, 0.1f);
     }
@@ -153,14 +160,14 @@ public class CharacterController : MonoBehaviour, IDamageable
         {
             yield return new WaitForSeconds(1f);
 
-            if (_model.CurHp <= 0) 
+            if (Model.CurHp <= 0) 
                 yield break;
 
-            _model.CurHp += _model.RerecoverHpPerSecond;
+            Model.CurHp += Model.RerecoverHpPerSecond;
 
-            if (_model.CurHp > _model.MaxHp)
+            if (Model.CurHp > Model.MaxHp)
             {
-                _model.CurHp = _model.MaxHp;
+                Model.CurHp = Model.MaxHp;
             }
         }
     }
