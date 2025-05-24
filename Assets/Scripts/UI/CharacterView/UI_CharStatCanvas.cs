@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UICurCharacter : MonoBehaviour
+public class UI_CharStatCanvas : MonoBehaviour
 {
+    // 현재 사용 X
     public void OnOffCanvas()
     {
         if (gameObject.activeSelf == false)
@@ -18,7 +19,7 @@ public class UICurCharacter : MonoBehaviour
     }
 
     /// <summary>
-    /// 스탯창 UI 활성화
+    /// 스탯창 Canvas UI 활성화
     /// </summary>
     public void Show()
     {
@@ -26,7 +27,7 @@ public class UICurCharacter : MonoBehaviour
     }
 
     /// <summary>
-    /// 스탯창 UI 비활성화
+    /// 스탯창 Canvas UI 비활성화
     /// </summary>
     public void Hide()
     {

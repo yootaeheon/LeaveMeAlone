@@ -11,6 +11,8 @@ public class CharacterController : MonoBehaviour, IDamageable
 {
     public CharacterModel _model;
 
+    public CharcaterView _view;
+
     [HideInInspector] public Transform _monster;
 
     private CharacterState _currentState = CharacterState.Move;
@@ -30,9 +32,44 @@ public class CharacterController : MonoBehaviour, IDamageable
         _animator = GetComponent<Animator>();
     }
 
+    #region Subscribe/Unsubscribe
+    public void Subscribe()
+    {
+        _model.CurHpChanged += _view.UpdateCurHp;
+        _model.MaxHpChanged += _view.UpdateMaxHp;
+        _model.RerecoverHpPerSecondChanged += _view.UpdateRerecoverHpPerSecond;
+        _model.DefensePowerChanged += _view.UpdateDefensePower;
+        _model.AttackPowerChanged += _view.UpdateAttackPower;
+        _model.AttackSpeedChanged += _view.UpdateAttackSpeed;
+        _model.CriticalChacnceChanged += _view.UpdateCriticalChance;
+        //_model.SkillDamageChanged += _view
+        //_model.SkillIntervalChanged +=_view
+    }
+
+    public void UnSubscribe()
+    {
+        _model.CurHpChanged -= _view.UpdateCurHp;
+        _model.MaxHpChanged -= _view.UpdateMaxHp;
+        _model.RerecoverHpPerSecondChanged -= _view.UpdateRerecoverHpPerSecond;
+        _model.DefensePowerChanged -= _view.UpdateDefensePower;
+        _model.AttackPowerChanged -= _view.UpdateAttackPower;
+        _model.AttackSpeedChanged -= _view.UpdateAttackSpeed;
+        _model.CriticalChacnceChanged -= _view.UpdateCriticalChance;
+        //_model.SkillDamageChanged -= _view
+        //_model.SkillIntervalChanged -=_view
+    }
+    #endregion
+
     private void Start()
     {
+        Subscribe();
+     
         recoveryHpRoutine = StartCoroutine(RecoveryHpRoutine());
+    }
+
+    private void OnDestroy()
+    {
+        UnSubscribe();
     }
 
     void Update()
