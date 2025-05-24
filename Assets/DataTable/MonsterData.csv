@@ -1,0 +1,11 @@
+﻿,MonsterNum,MaxHp,AttackDamage
+Stage1,1,100,10
+Stage2,2,150,12
+Stage3,3,200,14
+Stage4,4,250,16
+Stage5,5,300,18
+Stage6,6,350,20
+Stage7,7,400,22
+Stage8,8,450,24
+Stage9,9,500,26
+Stage10,10,550,28

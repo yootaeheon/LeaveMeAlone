@@ -34,6 +34,7 @@ namespace CustomUtility
         /// - Remember to initialize all properties or fields properly in the constructor to avoid null reference issues during serialization.
         /// - You can define custom constructors with parameters in derived classes, but you must also explicitly declare a parameterless constructor.
         ///   This ensures compatibility with Unity's serialization system, which requires a parameterless constructor for deserialization.
+        ///
         /// ## 파생 클래스에서의 주의점:
         /// - 저장해야 하는 모든 필드나 속성은 직렬화 가능하도록 설정해야 한다.
         ///   프라이빗 필드는 `[SerializeField]`, 자동 프로퍼티는 `[field: SerializeField]`를 사용한다.

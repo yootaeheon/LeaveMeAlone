@@ -6,30 +6,18 @@ namespace CustomUtility
 {
     namespace IO
     {
-        /// <summary>
-        /// # Summary
-        /// A static class for reading CSV files and loading them into different data structures.
-        /// This class supports loading CSV data into either a 2D array or a Dictionary structure.
         /// CSV 파일을 읽어 다양한 데이터 구조로 로드하는 정적 클래스.
-        /// 이 클래스는 CSV 데이터를 2D 배열 또는 Dictionary 구조로 로드하는 것을 지원한다.
+        /// 이 클래스는 CSV 데이터를 2D 배열 또는 Dictionary 구조로 로드하는 것을 지원
         /// 
-        /// ## Usage:
-        /// - Create an instance of a class that inherits from `Csv`, such as `CsvTable` or `CsvDictionary`.
-        /// - Call the `CsvReader.Read` method to load data from a CSV file.
-        /// - Access the data through the properties or methods provided by the `CsvTable` or `CsvDictionary` class.
         /// ## 사용 방법:
-        /// - `CsvTable` 또는 `CsvDictionary`와 같은 Csv를 상속받은 클래스의 인스턴스를 생성한다.
-        /// - `CsvReader.Read` 메서드를 호출하여 CSV 파일에서 데이터를 로드한다.
-        /// - `CsvTable` 또는 `CsvDictionary` 클래스가 제공하는 속성이나 메서드를 통해 데이터를 접근한다.
+        /// - `CsvTable` 또는 `CsvDictionary`와 같은 Csv를 상속받은 클래스의 인스턴스를 생성
+        /// - `CsvReader.Read` 메서드를 호출하여 CSV 파일에서 데이터를 로드
+        /// - `CsvTable` 또는 `CsvDictionary` 클래스가 제공하는 속성이나 메서드를 통해 데이터를 접근
         ///
-        /// ## Features:
-        /// - Supports both 2D array and string-based Dictionary structures for storing data.
-        /// - Provides utility methods for validating file paths and checking file contents.
-        /// - Logs errors and success messages in the Unity Editor.
         /// ## 기능:
-        /// - 데이터 저장을 위한 테이블(2D 배열)과 string 기반 Dictionary 구조를 지원한다.
-        /// - 파일 경로와 내용을 검증하기 위한 유틸리티 메서드를 제공한다.
-        /// - 유니티 에디터에서 오류와 성공 메시지를 로깅한다.
+        /// - 데이터 저장을 위한 테이블(2D 배열)과 string 기반 Dictionary 구조를 지원
+        /// - 파일 경로와 내용을 검증하기 위한 유틸리티 메서드를 제공
+        /// - 유니티 에디터에서 오류와 성공 메시지를 로깅
         /// </summary>
 
         public static class CsvReader
@@ -51,8 +39,7 @@ namespace CustomUtility
             }
 
             /// <summary>
-            /// Reads a CSV file and loads it into the appropriate data structure.
-            /// CSV 파일을 읽고 적절한 데이터 구조로 로드한다.
+            /// CSV 파일을 읽고 적절한 데이터 구조로 로드
             /// </summary>
             /// <param name="csv">The CSV object to be loaded. 데이터를 로드할 CSV 객체.</param>
             public static void Read(Csv csv)
@@ -80,7 +67,6 @@ namespace CustomUtility
             }
 
             /// <summary>
-            /// Reads a CSV file and loads it into a CsvDictionary structure.
             /// CSV 파일을 읽어 CsvDictionary로 로드한다.
             /// </summary>
             /// <param name="csv">The CsvDictionary object to load data into. 데이터를 로드할 CsvDictionary 객체.</param>
@@ -114,7 +100,6 @@ namespace CustomUtility
             }
 
             /// <summary>
-            /// Reads a CSV file and loads it into a 2D array (Table) structure.
             /// CSV 파일을 읽어 2차원 배열(Table) 구조로 로드한다.
             /// </summary>
             /// <param name="csv">The CsvTable object to load data into. 데이터를 로드할 CsvTable 객체.</param>
@@ -146,7 +131,6 @@ namespace CustomUtility
             }
 
             /// <summary>
-            /// Validates whether a file exists at the specified path.
             /// 지정된 경로에 파일이 존재하는지 검증한다.
             /// </summary>
             /// <param name="csv">The CSV object to check. 확인할 CSV 객체.</param>
@@ -164,7 +148,6 @@ namespace CustomUtility
             }
 
             /// <summary>
-            /// Reads all lines from a file and checks if it is empty.
             /// 파일의 모든 줄을 읽고 비어 있는지 확인한다.
             /// </summary>
             /// <param name="csv">The CSV object to be loaded. 데이터를 로드할 CSV 객체.</param>
@@ -185,7 +168,6 @@ namespace CustomUtility
             }
 
             /// <summary>
-            /// Logs the result of the CSV file loading process.
             /// CSV 파일 로딩 프로세스의 결과를 로그로 출력한다.
             /// </summary>
             /// <param name="csv">The CSV object processed. 처리된 CSV 객체.</param>
