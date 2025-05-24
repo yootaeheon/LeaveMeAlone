@@ -23,10 +23,10 @@ public class ObjectPool : MonoBehaviour
             PooledObject instance = Instantiate(_prefab);
             instance.gameObject.SetActive(false);
             instance._returnPool = this;
-            instance.transform.parent = _poolTransform;
+            instance.transform.SetParent(_poolTransform, false);
             _pool.Add(instance);
         }
-    }
+    } 
 
     public void Init()
     {
@@ -40,6 +40,7 @@ public class ObjectPool : MonoBehaviour
             PooledObject instance = _pool[_pool.Count - 1];
             instance.transform.position = position;
             instance.transform.rotation = rotation;
+            instance.transform.localScale = new Vector3(2,2,2);
             /*instance.transform.parent = null;*/
             instance.gameObject.SetActive(true);
 
@@ -50,7 +51,7 @@ public class ObjectPool : MonoBehaviour
         else
         {
             PooledObject instance = Instantiate(_prefab, position, rotation);
-            instance.transform.parent = _poolTransform;
+            instance.transform.SetParent(_poolTransform, false);
             instance._returnPool = this;
             _pool.Add(instance);
             return instance;

@@ -23,6 +23,8 @@ public class MonsterController : Monster, IDamageable
 
     private MonsterSpawner _spawner;
 
+    private Animator _animator;
+
     private void Awake()
     {
         Init();
@@ -30,6 +32,7 @@ public class MonsterController : Monster, IDamageable
 
     public void Init()
     {
+        _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _originColor = _spriteRenderer.color;
         _pooledObject = GetComponent<PooledObject>();
@@ -58,17 +61,22 @@ public class MonsterController : Monster, IDamageable
         switch (currentState)
         {
             case MonsterState.Idle:
+                _animator.SetBool("1_Move", false);
                 SearchForEnemies();
                 break;
 
             case MonsterState.Move:
+                _animator.SetBool("1_Move", true);
                 Move();
                 SearchForEnemies();
                 break;
 
             case MonsterState.Detect:
                 if (character != null)
+                {
+                    _animator.SetBool("1_Move", false);
                     StartCoroutine(AttackRoutine());
+                }
                 break;
         }
     }
@@ -86,7 +94,7 @@ public class MonsterController : Monster, IDamageable
     void Move()
     {
         // 단순 이동 로직 (예: 플레이어 입력, AI 이동 가능)
-        transform.Translate(Vector2.left * Base.MoveSpeed * Time.deltaTime);
+        transform.Translate(Vector2.left * 1f * Time.deltaTime);
     }
 
     IEnumerator AttackRoutine()
@@ -95,7 +103,7 @@ public class MonsterController : Monster, IDamageable
 
         while (character != null)
         {
-            Attack();
+            _animator.SetTrigger("2_Attack");
 
             yield return Util.GetDelay(Base.AttackInterval);
 
