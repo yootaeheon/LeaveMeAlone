@@ -27,7 +27,7 @@ public class CharacterModel : MonoBehaviour
 
 
 
-    [Header("Attack")]
+    [Header("TempAttack")]
     [SerializeField] LayerMask _enemyLayer = 1 << 6;
     public LayerMask EnemyLayer { get { return _enemyLayer; } set { _enemyLayer = value; } }
 

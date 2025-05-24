@@ -8,8 +8,7 @@ public class MonsterController : Monster, IDamageable
 {
     [Header("")]
     public Monster Base;
-
-    private Transform character;
+    public Transform character { get; set; }
 
     private SpriteRenderer _spriteRenderer;
 
@@ -23,7 +22,7 @@ public class MonsterController : Monster, IDamageable
 
     private MonsterSpawner _spawner;
 
-    private Animator _animator;
+    [SerializeField] Animator _animator;
 
     private void Awake()
     {
@@ -32,7 +31,6 @@ public class MonsterController : Monster, IDamageable
 
     public void Init()
     {
-        _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _originColor = _spriteRenderer.color;
         _pooledObject = GetComponent<PooledObject>();
@@ -113,10 +111,10 @@ public class MonsterController : Monster, IDamageable
         currentState = MonsterState.Move;
     }
 
-    public void Attack()
-    {
-        character.GetComponent<IDamageable>().TakeDamage(Base.AttackDamage);
-    }
+    /* public void Attack()
+     {
+         character.GetComponent<IDamageable>().TakeDamage(Base.AttackDamage);
+     }*/
 
     void OnDrawGizmos()
     {
@@ -131,7 +129,7 @@ public class MonsterController : Monster, IDamageable
 
         transform.DOShakePosition(0.3f, 0.2f);
 
-        _spriteRenderer.DOColor(Color.red, 0.1f).OnComplete(() => _spriteRenderer.DOColor(_originColor, 0.1f));
+        _spriteRenderer.DOColor(Color.white, 0.1f).OnComplete(() => _spriteRenderer.DOColor(_originColor, 0.1f));
 
         if (Base.CurHp <= 0)
         {
@@ -142,14 +140,16 @@ public class MonsterController : Monster, IDamageable
 
     void Die()
     {
+        _animator.Play("DEATH", 0, 0f);
+
         // DoTween을 사용하여 몬스터가 사라지는 애니메이션
         Sequence deathSequence = DOTween.Sequence();
 
         // 페이드아웃(투명화)
-        deathSequence.Append(_spriteRenderer.DOFade(0, 0.5f));
+        deathSequence.Append(_spriteRenderer.DOFade(0, 1f));
 
         // 크기 축소
-        deathSequence.Join(transform.DOScale(Vector3.zero, 0.5f));
+        deathSequence.Join(transform.DOScale(Vector3.zero, 1f));
 
         // 애니메이션 완료 후 비활성화 후 재초기화
         deathSequence.OnComplete(() =>

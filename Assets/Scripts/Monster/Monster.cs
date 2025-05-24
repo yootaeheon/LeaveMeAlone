@@ -18,11 +18,8 @@ public class Monster : MonoBehaviour
     [SerializeField] float _maxHp;
     public float MaxHp { get { return _maxHp; } set { _maxHp = value; } }
 
-    [SerializeField] float _moveSpeed;
-    public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
 
-
-    [Header("Attack")]
+    [Header("TempAttack")]
     [SerializeField] LayerMask _enemyLayer;
     public LayerMask EnemyLayer { get { return _enemyLayer; } set { _enemyLayer = value; } }
 
