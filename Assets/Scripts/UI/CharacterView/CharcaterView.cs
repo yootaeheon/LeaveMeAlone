@@ -40,7 +40,7 @@ public class CharcaterView : UIBinder
     public void UpdateAttackSpeed() => GetUI<TMP_Text>("AttackSpeedText").text = Util.GetText($"AttackSpeed : {_model.AttackSpeed}").ToString();
     public void UpdateCriticalChance() => GetUI<TMP_Text>("CriticalChanceText").text = Util.GetText($"Critical : {_model.CriticalChacnce}").ToString();
 
-   // public void UpdateSkillDamage() => GetUI<TMP_Text>("SkillDamage").text = Util.GetText($"{_model.SkillDamage}").ToString();
-   // public void UpdateSkillInterval() => GetUI<TMP_Text>("SkillInterval").text = Util.GetText($"{_model.SkillInterval}").ToString();
+   // public void UpdateSkillDamage() => GetUI<TMP_Text>("SkillDamage").text = Util.GetText($"{Model.SkillDamage}").ToString();
+   // public void UpdateSkillInterval() => GetUI<TMP_Text>("SkillInterval").text = Util.GetText($"{Model.SkillInterval}").ToString();
     #endregion
 }

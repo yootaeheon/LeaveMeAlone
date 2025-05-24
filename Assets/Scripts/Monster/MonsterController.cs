@@ -1,14 +1,13 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
-using DG.Tweening;
-using System.Collections.Generic;
 
 public enum MonsterState { Idle, Move, Detect, Attack }
 
 public class MonsterController : Monster, IDamageable
 {
     [Header("")]
-    public Monster _model;
+    public Monster Base;
 
     private Transform character;
 
@@ -43,11 +42,15 @@ public class MonsterController : Monster, IDamageable
         IsDead = false;
         CurHp = MaxHp;
         currentState = MonsterState.Move;
+
+        Base.OnCurHpChanged += () => Base._healthBar.UpdateHealthBar(Base.CurHp, Base.MaxHp);
     }
 
     private void OnDisable()
     {
         IsDead = true;
+        Base.OnCurHpChanged -= () => Base._healthBar.UpdateHealthBar(Base.CurHp, Base.MaxHp);
+
     }
 
     void Update()
@@ -72,7 +75,7 @@ public class MonsterController : Monster, IDamageable
 
     void SearchForEnemies()
     {
-        Collider2D enemy = Physics2D.OverlapCircle(transform.position, _model.AttackRange, _model.EnemyLayer);
+        Collider2D enemy = Physics2D.OverlapCircle(transform.position, Base.AttackRange, Base.EnemyLayer);
         if (enemy != null)
         {
             character = enemy.transform;
@@ -83,7 +86,7 @@ public class MonsterController : Monster, IDamageable
     void Move()
     {
         // 단순 이동 로직 (예: 플레이어 입력, AI 이동 가능)
-        transform.Translate(Vector2.left * _model.MoveSpeed * Time.deltaTime);
+        transform.Translate(Vector2.left * Base.MoveSpeed * Time.deltaTime);
     }
 
     IEnumerator AttackRoutine()
@@ -94,7 +97,7 @@ public class MonsterController : Monster, IDamageable
         {
             Attack();
 
-            yield return Util.GetDelay(_model.AttackInterval);
+            yield return Util.GetDelay(Base.AttackInterval);
 
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
@@ -104,25 +107,25 @@ public class MonsterController : Monster, IDamageable
 
     public void Attack()
     {
-        character.GetComponent<IDamageable>().TakeDamage(_model.AttackDamage);
+        character.GetComponent<IDamageable>().TakeDamage(Base.AttackDamage);
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _model.AttackRange); // 공격 범위 표시
+        Gizmos.DrawWireSphere(transform.position, Base.AttackRange); // 공격 범위 표시
     }
 
     public void TakeDamage(float Damage)
     {
-        _model.CurHp -= Damage;
+        Base.CurHp -= Damage;
         Debug.Log($"{Damage}만큼 피해 입음");
 
         transform.DOShakePosition(0.3f, 0.2f);
 
-        _spriteRenderer.DOColor(Color.red, 0.1f).OnComplete(()=> _spriteRenderer.DOColor(_originColor, 0.1f));
+        _spriteRenderer.DOColor(Color.red, 0.1f).OnComplete(() => _spriteRenderer.DOColor(_originColor, 0.1f));
 
-        if (_model.CurHp <= 0)
+        if (Base.CurHp <= 0)
         {
             CurHp = 0;
             Die();

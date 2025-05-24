@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,8 @@ public class Monster : MonoBehaviour
     public bool IsDead { get { return _isDead; } set { _isDead = value; } }
 
     [SerializeField] float _curHp;
-    public float CurHp { get { return _curHp; } set { _curHp = value; } }
+    public float CurHp { get { return _curHp; } set { _curHp = value; OnCurHpChanged?.Invoke(); } }
+    public Action OnCurHpChanged;
 
     [SerializeField] float _maxHp;
     public float MaxHp { get { return _maxHp; } set { _maxHp = value; } }
@@ -33,8 +35,6 @@ public class Monster : MonoBehaviour
     [SerializeField] float _attackInterval;
     public float AttackInterval { get { return _attackInterval; } set { _attackInterval = value; } }
 
-    /*void Start()
-    {
-        CurHp = MaxHp; // 초기 HP 설정
-    }*/
+    public UI_HealthBar _healthBar;
+
 }

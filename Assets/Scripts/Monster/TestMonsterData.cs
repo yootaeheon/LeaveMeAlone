@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TestMonsterData : MonoBehaviour
 {
-    public TestMonsterDataManager Data;
+    public DataManager Data;
 
     [Header("")]
     [SerializeField] int _curStageNum;
