@@ -17,6 +17,11 @@ public class CharacterController : MonoBehaviour, IDamageable
     [Header("Presenter")]
     [HideInInspector] public Transform _monster;
 
+    [SerializeField] ObjectPool _objectPool;
+
+    private IDamageable _monsterDamageable;
+    public IDamageable MonsterDamageable => _monsterDamageable ??= _monster.GetComponent<IDamageable>();
+
     private CharacterState _currentState = CharacterState.Move;
 
     private Animator _animator;
@@ -26,12 +31,13 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         Init();
     }
 
     public void Init()
     {
-        _animator = GetComponent<Animator>();
+       Model.CurHp = Model.MaxHp;
     }
 
     #region Subscribe/Unsubscribe
@@ -137,7 +143,7 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     public void Attack()
     {
-        _monster.GetComponent<IDamageable>().TakeDamage(Model.AttackPower);
+        MonsterDamageable.TakeDamage(Model.AttackPower);
     }
 
     void OnDrawGizmos()
@@ -151,6 +157,22 @@ public class CharacterController : MonoBehaviour, IDamageable
         Model.CurHp -= Damage;
 
         transform.DOShakePosition(0.2f, 0.1f);
+
+        if (Model.CurHp <= 0)
+        {
+            StartCoroutine(Die());
+        }
+    }
+
+    public IEnumerator Die()
+    {
+        _animator.Play("DEATH", 0, 0f);
+        yield return Util.GetDelay(1F);
+        CameraUtil.CameraFadeIn();
+        ChapterManager.Instance.ProgressInfo.KillCount = 5;
+        /*_objectPool.ResetPos(); // 몬스터 위치 초기화 시 서로 위치가 멀지만 멀리서 공부하는 버그 발생함.. 주석 처리해놓음 */
+
+        Init();
     }
 
     Coroutine recoveryHpRoutine;

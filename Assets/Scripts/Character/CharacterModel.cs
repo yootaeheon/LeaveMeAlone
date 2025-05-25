@@ -58,12 +58,4 @@ public class CharacterModel : MonoBehaviour
 
   /*  [Header("Equip")]
     [SerializeField] EquippableItemSO */
-
-
-
-
-    private void Awake()
-    {
-        CurHp = MaxHp; // 초기 HP 설정
-    }
 }

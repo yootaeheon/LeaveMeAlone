@@ -4816,9 +4816,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc39a6fc70dcef4d980999420257b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pool: []
+  ForResetPosList: []
   _prefab: {fileID: 3627014081102135636, guid: 35dbc05c848e1204fbb882ddcd56d934, type: 3}
   _size: 2
+  _poolTransform: {fileID: 890374559}
 --- !u!114 &1091239943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8346,6 +8347,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: _maxHp
+      value: 194.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _attackPower
       value: 50
       objectReference: {fileID: 0}
@@ -8382,9 +8387,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1286612337}
     - target: {fileID: 5384196312202943293, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: _spawner
+      value: 
+      objectReference: {fileID: 1091239943}
+    - target: {fileID: 5384196312202943293, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _healthBar
       value: 
       objectReference: {fileID: 826343232}
+    - target: {fileID: 5384196312202943293, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
+      propertyPath: _objectPool
+      value: 
+      objectReference: {fileID: 1091239942}
     - target: {fileID: 6052675301243119923, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: m_Constraints
       value: 4
