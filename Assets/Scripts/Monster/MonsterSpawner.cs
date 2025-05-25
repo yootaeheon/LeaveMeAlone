@@ -16,6 +16,14 @@ public class MonsterSpawner : MonoBehaviour
         Spawn();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Spawn();
+        }
+    }
+
     public void Spawn()
     {
         PooledObject instance = _pool.GetPool(_spawnPoint.position, _spawnPoint.rotation);

@@ -13,6 +13,15 @@ public class UI_Progress : UIBinder
     private void Start()
     {
         Init();
+
+        ChapterManager.Instance.ProgressInfo.OnStageChanged += UpdateProgressUI;
+        ChapterManager.Instance.ProgressInfo.OnChapterChanged += UpdateProgressUI;
+    }
+
+    private void OnDestroy()
+    {
+        ChapterManager.Instance.ProgressInfo.OnStageChanged -= UpdateProgressUI;
+        ChapterManager.Instance.ProgressInfo.OnChapterChanged -= UpdateProgressUI;
     }
 
     private void Init()

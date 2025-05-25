@@ -18,13 +18,12 @@ public class Monster : MonoBehaviour
 
     private void OnEnable()
     {
-        //  ProgressInfo.Stage, chpater 스테이지나 챕터 변경 시 호출할 이벤트에 InitStatus(_curChapter, _curStage); 연결
-
+        ChapterManager.Instance.ProgressInfo.OnStageChanged += () => InitStatus(_curChapter, _curStage);
     }
 
     private void OnDisable()
     {
-        //  ProgressInfo.Stage, chpater 스테이지나 챕터 변경 시 호출할 이벤트에  InitStatus(_curChapter, _curStage); 연결 해제
+        ChapterManager.Instance.ProgressInfo.OnStageChanged -= () => InitStatus(_curChapter, _curStage);
     }
 
     /// <summary>

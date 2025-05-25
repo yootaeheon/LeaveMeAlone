@@ -7,44 +7,41 @@ using UnityEngine;
 /// </summary>
 public class ObjectPool : MonoBehaviour
 {
-    [SerializeField] List<PooledObject> _pool = new List<PooledObject>();
+    [System.NonSerialized]
+    public List<PooledObject> Pool = new List<PooledObject>();
+
+    public List<PooledObject> ForResetPosList;
 
     [SerializeField] PooledObject _prefab;
 
     [SerializeField] int _size;
 
-    private Transform _poolTransform;
+    [SerializeField] Transform _poolTransform;
 
     private void Awake()
     {
-        Init();
         for (int i = 0; i < _size; i++)
         {
-            PooledObject instance = Instantiate(_prefab);
+            PooledObject instance = Instantiate(_prefab, _poolTransform.position, Quaternion.identity);
             instance.gameObject.SetActive(false);
             instance._returnPool = this;
             instance.transform.SetParent(_poolTransform, false);
-            _pool.Add(instance);
+            Pool.Add(instance);
+            ForResetPosList.Add(instance);
         }
     } 
 
-    public void Init()
-    {
-        _poolTransform = transform.GetChild(1);
-    }
-
     public PooledObject GetPool(Vector3 position, Quaternion rotation)
     {
-        if (_pool.Count > 0)
+        if (Pool.Count > 0)
         {
-            PooledObject instance = _pool[_pool.Count - 1];
+            PooledObject instance = Pool[Pool.Count - 1];
             instance.transform.position = position;
             instance.transform.rotation = rotation;
             instance.transform.localScale = new Vector3(2,2,2);
-            /*instance.transform.parent = null;*/
             instance.gameObject.SetActive(true);
 
-            _pool.RemoveAt(_pool.Count - 1);
+            Pool.RemoveAt(Pool.Count - 1);
 
             return instance;
         }
@@ -53,7 +50,7 @@ public class ObjectPool : MonoBehaviour
             PooledObject instance = Instantiate(_prefab, position, rotation);
             instance.transform.SetParent(_poolTransform, false);
             instance._returnPool = this;
-            _pool.Add(instance);
+            Pool.Add(instance);
             return instance;
         }
     }
@@ -63,6 +60,15 @@ public class ObjectPool : MonoBehaviour
         instance.gameObject.SetActive(false);
         /* instance.transform.parent = _poolTransform;*/
         instance.transform.position = _poolTransform.transform.position;
-        _pool.Add(instance);
+        Pool.Add(instance);
     }
+
+    public void ResetPos()
+    {
+        foreach (PooledObject obj in ForResetPosList)
+        {
+            obj.transform.position = _poolTransform.transform.position;
+        }
+    }
+
 }

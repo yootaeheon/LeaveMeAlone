@@ -41,7 +41,6 @@ public class MonsterController : Monster, IDamageable
     private void OnEnable()
     {
         IsDead = false;
-        CurHp = MaxHp;
         currentState = MonsterState.Move;
 
         OnCurHpChanged += () => _healthBar.UpdateHealthBar(CurHp, MaxHp);
