@@ -1,14 +1,21 @@
 using CustomUtility.IO;
 using UnityEngine;
 
+/// <summary>
+/// CSV Data를 읽고 저장해놓는 클래스
+/// CSV 데이터를 읽을 필요가 있을 시 DataManager에서 MonsterCSV를 불러와서 GetData()호출하면 됨
+/// </summary>
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance {  get; private set; }
     [field : SerializeField] public CsvTable MonsterCSV { get; private set; }
 
     private void Awake() => Init();
-
-    /*private void Start() => TestMethod();*/
+    private void Init()
+    {
+        SetSingleton();
+        CsvReader.Read(MonsterCSV);
+    }
 
     private void SetSingleton()
     {
@@ -22,22 +29,13 @@ public class DataManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Init()
-    {
-        CsvReader.Read(MonsterCSV);
-    }
-
-    private void TestMethod()
-    {
-        /* // 2 Stage의 몬스터들의 MaxHp 불러오기
-        Debug.Log(MonsterCSV.GetData(2, (int)MonsterData.MaxHp));*/
-    }
 }
 
 public enum MonsterData
 {
-    Num = 1,
+    Chapter_Stage =1,
+    Chapter,
+    Stage,
     MaxHp,
     AttackDamage,
 }

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 [CreateAssetMenu()]
@@ -7,11 +6,32 @@ using UnityEngine;
 public class ProgressSO : ScriptableObject
 {
     [SerializeField] int _chapter;
-    public int Chapter { get { return _chapter; } set { _chapter = value; } }
+    public int Chapter { get { return _chapter; } set { _chapter = value; OnChapterChanged?.Invoke(); } }
+    public event Action OnChapterChanged;
 
     [SerializeField] int _stage;
-    public int Stage { get { return _stage; } set { _stage = value; } }
+    public int Stage { get { return _stage; } set { _stage = value; OnStageChanged?.Invoke(); } }
+    public event Action OnStageChanged;
 
-    [SerializeField] int _monsterNumInStage;
-    public int MonsterNumInStage { get { return _monsterNumInStage; } set {_monsterNumInStage = value; } }
+
+    [SerializeField] int _killCount;
+    public event Action OnClearStage; // FadeIn 효과 연결
+    public int KillCount
+    {
+        get { return _killCount; }
+        set
+        {
+            _killCount = value;
+            if (_killCount == 0)
+            {
+                AllMonsterSpawned();
+            }
+        }
+    }
+
+    public void AllMonsterSpawned()
+    {
+        OnClearStage?.Invoke();
+        KillCount = 5;
+    }
 }

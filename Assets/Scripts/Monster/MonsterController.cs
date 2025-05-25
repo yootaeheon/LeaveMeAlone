@@ -44,15 +44,16 @@ public class MonsterController : Monster, IDamageable
         CurHp = MaxHp;
         currentState = MonsterState.Move;
 
-        Base.OnCurHpChanged += () => Base._healthBar.UpdateHealthBar(Base.CurHp, Base.MaxHp);
+        OnCurHpChanged += () => _healthBar.UpdateHealthBar(CurHp, MaxHp);
     }
 
     private void OnDisable()
     {
         IsDead = true;
-        Base.OnCurHpChanged -= () => Base._healthBar.UpdateHealthBar(Base.CurHp, Base.MaxHp);
-
+        OnCurHpChanged -= () => _healthBar.UpdateHealthBar(CurHp, MaxHp);
     }
+
+    
 
     void Update()
     {
@@ -81,7 +82,7 @@ public class MonsterController : Monster, IDamageable
 
     void SearchForEnemies()
     {
-        Collider2D enemy = Physics2D.OverlapCircle(transform.position, Base.AttackRange, Base.EnemyLayer);
+        Collider2D enemy = Physics2D.OverlapCircle(transform.position, AttackRange, EnemyLayer);
         if (enemy != null)
         {
             character = enemy.transform;
@@ -103,7 +104,7 @@ public class MonsterController : Monster, IDamageable
         {
             _animator.SetTrigger("2_Attack");
 
-            yield return Util.GetDelay(Base.AttackInterval);
+            yield return Util.GetDelay(AttackInterval);
 
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
@@ -119,19 +120,19 @@ public class MonsterController : Monster, IDamageable
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, Base.AttackRange); // 공격 범위 표시
+        Gizmos.DrawWireSphere(transform.position, AttackRange); // 공격 범위 표시
     }
 
     public void TakeDamage(float Damage)
     {
-        Base.CurHp -= Damage;
+        CurHp -= Damage;
         Debug.Log($"{Damage}만큼 피해 입음");
 
         transform.DOShakePosition(0.3f, 0.2f);
 
         _spriteRenderer.DOColor(Color.white, 0.1f).OnComplete(() => _spriteRenderer.DOColor(_originColor, 0.1f));
 
-        if (Base.CurHp <= 0)
+        if (CurHp <= 0)
         {
             CurHp = 0;
             Die();

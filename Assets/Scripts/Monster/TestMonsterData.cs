@@ -1,25 +1,20 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class TestMonsterData : MonoBehaviour
 {
     public DataManager Data;
 
     [Header("")]
-    [SerializeField] int _curStageNum;
+    [SerializeField] int _curChapter;
+    [SerializeField] int _curStage;
 
-    [Header("")]
-    [SerializeField] int _num;
-    [SerializeField] int _maxHp;
-    [SerializeField] int _attackDamage;
-
-
-    private void Start() => Init(_curStageNum);
+    private void Start() => InitStatus(_curChapter ,_curStage);
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Init(_curStageNum);
+            InitStatus(_curChapter ,_curStage);
         }
     }
 
@@ -28,10 +23,14 @@ public class TestMonsterData : MonoBehaviour
     /// 메서드의 매개변수는 stageNum
     /// </summary>
     /// <param name="stageNum"></param>
-    private void Init(int stageNum)
+    public void InitStatus(int chapter, int stage, float baseHp = 100f, float baseDamage = 10f)
     {
-        _num = int.Parse(Data.MonsterCSV.GetData(stageNum, (int)MonsterData.Num));
-        _maxHp = int.Parse(Data.MonsterCSV.GetData(stageNum, (int)MonsterData.MaxHp));
-        _attackDamage = int.Parse(Data.MonsterCSV.GetData(stageNum, (int)MonsterData.AttackDamage));
+        float multiplier = 1f + (chapter - 1) * 0.2f + (stage - 1) * 0.05f;
+
+        MaxHp = Mathf.Round(baseHp * multiplier * 10f) / 10f; // 소수 첫째 자리까지
+        AttackDamage = Mathf.Round(baseDamage * multiplier * 10f) / 10f;
+
+        CurHp = MaxHp; // 체력 초기화
     }
 }
+*/

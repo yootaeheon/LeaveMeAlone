@@ -11,9 +11,6 @@ public class MonsterSpawner : MonoBehaviour
 
     [SerializeField] Transform _spawnPoint;
 
-    private int _spawnCount;
-    private int monsterNumInStage;
-
     private void Start()
     {
         Spawn();
@@ -22,6 +19,6 @@ public class MonsterSpawner : MonoBehaviour
     public void Spawn()
     {
         PooledObject instance = _pool.GetPool(_spawnPoint.position, _spawnPoint.rotation);
-        _spawnCount++;
+        ChapterManager.Instance.ProgressInfo.KillCount--;
     }
 }

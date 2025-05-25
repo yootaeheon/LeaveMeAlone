@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MonsterCSV>k__BackingField:
-    _filePath: DataTable/MonsterData.csv
+    _filePath: DataTable/MonsterTable.csv
     <SplitSymbol>k__BackingField: 44
 --- !u!4 &9149030
 Transform:
