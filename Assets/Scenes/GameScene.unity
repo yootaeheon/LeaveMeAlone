@@ -1612,11 +1612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfaec4b2083584e419ed1ebcf4dbf239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 9149029}
-  _curStageNum: 1
-  _num: 0
-  _maxHp: 0
-  _attackDamage: 0
 --- !u!4 &326122587
 Transform:
   m_ObjectHideFlags: 0
@@ -9022,27 +9017,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056925563090866073, guid: 7cd8cb569c59d204e835e004f92d8160, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5056925563090866073, guid: 7cd8cb569c59d204e835e004f92d8160, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5056925563090866073, guid: 7cd8cb569c59d204e835e004f92d8160, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 5056925563090866073, guid: 7cd8cb569c59d204e835e004f92d8160, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 5056925563090866073, guid: 7cd8cb569c59d204e835e004f92d8160, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 5056925563090866073, guid: 7cd8cb569c59d204e835e004f92d8160, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 5523922415430101618, guid: 7cd8cb569c59d204e835e004f92d8160, type: 3}
       propertyPath: m_Name
