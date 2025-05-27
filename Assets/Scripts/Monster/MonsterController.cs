@@ -159,6 +159,7 @@ public class MonsterController : Monster, IDamageable
             transform.localScale = Vector3.one;
             _spriteRenderer.DOFade(1, 0f);
             _spawner.Spawn();
+            InitStatus(CurChapter, CurStage);
         });
     }
 }

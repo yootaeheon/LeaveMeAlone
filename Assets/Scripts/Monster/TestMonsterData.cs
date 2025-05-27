@@ -5,16 +5,16 @@ public class TestMonsterData : MonoBehaviour
     public DataManager Data;
 
     [Header("")]
-    [SerializeField] int _curChapter;
-    [SerializeField] int _curStage;
+    [SerializeField] int CurChapter;
+    [SerializeField] int CurStage;
 
-    private void Start() => InitStatus(_curChapter ,_curStage);
+    private void Start() => InitStatus(CurChapter ,CurStage);
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            InitStatus(_curChapter ,_curStage);
+            InitStatus(CurChapter ,CurStage);
         }
     }
 

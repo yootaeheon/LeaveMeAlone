@@ -8,22 +8,22 @@ public class Monster : MonoBehaviour
     // MaxHp = BaseHp × (1 + (Chapter - 1) × 0.2 + (Stage - 1) × 0.05);
     // AttackDamage = BaseDamage × (1 + (Chapter - 1) × 0.2 + (Stage - 1) × 0.05);
     // 챕터가 올라가면 (Chapter - 1) * 0.2만큼, 스테이지가 올라가면 (Stage - 1) * 0.05만큼 난이도가 증가
-
-    public DataManager Data;
-    private int _curChapter => ChapterManager.Instance.ProgressInfo.Chapter;
-    private int _curStage => ChapterManager.Instance.ProgressInfo.Stage;
+    public int CurChapter => ChapterManager.Instance.ProgressInfo.Chapter;
+    public int CurStage => ChapterManager.Instance.ProgressInfo.Stage;
 
 
-    private void Start() => InitStatus(_curChapter, _curStage);
+    /*private void Start() => InitStatus(CurChapter, CurStage);*/
 
     private void OnEnable()
     {
-        ChapterManager.Instance.ProgressInfo.OnStageChanged += () => InitStatus(_curChapter, _curStage);
+        ChapterManager.Instance.ProgressInfo.OnStageChanged += () => InitStatus(CurChapter, CurStage);
+        InitStatus(CurChapter, CurStage);
     }
 
     private void OnDisable()
     {
-        ChapterManager.Instance.ProgressInfo.OnStageChanged -= () => InitStatus(_curChapter, _curStage);
+        ChapterManager.Instance.ProgressInfo.OnStageChanged -= () => InitStatus(CurChapter, CurStage);
+        InitStatus(CurChapter, CurStage);
     }
 
     /// <summary>
