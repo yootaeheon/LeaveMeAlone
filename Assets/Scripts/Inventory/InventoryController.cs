@@ -70,7 +70,7 @@ namespace Inventory
         /// 인벤토리 열기/닫기 메서드
         /// 인벤토리 버튼에 연결
         /// </summary>
-        public void OnOffInventory()
+       /* public void OnOffInventory()
         {
             if (_inventoryUI.isActiveAndEnabled == false)
             {
@@ -84,6 +84,20 @@ namespace Inventory
             {
                 _inventoryUI.Hide();
             }
+        }*/
+
+        public void Button_ShowInventory()
+        {
+            _inventoryUI.Show();
+            foreach (var item in _inventoryData.GetCurInventoryDic())
+            {
+                _inventoryUI.UpdateData(item.Key, item.Value.Item.ItemImage, item.Value.Quantity);
+            }
+        }
+
+        public void Button_HideInventory()
+        {
+            _inventoryUI.Hide();
         }
 
        
