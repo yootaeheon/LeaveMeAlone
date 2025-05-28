@@ -12,7 +12,7 @@ public class Monster : MonoBehaviour
     public int CurStage => ChapterManager.Instance.ProgressInfo.Stage;
 
 
-    /*private void Start() => InitStatus(CurChapter, CurStage);*/
+    private void Start() => InitStatus(CurChapter, CurStage);
 
     private void OnEnable()
     {
