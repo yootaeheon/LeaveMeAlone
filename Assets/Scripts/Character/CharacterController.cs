@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using TMPro;
 
 public enum CharacterState { Idle, Move, Detect, Attack }
 
@@ -13,6 +14,7 @@ public class CharacterController : MonoBehaviour, IDamageable
     [Header("View")]
     public CharcaterView View;
     [SerializeField] UI_HealthBar _healthBar;
+    [SerializeField] TMP_Text _damageText;
 
     [Header("Presenter")]
     [HideInInspector] public Transform _monster;
@@ -155,6 +157,8 @@ public class CharacterController : MonoBehaviour, IDamageable
     public void TakeDamage(float Damage)
     {
         Model.CurHp -= Damage;
+        ShowDamageText(Damage);
+
 
         transform.DOShakePosition(0.2f, 0.1f);
 
@@ -162,6 +166,22 @@ public class CharacterController : MonoBehaviour, IDamageable
         {
             StartCoroutine(Die());
         }
+    }
+
+    private void ShowDamageText(float damage)
+    {
+        _damageText.text = damage.ToString();
+        _damageText.alpha = 1;
+        _damageText.rectTransform.anchoredPosition = Vector2.zero;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_damageText.rectTransform.DOAnchorPosY(100f, 1f)) // anchoredPosition ±âÁØ
+           .Join(_damageText.DOFade(0, 1f))
+           .OnComplete(() =>
+           {
+               _damageText.alpha = 0;
+               _damageText.rectTransform.anchoredPosition = Vector2.zero;
+           });
     }
 
     public IEnumerator Die()

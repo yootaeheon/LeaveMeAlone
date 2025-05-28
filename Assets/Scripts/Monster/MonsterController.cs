@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public enum MonsterState { Idle, Move, Detect, Attack }
@@ -23,6 +24,8 @@ public class MonsterController : Monster, IDamageable
     private MonsterSpawner _spawner;
 
     [SerializeField] Animator _animator;
+
+    [SerializeField] TMP_Text _damageText;
 
     private void Awake()
     {
@@ -125,7 +128,7 @@ public class MonsterController : Monster, IDamageable
     public void TakeDamage(float Damage)
     {
         CurHp -= Damage;
-        Debug.Log($"{Damage}만큼 피해 입음");
+        ShowDamageText(Damage);
 
         transform.DOShakePosition(0.3f, 0.2f);
 
@@ -136,6 +139,22 @@ public class MonsterController : Monster, IDamageable
             CurHp = 0;
             Die();
         }
+    }
+
+    private void ShowDamageText(float damage)
+    {
+        _damageText.text = damage.ToString();
+        _damageText.alpha = 1f;
+        _damageText.rectTransform.anchoredPosition = Vector2.zero;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_damageText.rectTransform.DOAnchorPosY(100f, 0.5f)) // anchoredPosition 기준으로 위로 이동
+           .Join(_damageText.DOFade(0, 0.5f))
+           .OnComplete(() =>
+           {
+               _damageText.alpha = 0;
+               _damageText.rectTransform.anchoredPosition = Vector2.zero;
+           });
     }
 
     void Die()
