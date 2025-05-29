@@ -159,6 +159,8 @@ public class MonsterController : Monster, IDamageable
 
     void Die()
     {
+        _characterController._monster = null;
+
         _animator.Play("DEATH", 0, 0f);
 
         // DoTween을 사용하여 몬스터가 사라지는 애니메이션
@@ -174,7 +176,6 @@ public class MonsterController : Monster, IDamageable
         deathSequence.OnComplete(() =>
         {
             _pooledObject.CallReturnPool();
-            _characterController._monster = null;
             transform.localScale = Vector3.one;
             _spriteRenderer.DOFade(1, 0f);
             _spawner.Spawn();

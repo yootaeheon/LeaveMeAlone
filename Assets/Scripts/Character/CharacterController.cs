@@ -134,7 +134,10 @@ public class CharacterController : MonoBehaviour, IDamageable
         {
             _animator.SetTrigger("2_Attack");
 
-            yield return new WaitForSeconds(Model.AttackSpeed);
+            yield return Util.GetDelay(Model.AttackSpeed);
+
+            if (_monster != null)
+                continue;
 
             SearchForEnemies(); // 공격 후 다시 적 탐색
         }
