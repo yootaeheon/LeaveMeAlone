@@ -16,13 +16,22 @@ namespace Inventory
                                                           
         [SerializeField] InventorySO _inventoryData;         // Data
 
+        [SerializeField] EquipmentManager _equipmentManager;
+
         public List<InventoryItem> _initItems = new List<InventoryItem>();
 
         private void Awake()
         {
             PrepareUI();
-            /* _inventoryData.Init();*/
             PrepareInventoryData();
+        }
+
+        private void OnEnable()
+        {
+            _inventoryUI.OnDescriptionRequested += CallRequestDescription;  // 설명 요청 이벤트 구독
+            _inventoryUI.OnSwapItems += CallSwapItems;                      // 아이템 교환 이벤트 구독
+            _inventoryUI.OnStartDragging += CallDragging;                   // 드래그 시작 시 이벤트 구독
+            _inventoryUI.OnItemActionRequested += CallItemActionRequest;    // 아이템 액션 요청 이벤트 구독
         }
 
         private void OnDisable()
@@ -38,11 +47,6 @@ namespace Inventory
         private void PrepareUI()
         {
             _inventoryUI.InitInventoryUI(_inventoryData.Size);               // UI_Progress 슬롯 개수 초기화
-
-            _inventoryUI.OnDescriptionRequested += CallRequestDescription;  // 설명 요청 이벤트 구독
-            _inventoryUI.OnSwapItems += CallSwapItems;                      // 아이템 교환 이벤트 구독
-            _inventoryUI.OnStartDragging += CallDragging;                   // 드래그 시작 시 이벤트 구독
-            _inventoryUI.OnItemActionRequested += CallItemActionRequest;    // 아이템 액션 요청 이벤트 구독
         }
 
         public void PrepareInventoryData()
@@ -119,6 +123,8 @@ namespace Inventory
             }
             ItemSO item = inventoryItem.Item;
             _inventoryUI.UpdateDescription(itemIndex, item.ItemImage, item.name, item.Description);
+            _equipmentManager.SelectedItem = (EquipItemSO)_equipmentManager.SetSelectedItem(item);
+
         }
 
         /// <summary>
@@ -163,6 +169,7 @@ namespace Inventory
 
             ItemSO item = inventoryItem.Item;
             _inventoryUI.UpdateDescription(itemIndex, item.ItemImage, item.name, item.Description);
+            
         }
         #endregion
     }

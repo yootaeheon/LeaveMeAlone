@@ -17,7 +17,7 @@ public class EquipmentManager : MonoBehaviour
 
     private Dictionary<EquipmentType, EquipItemSO> _equippedItems = new();
 
-    private EquipItemSO _selectedItem;
+    public EquipItemSO SelectedItem { get; set;}
 
     /// <summary>
     /// 장비 장착 메서드
@@ -146,28 +146,32 @@ public class EquipmentManager : MonoBehaviour
         return item;
     }
 
-    public void OnEquipButton()
+    public void Button_Equip()
     {
-        if (_selectedItem == null)
+        if (SelectedItem == null)
         {
             Debug.LogWarning("[EquipManager] 장착할 장비 아이템이 선택되지 않았습니다.");
             return;
         }
 
-        EquipItem(_selectedItem);
+
+        EquipItem(SelectedItem);
     }
 
-    public void SetSelectedItem(ItemSO item)
+    public ItemSO SetSelectedItem(ItemSO item)
     {
         // 아이템 타입 체크 및 할당
         if (item is EquipItemSO equipItem)
         {
-            _selectedItem = equipItem;
+            SelectedItem = equipItem;
+            Debug.Log($"{SelectedItem}이 선택됨");
+            return SelectedItem;
         }
         else
         {
             Debug.LogWarning("선택된 아이템은 장비 아이템이 아닙니다.");
-            _selectedItem = null;
+            SelectedItem = null;
+            return null;
         }
     }
 }

@@ -18,14 +18,6 @@ public class ChapterManager : MonoBehaviour
 
     private void Awake() => SetSingleton();
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Debug.Log("1");
-            ClearChapter();
-        }
-    }
     private void SetSingleton()
     {
         if (Instance == null)
