@@ -12441,7 +12441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _maxHp
-      value: 194.5
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
       propertyPath: _attackPower

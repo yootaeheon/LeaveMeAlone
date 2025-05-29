@@ -189,6 +189,7 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     public IEnumerator Die()
     {
+        /*_monster = null; // »ç¸Á ½Ã*/
         _animator.Play("DEATH", 0, 0f);
         yield return Util.GetDelay(1F);
         CameraUtil.CameraFadeIn();
