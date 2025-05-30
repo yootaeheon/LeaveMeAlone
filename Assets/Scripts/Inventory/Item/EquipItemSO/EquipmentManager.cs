@@ -9,6 +9,7 @@ using UnityEngine;
 public class EquipmentManager : MonoBehaviour
 {
     [SerializeField] CharacterModel _model;
+    [SerializeField] UIEquip _UIequip;
 
     [SerializeField] SpriteRenderer _helmetSpriteRenderer;
     [SerializeField] SpriteRenderer _armorSpriteRenderer;
@@ -66,6 +67,8 @@ public class EquipmentManager : MonoBehaviour
                 _model.CriticalChacnce += item.CriticalChance;
                 break;
         }
+
+        _UIequip.UpdateAllSlots(); //여기서 유아이 업데이트해야할듯 고쳐보자!!!!!!!!
     }
 
     /// <summary>
@@ -153,7 +156,6 @@ public class EquipmentManager : MonoBehaviour
             Debug.LogWarning("[EquipManager] 장착할 장비 아이템이 선택되지 않았습니다.");
             return;
         }
-
 
         EquipItem(SelectedItem);
     }

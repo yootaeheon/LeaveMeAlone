@@ -2440,12 +2440,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: 0
+  m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
+  m_PreferredWidth: 0
+  m_PreferredHeight: 0
+  m_FlexibleWidth: 2
+  m_FlexibleHeight: 90
   m_LayoutPriority: 1
 --- !u!114 &338995833
 MonoBehaviour:
@@ -4213,12 +4213,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: 0
+  m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
+  m_PreferredWidth: 0
+  m_PreferredHeight: 0
+  m_FlexibleWidth: 2
+  m_FlexibleHeight: 90
   m_LayoutPriority: 1
 --- !u!114 &581350017
 MonoBehaviour:
@@ -4311,6 +4311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _model: {fileID: 613916438}
+  _UIequip: {fileID: 6808273554543039255}
   _helmetSpriteRenderer: {fileID: 488108430}
   _armorSpriteRenderer: {fileID: 1286676970}
   _backSpriteRenderer: {fileID: 131085032}
@@ -7373,7 +7374,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 613916439}
         m_TargetAssemblyTypeName: EquipmentManager, Assembly-CSharp
-        m_MethodName: EquipItem
+        m_MethodName: UnEquipSelectedItem
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8181,12 +8182,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: 0
+  m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
+  m_PreferredWidth: 0
+  m_PreferredHeight: 0
+  m_FlexibleWidth: 2
+  m_FlexibleHeight: 90
   m_LayoutPriority: 1
 --- !u!114 &1319918407
 MonoBehaviour:
@@ -12366,12 +12367,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: 0
+  m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
+  m_PreferredWidth: 0
+  m_PreferredHeight: 0
+  m_FlexibleWidth: 2
+  m_FlexibleHeight: 90
   m_LayoutPriority: 1
 --- !u!114 &2117380453
 MonoBehaviour:
@@ -13733,7 +13734,7 @@ MonoBehaviour:
     m_Right: 30
     m_Top: 30
     m_Bottom: 30
-  m_ChildAlignment: 1
+  m_ChildAlignment: 4
   m_Spacing: 30
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -13755,16 +13756,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equipManager: {fileID: 613916439}
-  _inventorySO: {fileID: 11400000, guid: e9192f40c9ddd9142a4f138c8803e920, type: 2}
-  _parentTransform: {fileID: 2930255064975715517}
-  _prefab: {fileID: 0}
-  helmetSlot: {fileID: 0}
-  armorSlot: {fileID: 0}
-  backSlot: {fileID: 0}
-  weaponSlot: {fileID: 0}
+  _helmetImage: {fileID: 361270360}
+  _armorSpriteRenderer: {fileID: 1331876818}
+  _backSpriteRenderer: {fileID: 1649842058}
+  _weaponSpriteRenderer: {fileID: 130238374}
   emptySlotSprite: {fileID: 0}
   _equipItems: []
-  <Size>k__BackingField: 4
 --- !u!224 &6825796803135502667
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13859,7 +13856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: 0
+  m_MinWidth: 600
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
