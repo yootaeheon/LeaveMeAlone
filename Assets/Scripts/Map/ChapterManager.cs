@@ -48,7 +48,7 @@ public class ChapterManager : MonoBehaviour
     /// <param name="stageNum"></param>
     /*private void Init(int chapter, int stage)
     {
-        ProgressInfo.Stage = int.Parse(Data.MonsterCSV.GetData(stageNum, (int)MonsterData.Stage));
+        _progressInfo.Stage = int.Parse(Data.MonsterCSV.GetData(stageNum, (int)MonsterData.Stage));
     }*/
 
 

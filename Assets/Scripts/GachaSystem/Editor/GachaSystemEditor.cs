@@ -30,7 +30,7 @@ public class GachaSystemEditor : Editor
         DrawDistribution("Helmet", gacha.helmetTable);
         DrawDistribution("Armor", gacha.armorTable);
         DrawDistribution("Weapon", gacha.weaponTable);
-        DrawDistribution("Cloak", gacha.cloakTable);
+        DrawDistribution("Back", gacha.Back);
     }
 
     /// <summary>

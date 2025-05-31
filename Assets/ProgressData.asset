@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ProgressData
   m_EditorClassIdentifier: 
   _chapter: 5
-  _stage: 1
-  _killCount: 3
+  _stage: 2
+  _killCount: 1
