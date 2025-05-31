@@ -11,7 +11,7 @@ public class GachaSystem : MonoBehaviour
     [SerializeField] ProgressSO _progressInfo;
     [SerializeField] EquipItemData _equipItemData;
     [SerializeField] GameObject _item;
-    [SerializeField] Transform _player;
+    [SerializeField] Transform _spawnPos;
 
     [Header("캐릭터 레벨 설정 (1~100)")]
     [Range(1, 100)]
@@ -59,10 +59,10 @@ public class GachaSystem : MonoBehaviour
     /// </summary>
     void OnValidate()
     {
-        helmetTable.GenerateDistribution(_characterLevel, stdDev);
-        armorTable.GenerateDistribution(_characterLevel, stdDev);
-        weaponTable.GenerateDistribution(_characterLevel, stdDev);
-        Back.GenerateDistribution(_characterLevel, stdDev);
+        helmetTable.GenerateDistribution(_progressInfo.Progress, stdDev);
+        armorTable.GenerateDistribution(_progressInfo.Progress, stdDev);
+        weaponTable.GenerateDistribution(_progressInfo.Progress, stdDev);
+        Back.GenerateDistribution(_progressInfo.Progress, stdDev);
     }
 
     public void GenerateItem()
@@ -73,7 +73,7 @@ public class GachaSystem : MonoBehaviour
         // 레벨은 1부터 시작하므로 인덱스는 level - 1
         if (level >= 1 && level <= list.Count)
         {
-            GameObject item = Instantiate(_item, _player.position + new Vector3(5,0.5f,0), Quaternion.identity);
+            GameObject item = Instantiate(_item, _spawnPos.position, Quaternion.identity);
             item.GetComponent<Item>().InventoryItem = list[level-1];
             Debug.Log($"[소환됨] {itemType} Lv.{level}");
         }
