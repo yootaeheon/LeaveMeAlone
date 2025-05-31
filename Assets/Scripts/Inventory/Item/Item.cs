@@ -25,7 +25,7 @@ public class Item : MonoBehaviour
 
     private void Update()
     {
-        Move();
+        ItemMove();
     }
 
     public void DestroyItem()
@@ -42,7 +42,7 @@ public class Item : MonoBehaviour
         sequence.OnComplete(()=>Destroy(gameObject));
     }
 
-    public void Move()
+    public void ItemMove()
     {
         transform.Translate(Vector2.left * 1f * Time.deltaTime);
     }
