@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42560bd79d6cf9347bf6c839ae88b94d, type: 3}
-  m_Name: DefaultArmor
+  m_Name: Helmet_9
   m_EditorClassIdentifier: 
   <MaxStackSize>k__BackingField: 1
-  <Name>k__BackingField: DefaultArmor
-  <Description>k__BackingField: 'MaxHp+5;
+  <Name>k__BackingField: DefaultHelmet
+  <Description>k__BackingField: 'MaxHp + 10;
 
-    RecoverHp/S+1;
+    Recovery Hp / S + 1;
 
-    DefensePower+1;'
+    Defense
+    Power + 1;'
   <ActionSFX>k__BackingField: {fileID: 0}
-  <ItemImage>k__BackingField: {fileID: -314589219302796148, guid: 7f34c450245f5488bac2d54b5fbbae81, type: 3}
-  _equipmetnType: 0
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: 732442a90ec3747df83c46125de06b60, type: 3}
+  _equipmetnType: 1
   _attackPower: 0
   _attackSpeed: 0
   _criticalChance: 0
-  _plusMaxHp: 5
+  _plusMaxHp: 10
   _recoverHpPerSecond: 1
   _defensePower: 1

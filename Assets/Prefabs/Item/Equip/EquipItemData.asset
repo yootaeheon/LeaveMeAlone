@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435c3a71f0a27f94cb376ef4e97615a3, type: 3}
+  m_Name: EquipItemData
+  m_EditorClassIdentifier: 
+  <Helmet1>k__BackingField: {fileID: 11400000, guid: 8aa7aa27fedb3af4aa83fae5e9f60b99, type: 2}
+  <Helmet2>k__BackingField: {fileID: 11400000, guid: f878790d052e5784f8645a732747c468, type: 2}
+  <Helmet3>k__BackingField: {fileID: 11400000, guid: 3c68cacd37acde641948fbc39064882d, type: 2}
+  <Helmet4>k__BackingField: {fileID: 11400000, guid: 92663b791fadc7a4385a804c8c26890d, type: 2}
+  <Helmet5>k__BackingField: {fileID: 11400000, guid: 3f741ecca81cc7740ab9019aed8327f3, type: 2}
+  <Helmet6>k__BackingField: {fileID: 11400000, guid: 384d658624588a049b0964f710b19f28, type: 2}
+  <Helmet7>k__BackingField: {fileID: 11400000, guid: 538d4fe628fceb74b81b38f3d83fb6ba, type: 2}
+  <Helmet8>k__BackingField: {fileID: 11400000, guid: 9ad5233b38c3c6b41be6beed2686e066, type: 2}
+  <Helmet9>k__BackingField: {fileID: 11400000, guid: b6552e54d7e3d374cae522439104e794, type: 2}
+  <Helmet10>k__BackingField: {fileID: 11400000, guid: 21042e6d679b8314cbceedb1411f6839, type: 2}
+  <Armor1>k__BackingField: {fileID: 11400000, guid: 17d1822129de5d241a0487751da396d2, type: 2}
+  <Armor2>k__BackingField: {fileID: 11400000, guid: a6fcf3ca09103cf4e9e740042d670841, type: 2}
+  <Armor3>k__BackingField: {fileID: 11400000, guid: 86b7f9430309c594b820195fb3fb4973, type: 2}
+  <Armor4>k__BackingField: {fileID: 11400000, guid: 271315b243a5ab74fb73a3653753a060, type: 2}
+  <Armor5>k__BackingField: {fileID: 11400000, guid: 6e7b9981b7287c84faaf784064e62a7d, type: 2}
+  <Armor6>k__BackingField: {fileID: 11400000, guid: e3efcc9e18f383a4c89fe410b5e6049b, type: 2}
+  <Armor7>k__BackingField: {fileID: 11400000, guid: e9467f6900f23524aacdb1cf2a9a6876, type: 2}
+  <Armor8>k__BackingField: {fileID: 11400000, guid: 6362b85c14cdaf945a14e645d8a2e90f, type: 2}
+  <Armor9>k__BackingField: {fileID: 11400000, guid: 89c3697d658cce2488b27f36ca8911f7, type: 2}
+  <Armor10>k__BackingField: {fileID: 11400000, guid: 1b26cc2a2903ae04bbaa5aabf48e7a75, type: 2}
+  <Shoulder1>k__BackingField: {fileID: 0}
+  <Shoulder11>k__BackingField: {fileID: 0}
+  <Shoulder2>k__BackingField: {fileID: 0}
+  <Shoulder22>k__BackingField: {fileID: 0}
+  <Shoulder3>k__BackingField: {fileID: 0}
+  <Shoulder33>k__BackingField: {fileID: 0}
+  <Shoulder4>k__BackingField: {fileID: 0}
+  <Shoulder44>k__BackingField: {fileID: 0}
+  <Shoulder5>k__BackingField: {fileID: 0}
+  <Shoulder55>k__BackingField: {fileID: 0}
+  <Shoulder6>k__BackingField: {fileID: 0}
+  <Shoulder66>k__BackingField: {fileID: 0}
+  <Shoulder7>k__BackingField: {fileID: 0}
+  <Shoulder77>k__BackingField: {fileID: 0}
+  <Shoulder8>k__BackingField: {fileID: 0}
+  <Shoulder88>k__BackingField: {fileID: 0}
+  <Shoulder9>k__BackingField: {fileID: 0}
+  <Shoulder99>k__BackingField: {fileID: 0}
+  <Shoulder10>k__BackingField: {fileID: 0}
+  <Shoulder1010>k__BackingField: {fileID: 0}
+  <Back1>k__BackingField: {fileID: 11400000, guid: 07f47bba7d6a2f34b8188a45a41891e8, type: 2}
+  <Back2>k__BackingField: {fileID: 11400000, guid: cf9c2936d36969341ae8402ed25fdf0b, type: 2}
+  <Back3>k__BackingField: {fileID: 11400000, guid: ac70e956e08ff7f469fe5f11470021b5, type: 2}
+  <Back4>k__BackingField: {fileID: 11400000, guid: 6f31e914b5afb7543ac9d02f57a880c4, type: 2}
+  <Back5>k__BackingField: {fileID: 11400000, guid: 772fc5f9b87e0d54481264f42b471c5b, type: 2}
+  <Back6>k__BackingField: {fileID: 11400000, guid: 0051ce2f4ff82f842ad3bba0266a0b69, type: 2}
+  <Back7>k__BackingField: {fileID: 11400000, guid: af29290b99cf27448ba2118bad7c0590, type: 2}
+  <Back8>k__BackingField: {fileID: 11400000, guid: baab0c2ac974c1b4d96deb7ad9664d14, type: 2}
+  <Back9>k__BackingField: {fileID: 11400000, guid: e565c3dd260610348be03c86b31153f5, type: 2}
+  <Back10>k__BackingField: {fileID: 11400000, guid: 8e7faddb48e13894ba4abe047a1741b5, type: 2}
+  <Weapon1>k__BackingField: {fileID: 11400000, guid: 90194a941b0eacd4b84cf523f1f22f73, type: 2}
+  <Weapon2>k__BackingField: {fileID: 11400000, guid: 0e4f972fb861d2a4e8f4a81925b7f216, type: 2}
+  <Weapon3>k__BackingField: {fileID: 11400000, guid: 4dba3913f85fde649a376afc1c2eaad0, type: 2}
+  <Weapon4>k__BackingField: {fileID: 11400000, guid: c89ecd757f1ffb141b691139d92361a5, type: 2}
+  <Weapon5>k__BackingField: {fileID: 11400000, guid: 21f7da1fee9c5114ab540d63e6449ba5, type: 2}
+  <Weapon6>k__BackingField: {fileID: 11400000, guid: 9fbec265b343a2e4e90f4db5a797b6a5, type: 2}
+  <Weapon7>k__BackingField: {fileID: 11400000, guid: 7c33d27bd075b864c9bc3aaeee83dd3e, type: 2}
+  <Weapon8>k__BackingField: {fileID: 11400000, guid: 5711e09430fb9c049b48c83fcedeffc2, type: 2}
+  <Weapon9>k__BackingField: {fileID: 11400000, guid: 9c724f5a60f51a5448ca75e42f2a0b5f, type: 2}
+  <Weapon10>k__BackingField: {fileID: 11400000, guid: f4aefa835ae51664caaa1d3abd333a78, type: 2}

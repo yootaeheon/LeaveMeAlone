@@ -4324,15 +4324,7 @@ MonoBehaviour:
   _inventoryUI: {fileID: 311476420}
   _inventoryData: {fileID: 11400000, guid: e9192f40c9ddd9142a4f138c8803e920, type: 2}
   _equipmentManager: {fileID: 613916439}
-  _initItems:
-  - Quantity: 1
-    Item: {fileID: 11400000, guid: 89c3697d658cce2488b27f36ca8911f7, type: 2}
-  - Quantity: 1
-    Item: {fileID: 11400000, guid: 8aa7aa27fedb3af4aa83fae5e9f60b99, type: 2}
-  - Quantity: 1
-    Item: {fileID: 11400000, guid: 90194a941b0eacd4b84cf523f1f22f73, type: 2}
-  - Quantity: 1
-    Item: {fileID: 11400000, guid: 07f47bba7d6a2f34b8188a45a41891e8, type: 2}
+  _initItems: []
 --- !u!114 &613916438 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5140215397059755833, guid: 55895f2415b69ec4caebb450c3694c8d, type: 3}
@@ -13703,12 +13695,12 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e9192f40c9ddd9142a4f138c8803e920, type: 2}
     - target: {fileID: 8468218258638690902, guid: 9108f21538f63cb418625183490844b4, type: 3}
       propertyPath: <Quantity>k__BackingField
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8468218258638690902, guid: 9108f21538f63cb418625183490844b4, type: 3}
       propertyPath: <InventoryItem>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 722fd684ebc376a42979b45d4a6bb764, type: 2}
+      objectReference: {fileID: 11400000, guid: db522ad60f5bf6d499866a4bddeb8b29, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

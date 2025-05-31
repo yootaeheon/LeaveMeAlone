@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class ProgressSO : ScriptableObject
 {
+    public int Progress => ((1-Chapter)*10) + Stage;
+
     [SerializeField] int _chapter;
     public int Chapter { get { return _chapter; } set { _chapter = value; OnChapterChanged?.Invoke(); } }
     public event Action OnChapterChanged;

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42560bd79d6cf9347bf6c839ae88b94d, type: 3}
+  m_Name: Weapon_10
+  m_EditorClassIdentifier: 
+  <MaxStackSize>k__BackingField: 1
+  <Name>k__BackingField: DefaultWeapon
+  <Description>k__BackingField: 'AttackPower + 10;
+
+    AttackSpeed + 0.1f;
+
+    CriticalChance
+    + 0.1f;'
+  <ActionSFX>k__BackingField: {fileID: 0}
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: bc54460ac3fe5478f9cacb9b1cbdcc69, type: 3}
+  _equipmetnType: 3
+  _attackPower: 10
+  _attackSpeed: 0.1
+  _criticalChance: 0.1
+  _plusMaxHp: 0
+  _recoverHpPerSecond: 0
+  _defensePower: 0
