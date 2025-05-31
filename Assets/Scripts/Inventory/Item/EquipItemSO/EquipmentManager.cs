@@ -160,6 +160,24 @@ public class EquipmentManager : MonoBehaviour
         EquipItem(SelectedItem);
     }
 
+    /// <summary>
+    /// 선택된 장비를 해제하는 버튼 메서드
+    /// </summary>
+    public void Button_UnEquip()
+    {
+        if (SelectedItem == null)
+        {
+            Debug.LogWarning("[EquipManager] 해제할 장비 아이템이 선택되지 않았습니다.");
+            return;
+        }
+
+        // 선택된 장비를 해제
+        UnEquipSelectedItem(SelectedItem);
+
+        // UI 업데이트
+        _UIequip.UpdateAllSlots();
+    }
+
     public ItemSO SetSelectedItem(ItemSO item)
     {
         // 아이템 타입 체크 및 할당
