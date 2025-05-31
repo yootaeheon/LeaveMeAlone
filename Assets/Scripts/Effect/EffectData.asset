@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b04c1e965b33844950ef7e82af2f4a, type: 3}
+  m_Name: EffectData
+  m_EditorClassIdentifier: 
+  <AttackPowerEffect>k__BackingField: {fileID: 841143154332405800, guid: fbe02ab71561c8240b1d53c97c898aa3, type: 3}
+  <RecoveryEffect>k__BackingField: {fileID: 6283534012883352750, guid: f187fdd8ef452c840a23b8d6ce067b93, type: 3}
+  <DefensePowerEffect>k__BackingField: {fileID: 3267751598968977454, guid: 4a58669c8646d1941a4b76e3745e30ae, type: 3}
+  <AttackSpeedEffect>k__BackingField: {fileID: 4306228554085981334, guid: 016afa9ba6078f843b4b5e909920dc85, type: 3}
+  <CriticalChanceEffect>k__BackingField: {fileID: 5326185835649482493, guid: 98bece6d1828bfc469437cfbc1241023, type: 3}
+  <DeadEffect>k__BackingField: {fileID: 6161073395266268325, guid: cce9afa6be8dae643be15442b88eb103, type: 3}
+  <MaxHpEffect>k__BackingField: {fileID: 904651187185394017, guid: 4dd331fb59a25234dbec6c9e87083bcc, type: 3}
+  <HpItemEffect>k__BackingField: {fileID: 702981894718865960, guid: f2c45c8ee47dc9148a3b2c1e104f0d43, type: 3}
+  <DebuffItemEffect>k__BackingField: {fileID: 702981894718865960, guid: f2c45c8ee47dc9148a3b2c1e104f0d43, type: 3}

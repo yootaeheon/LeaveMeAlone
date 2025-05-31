@@ -191,6 +191,7 @@ public class CharacterController : MonoBehaviour, IDamageable
     {
         /*_monster = null; // »ç¸Á ½Ã*/
         _animator.Play("DEATH", 0, 0f);
+        EffectManager.Instance.PlayEffect(EffectManager.Instance.EffectData.DeadEffect, transform.position);
         yield return Util.GetDelay(1F);
         CameraUtil.CameraFadeIn();
         ChapterManager.Instance.ProgressInfo.KillCount = 5;
@@ -204,7 +205,7 @@ public class CharacterController : MonoBehaviour, IDamageable
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return Util.GetDelay(1f);
 
             if (Model.CurHp <= 0) 
                 yield break;
