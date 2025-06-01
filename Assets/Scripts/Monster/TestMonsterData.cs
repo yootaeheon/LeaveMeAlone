@@ -8,13 +8,13 @@ public class TestMonsterData : MonoBehaviour
     [SerializeField] int CurChapter;
     [SerializeField] int CurStage;
 
-    private void Start() => InitStatus(CurChapter ,CurStage);
+    private void Start() => InitStatusAfter100(CurChapter ,CurStage);
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            InitStatus(CurChapter ,CurStage);
+            InitStatusAfter100(CurChapter ,CurStage);
         }
     }
 
@@ -23,7 +23,7 @@ public class TestMonsterData : MonoBehaviour
     /// 메서드의 매개변수는 stageNum
     /// </summary>
     /// <param name="stageNum"></param>
-    public void InitStatus(int chapter, int stage, float baseHp = 100f, float baseDamage = 10f)
+    public void InitStatusAfter100(int chapter, int stage, float baseHp = 100f, float baseDamage = 10f)
     {
         float multiplier = 1f + (chapter - 1) * 0.2f + (stage - 1) * 0.05f;
 

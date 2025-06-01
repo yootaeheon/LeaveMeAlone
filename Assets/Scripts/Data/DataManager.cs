@@ -33,7 +33,7 @@ public class DataManager : MonoBehaviour
 
 public enum MonsterData
 {
-    Chapter_Stage =1,
+    Chapter_Stage,
     Chapter,
     Stage,
     MaxHp,

@@ -11,27 +11,34 @@ public class Monster : MonoBehaviour
     public int CurChapter => ChapterManager.Instance.ProgressInfo.Chapter;
     public int CurStage => ChapterManager.Instance.ProgressInfo.Stage;
 
+    public int Progress => (CurChapter-1) * 10 + CurStage;
+    private void Start() => InitStatusAfter100(CurChapter, CurStage);
 
-    private void Start() => InitStatus(CurChapter, CurStage);
 
     private void OnEnable()
     {
-        ChapterManager.Instance.ProgressInfo.OnStageChanged += () => InitStatus(CurChapter, CurStage);
-        InitStatus(CurChapter, CurStage);
+        ChapterManager.Instance.ProgressInfo.OnStageChanged += () => InitStatusAfter100(CurChapter, CurStage);
+        ChapterManager.Instance.ProgressInfo.OnStageChanged += () => InitStatus(Progress);
+        InitStatus(Progress);
+        InitStatusAfter100(CurChapter, CurStage);
     }
 
     private void OnDisable()
     {
-        ChapterManager.Instance.ProgressInfo.OnStageChanged -= () => InitStatus(CurChapter, CurStage);
-        InitStatus(CurChapter, CurStage);
+        ChapterManager.Instance.ProgressInfo.OnStageChanged -= () => InitStatusAfter100(CurChapter, CurStage);
+        ChapterManager.Instance.ProgressInfo.OnStageChanged -= () => InitStatus(Progress);
     }
 
+  
     /// <summary>
-    /// Stage에 맞는 몬스터 정보 초기화
-    /// 메서드의 매개변수는 stageNum
+    /// 10챕터 10스테이지 이후 몬스터 능력치 상승 공식
+    /// 확장성과 유지보수성을 고려
     /// </summary>
-    /// <param name="stageNum"></param>
-    public void InitStatus(int chapter, int stage, float baseHp = 100f, float baseDamage = 10f)
+    /// <param name="chapter"></param>
+    /// <param name="stage"></param>
+    /// <param name="baseHp"></param>
+    /// <param name="baseDamage"></param>
+    public void InitStatusAfter100(int chapter, int stage, float baseHp = 100f, float baseDamage = 10f)
     {
         float multiplier = 1f + (chapter - 1) * 0.2f + (stage - 1) * 0.05f;
 
@@ -39,6 +46,16 @@ public class Monster : MonoBehaviour
         AttackDamage = Mathf.Round(baseDamage * multiplier * 10f) / 10f;
 
         CurHp = MaxHp; // 체력 초기화
+    }
+
+    /// <summary>
+    /// Stage에 맞는 몬스터 정보 초기화
+    /// 메서드의 매개변수는 stageNum
+    /// </summary>
+    public void InitStatus(int progress)
+    {
+        MaxHp = int.Parse(DataManager.Instance.MonsterCSV.GetData(progress, (int)MonsterData.MaxHp));
+        AttackDamage = int.Parse(DataManager.Instance.MonsterCSV.GetData(progress, (int)MonsterData.AttackDamage));
     }
 
 

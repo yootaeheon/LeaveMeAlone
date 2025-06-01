@@ -51,14 +51,12 @@ public class GachaSystem : MonoBehaviour
     {
         _progressInfo.OnChapterChanged += LevelChanged;
         _progressInfo.OnStageChanged += LevelChanged;
-       /* _progressInfo.OnChapterChanged += OnValidate;*/
     }
 
     private void OnDisable()
     {
         _progressInfo.OnChapterChanged -= LevelChanged;
         _progressInfo.OnStageChanged -= LevelChanged;
-        /*_progressInfo.OnChapterChanged -= OnValidate;*/
     }
 
     public void LevelChanged()
@@ -90,8 +88,13 @@ public class GachaSystem : MonoBehaviour
         }
     }
 
-    public void GenerateItem()
+    public void Button_Gacha()
     {
+        if (GameManager.Instance.Gold < 5000)
+            return;
+
+        GameManager.Instance.Gold -= 5000;
+
         var (itemType, level) = GetRandomItem();
         var list = EqipItemDataDic[itemType];
 

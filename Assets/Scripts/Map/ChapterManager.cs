@@ -15,6 +15,10 @@ public class ChapterManager : MonoBehaviour
     [SerializeField] ProgressSO _progressInfo;
     public ProgressSO ProgressInfo { get { return _progressInfo; } set { _progressInfo = value; } }
 
+    [Header("Item")]
+    [SerializeField] GameObject _itemPrefab;
+    [SerializeField] Transform _itemSpawnPos;
+
 
     private void Awake() => SetSingleton();
 
@@ -71,10 +75,21 @@ public class ChapterManager : MonoBehaviour
     /// </summary>
     public void ClearStage()
     {
-        ProgressInfo.Stage++;
+        /*ProgressInfo.Stage++;*/
+        if (_progressInfo.Stage == 10)
+        {
+            ProgressInfo.Chapter++;
+            ProgressInfo.Stage = 1;
+        }
+        else
+        {
+            ProgressInfo.Stage++;
+        }
 
         CameraUtil.CameraFadeIn();
         DelayLayerMoveSpeed();
+
+        GameObject item = Instantiate(_itemPrefab, _itemSpawnPos.position, Quaternion.identity);
     }
 
 
