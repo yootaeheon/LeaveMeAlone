@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42560bd79d6cf9347bf6c839ae88b94d, type: 3}
   m_Name: Weapon_3
   m_EditorClassIdentifier: 
-  <MaxStackSize>k__BackingField: 1
+  <MaxStackSize>k__BackingField: 99
   <Name>k__BackingField: DefaultWeapon
   <Description>k__BackingField: 'AttackPower + 10;
 
