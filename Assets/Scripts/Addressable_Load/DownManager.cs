@@ -74,7 +74,7 @@ public class DownManager : MonoBehaviour
             DownValueText.text = "100 %";
             DownSlider.value = 1f;
             yield return new WaitForSeconds(2f);
-            LoadingManager.LoadScene("TestScene");
+            LoadingManager.LoadScene("GameScene");
         }
     }
 
@@ -181,7 +181,7 @@ public class DownManager : MonoBehaviour
             // 모든 다운로드 완료 시
             if (total == patchSize)
             {
-                LoadingManager.LoadScene("TestScene");
+                LoadingManager.LoadScene("GameScene");
                 break;
             }
 
