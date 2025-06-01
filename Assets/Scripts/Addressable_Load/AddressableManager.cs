@@ -19,17 +19,13 @@ public class AddressableManager : MonoBehaviour
 
     private List<GameObject> gameObjects = new List<GameObject>();
 
+    // DownManager에서 로딩 해놓고
+    // Star에서 바로 스폰
     private void Start()
     {
-        StartCoroutine(InitAddressable());
+        Button_SpawnObj();
     }
-
-    IEnumerator InitAddressable()
-    {
-        var init = Addressables.InitializeAsync();
-        yield return init;
-    }
-
+  
     public void Button_SpawnObj()
     {
         _characterObj.InstantiateAsync().Completed += (obj) =>
