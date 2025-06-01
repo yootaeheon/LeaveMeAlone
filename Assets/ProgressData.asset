@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501bf95ad9f59ba4d9b4b9efc394dba1, type: 3}
   m_Name: ProgressData
   m_EditorClassIdentifier: 
-  _chapter: 1
-  _stage: 1
+  _chapter: 9
+  _stage: 9
   _killCount: 5

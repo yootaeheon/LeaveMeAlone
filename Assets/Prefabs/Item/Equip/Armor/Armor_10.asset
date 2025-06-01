@@ -20,7 +20,7 @@ MonoBehaviour:
 
     DefensePower+1;'
   <ActionSFX>k__BackingField: {fileID: 0}
-  <ItemImage>k__BackingField: {fileID: 8681217020312184217, guid: 7837b3161c8b7477e9711cb259036797, type: 3}
+  <ItemImage>k__BackingField: {fileID: -8439029293663886290, guid: bb53a852f02d94491bd324185eaa77ea, type: 3}
   _equipmetnType: 0
   _attackPower: 0
   _attackSpeed: 0

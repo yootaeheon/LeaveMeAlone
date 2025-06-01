@@ -14,11 +14,11 @@ public class GachaSystem : MonoBehaviour
     [SerializeField] Transform _spawnPos;
 
     [Header("캐릭터 레벨 설정 (1~100)")]
-    [Range(1, 100)]
+    /*[Range(1, 100)]*/
     public int _characterLevel;  // 플레이어의 현재 레벨 (확률 분포 중심값에 영향)
 
     [Header("표준편차: 클수록 레벨 분산 커짐")]
-    public float stdDev = 2.0f;  // 정규분포의 표준편차, 높을수록 더 다양한 레벨 등장
+    public float stdDev;  // 정규분포의 표준편차, 높을수록 더 다양한 레벨 등장
 
     [Header("아이템 부위별 커스텀 확률 테이블")]
     public DropTable helmetTable = new DropTable("Helmet"); // 헬멧 아이템 드롭 테이블
@@ -34,24 +34,39 @@ public class GachaSystem : MonoBehaviour
     public enum EquipType { Helmet, Armor, Back, Weapon }
     public EquipType type;
 
-    public List<ItemSO> HelmetList;
-    public List<ItemSO> ArmorList;
-    public List<ItemSO> BackList;
-    public List<ItemSO> WeaponList;
+    private List<ItemSO> HelmetList;
+    private List<ItemSO> ArmorList;
+    private List<ItemSO> BackList;
+    private List<ItemSO> WeaponList;
 
-    public Dictionary<EquipType, List<ItemSO>> EqipItemDataDic;
+    private Dictionary<EquipType, List<ItemSO>> EqipItemDataDic;
 
     private void Awake()
     {
         InitData();
+        LevelChanged();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            GenerateItem();
-        }
+        _progressInfo.OnChapterChanged += LevelChanged;
+        _progressInfo.OnStageChanged += LevelChanged;
+       /* _progressInfo.OnChapterChanged += OnValidate;*/
+    }
+
+    private void OnDisable()
+    {
+        _progressInfo.OnChapterChanged -= LevelChanged;
+        _progressInfo.OnStageChanged -= LevelChanged;
+        /*_progressInfo.OnChapterChanged -= OnValidate;*/
+    }
+
+    public void LevelChanged()
+    {
+        _characterLevel = (_progressInfo.Chapter - 1) * 10 + _progressInfo.Stage;
+        Debug.Log(_characterLevel);
+
+        OnValidate();
     }
 
     /// <summary>
@@ -59,10 +74,20 @@ public class GachaSystem : MonoBehaviour
     /// </summary>
     void OnValidate()
     {
-        helmetTable.GenerateDistribution(_progressInfo.Progress, stdDev);
-        armorTable.GenerateDistribution(_progressInfo.Progress, stdDev);
-        weaponTable.GenerateDistribution(_progressInfo.Progress, stdDev);
-        Back.GenerateDistribution(_progressInfo.Progress, stdDev);
+        helmetTable.GenerateDistribution(_characterLevel, stdDev);
+        armorTable.GenerateDistribution(_characterLevel, stdDev);
+        weaponTable.GenerateDistribution(_characterLevel, stdDev);
+        Back.GenerateDistribution(_characterLevel, stdDev);
+    }
+
+    private void Update()
+    {
+      /*  Debug.Log($"진행도 및 캐릭터 레벨 = {_characterLevel}");*/
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            LevelChanged();
+        }
     }
 
     public void GenerateItem()
@@ -70,7 +95,7 @@ public class GachaSystem : MonoBehaviour
         var (itemType, level) = GetRandomItem();
         var list = EqipItemDataDic[itemType];
 
-        // 레벨은 1부터 시작하므로 인덱스는 level - 1
+        // 아이템 생성
         if (level >= 1 && level <= list.Count)
         {
             GameObject item = Instantiate(_item, _spawnPos.position, Quaternion.identity);
@@ -95,7 +120,7 @@ public class GachaSystem : MonoBehaviour
         // 0~3 사이 랜덤 정수로 부위 선택
         EquipType type = (EquipType)UnityEngine.Random.Range(0, 4);
 
-        int level = 1; // 기본 아이템 레벨
+        int level = _characterLevel; // 기본 아이템 레벨
         DropTable table = GetTable(type); // 해당 부위의 드롭 테이블 가져오기
 
         // 천장 시스템: 연속으로 낮은 레벨이 나오면 최고 레벨 지급
@@ -136,17 +161,7 @@ public class GachaSystem : MonoBehaviour
         };
     }
 
-
-
-
-
-
-
-
-
-
-
-   
+    #region 가챠아이템 리스트 추가
     public void InitData()
     {
         HelmetList = new List<ItemSO>()
@@ -182,4 +197,5 @@ public class GachaSystem : MonoBehaviour
             { EquipType.Weapon, WeaponList }
         };
     }
+    #endregion
 }
