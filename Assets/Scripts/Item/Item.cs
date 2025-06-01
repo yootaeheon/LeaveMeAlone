@@ -9,13 +9,17 @@ public class Item : MonoBehaviour
     [field : SerializeField] public ItemSO InventoryItem { get; set; }
     [field: SerializeField] public int Quantity { get; set; } = 1;
 
+    [SerializeField] float _animDuration = 0.3f;
+
+    [SerializeField] ConsumeItemDataSO ItemData;
+
     private AudioSource _audioSource;
 
-    [SerializeField] float _animDuration = 0.3f;
 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
+        InventoryItem = ItemData.ItemList[Random.Range(0, ItemData.ItemList.Count-1)];
     }
 
     private void Start()

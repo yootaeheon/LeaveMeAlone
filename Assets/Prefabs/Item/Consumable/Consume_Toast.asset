@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e556d05a399b6f440b368cbc32555295, type: 3}
+  m_Name: Consume_Toast
+  m_EditorClassIdentifier: 
+  <MaxStackSize>k__BackingField: 99
+  <Name>k__BackingField: Toast
+  <Description>k__BackingField: Hp += 15;
+  <ActionSFX>k__BackingField: {fileID: 8300000, guid: 7ab1d9ce243bb564d9ec01dbea57b31b, type: 3}
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: 76d285b5c2a664f8a9568c067acacf68, type: 3}
+  <Value>k__BackingField: 15
