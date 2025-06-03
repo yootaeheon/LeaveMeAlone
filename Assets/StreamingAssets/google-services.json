@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "40377125664",
+    "project_id": "idlerpg-a1c75",
+    "storage_bucket": "idlerpg-a1c75.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40377125664:android:be1db9ebb6cbd9c0d46545",
+        "android_client_info": {
+          "package_name": "com.taroni.IDLERPG"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeWuSKit29FYdt1AnIu7siIBU1cg4qzDs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
