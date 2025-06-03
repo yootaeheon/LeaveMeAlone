@@ -163,6 +163,8 @@ public class MonsterController : Monster, IDamageable
 
         _animator.Play("DEATH", 0, 0f);
 
+        GameManager.Instance.Gold += 10;
+
         // DoTween을 사용하여 몬스터가 사라지는 애니메이션
         Sequence deathSequence = DOTween.Sequence();
 

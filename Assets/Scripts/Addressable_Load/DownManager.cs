@@ -17,7 +17,7 @@ public class DownManager : MonoBehaviour
     public TMP_Text DownValueText;
 
     [Header("Label")]
-    public AssetLabelReference GameObjLabel;
+   /* public AssetLabelReference GameObjLabel;*/
     public AssetLabelReference DefaultLabel;
 
     private long patchSize; // 패치 사이즈 크기는 Long
@@ -45,7 +45,7 @@ public class DownManager : MonoBehaviour
     IEnumerator CheckUpdateFiles()
     {
         // 라벨을 담는 리스트 생성
-        List<string> labels = new List<string>() { GameObjLabel.labelString, DefaultLabel.labelString };
+        List<string> labels = new List<string>() {/* GameObjLabel.labelString,*/ DefaultLabel.labelString };
 
         // patchSize 변수 초기화
         patchSize = default;
@@ -121,7 +121,7 @@ public class DownManager : MonoBehaviour
     IEnumerator PatchFiles()
     {
         // 라벨을 담는 리스트 생성
-        List<string> labels = new List<string>() { GameObjLabel.labelString, DefaultLabel.labelString };
+        List<string> labels = new List<string>() { /*GameObjLabel.labelString, */DefaultLabel.labelString };
 
         // 라벨 리스트 순회하며 다운로드사이즈 받아서 handle에 저장
         foreach (string label in labels)

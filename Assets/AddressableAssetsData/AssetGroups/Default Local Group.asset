@@ -17,12 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 44eb6080c4ff5e94498731a7867b1e2d
   m_SerializeEntries:
-  - m_GUID: 027b4589ccc0c60499301d1d9fdecccb
-    m_Address: Assets/MyAddressable/Backgrounds.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - GameObject
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1bdd31a26bb0e4a5085ea676817a295d
     m_Address: Assets/Import/SPUM
     m_ReadOnly: 0
@@ -35,53 +29,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2ed306812ebed464299fdacda864ba68
-    m_Address: Assets/Import/Layer Lab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3b3fa719517c0404dabe1e4241479268
-    m_Address: Assets/MyAddressable/DefaultCanvas.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - GameObject
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 57ce4d4bb9a319543ac2d9f03831ef12
-    m_Address: Assets/MyAddressable/LevelUpCanvas.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - GameObject
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6e9dbe7d52a5e449596fd541821ec60a
     m_Address: Assets/Import/2D Pixel RPG Icon Pack/Icons/Postion
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7119e9d92525cfa468861bfaee9af63b
-    m_Address: Assets/MyAddressable/Player.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - GameObject
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 891526f780223244dbcd06a2ca2aed82
-    m_Address: Assets/Invent
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8ee337cca9d909743b354674d3181880
-    m_Address: Assets/MyAddressable/CurCharacterCanvas.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - GameObject
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a189f9371ab3caa40a00140112d49dab
-    m_Address: Assets/MyAddressable/ShopCanvas.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - GameObject
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a805533a7b43d504d99c4bc5e33b51a8
     m_Address: Assets/Import/StateEffect
@@ -89,23 +41,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ca38c0ca78da4a64ca36a6be48f11627
-    m_Address: Assets/MyAddressable/InventoryCanvas.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - GameObject
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d4d24ea62e2c148c2aa224a6970a7f59
     m_Address: Assets/Import/2D Pixel RPG Icon Pack/Icons/Food
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f1ffdaa358c049d458bb0b06dad0fac7
-    m_Address: Assets/MyAddressable/SoundManager.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - GameObject
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 10ca668a64be4dc4dae112b130e599bc, type: 2}

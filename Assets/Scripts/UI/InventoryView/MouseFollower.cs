@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class MouseFollower : MonoBehaviour
 {
-    [SerializeField] Canvas _canvas; // 연결된 캔버스
+    private Canvas _canvas; // 연결된 캔버스
     [SerializeField] UIInventoryItem _item; // 드래그 중 표시할 아이템 UI_Progress
 
     private void Awake()
