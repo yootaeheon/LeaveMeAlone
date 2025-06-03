@@ -1603,10 +1603,10 @@ MonoBehaviour:
   DownSlider: {fileID: 1895126043}
   SizeInfoText: {fileID: 62779765}
   DownValueText: {fileID: 734759156}
-  CharacterLabel:
-    m_LabelString: Character
-  MonsterLabel:
-    m_LabelString: Monster
+  GameObjLabel:
+    m_LabelString: GameObject
+  DefaultLabel:
+    m_LabelString: default
 --- !u!4 &2083382023
 Transform:
   m_ObjectHideFlags: 0

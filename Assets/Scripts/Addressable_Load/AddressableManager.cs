@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
+/// 로드한 에셋은 사용하지 않을 시 Release해줘야 메모리 아낄 수 있음
+/// ReleaseInstance() <-> InstantiateAsync
+/// ReleaseAsset() <-> LoadAssetAsync
 public class AddressableManager : MonoBehaviour
 {
-
-    [SerializeField] AssetReferenceGameObject _characterObj;
-    [SerializeField] AssetReferenceGameObject[] _monsterObjs;
+    [SerializeField] AssetReferenceGameObject[] _gameObjs;
 
    /* private AssetReferenceT<AudioClip> SoundBGM;
     private GameObject BGMobj;
@@ -28,14 +29,14 @@ public class AddressableManager : MonoBehaviour
   
     public void Button_SpawnObj()
     {
-        _characterObj.InstantiateAsync().Completed += (obj) =>
+       /* _gameObj.InstantiateAsync().Completed += (obj) =>
         {
             gameObjects.Add(obj.Result);
-        };
+        };*/
 
-        for (int i = 0; i < _monsterObjs.Length; i++)
+        for (int i = 0; i < _gameObjs.Length; i++)
         {
-            _monsterObjs[i].InstantiateAsync().Completed += (obj) =>
+            _gameObjs[i].InstantiateAsync().Completed += (obj) =>
             {
                 gameObjects.Add(obj.Result);
             };
@@ -58,10 +59,10 @@ public class AddressableManager : MonoBehaviour
         };*/
     }
 
-    public void Button_ReleaseObj()
+   /* public void Button_ReleaseObj()
     {
-       /* SoundBGM.ReleaseAsset();
-        FlagSprite.ReleaseAsset();*/
+       *//* SoundBGM.ReleaseAsset();
+        FlagSprite.ReleaseAsset();*//*
 
         if (gameObjects.Count == 0)
             return;
@@ -69,10 +70,5 @@ public class AddressableManager : MonoBehaviour
         var index = gameObjects.Count - 1;
         Addressables.ReleaseInstance(gameObjects[index]);
         gameObjects.RemoveAt(index);
-
-    }
-
-    // ReleaseInstance() <-> InstantiateAsync
-    // ReleaseAsset() <-> LoadAssetAsync
-
+    }*/
 }
