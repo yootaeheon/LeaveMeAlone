@@ -1,4 +1,4 @@
-/*using System;
+using System;
 using UnityEngine;
 using Firebase.Auth;
 using Firebase.Database;
@@ -84,7 +84,7 @@ public class OfflineRewardManager : MonoBehaviour
                     Debug.Log($"[오프라인 보상] 경과 시간: {calculatedSeconds}초, 기본 보상: {baseReward}");
 
                     // 사용자에게 광고 보기 여부를 묻는 팝업 표시
-                    UIManager.Instance.ShowOfflineRewardPopup(baseReward, OnAdWatchSelected, OnAdDeclined);
+                    ShowOfflineRewardPopup(baseReward, OnAdWatchSelected, OnAdDeclined);
                 }
                 else
                 {
@@ -106,11 +106,11 @@ public class OfflineRewardManager : MonoBehaviour
     /// </summary>
     void OnAdWatchSelected()
     {
-        if (Advertisement.IsReady("rewardedVideo"))
+        if (Advertisement.isInitialized) /*("rewardedVideo")*/
         {
             Advertisement.Show("rewardedVideo", new ShowOptions
             {
-                resultCallback = HandleAdResult
+                /*resultCallback = HandleAdResult*//* 여기 수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
             });
         }
         else
@@ -142,8 +142,8 @@ public class OfflineRewardManager : MonoBehaviour
     /// </summary>
     void GiveReward(int rewardAmount)
     {
-        GameManager.Instance.AddGold(rewardAmount);                        // 골드 증가
-        UIManager.Instance.ShowFinalRewardToast(rewardAmount);            // UI로 보상 알림 표시
+        GameManager.Instance.Gold += (rewardAmount);                        // 골드 증가
+        ShowFinalRewardToast(rewardAmount);            // UI로 보상 알림 표시
         Debug.Log($"[오프라인 보상] 최종 지급: {rewardAmount} 골드");
     }
 
@@ -161,4 +161,3 @@ public class OfflineRewardManager : MonoBehaviour
         // 예시: "총 7200 골드를 획득했습니다!"
     }
 }
-*/

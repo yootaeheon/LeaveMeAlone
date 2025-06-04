@@ -3975,6 +3975,10 @@ PrefabInstance:
       propertyPath: _inventoryUI
       value: 
       objectReference: {fileID: 311476420}
+    - target: {fileID: 3918751589527674857, guid: 7119e9d92525cfa468861bfaee9af63b, type: 3}
+      propertyPath: Model
+      value: 
+      objectReference: {fileID: 5140215395633502038}
     - target: {fileID: 5362920619024002297, guid: 7119e9d92525cfa468861bfaee9af63b, type: 3}
       propertyPath: _UIequip
       value: 
