@@ -1,24 +1,14 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
+using static Assets.Scripts.Item.ElementTypeEnum;
 
 namespace Inventory.Model
 {
-    public enum RecoveryType
-    {
-        HP,
-        MP,
-    }
-
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Inventory/Consume Item")]
     public class ConsumeItemSO : ItemSO
     {
-        [field: SerializeField] public int Value {  get; set; }
+        [field: SerializeField] public int Value { get; set; }
 
-        public void Consume()
-        {
-
-        }
-
+        [field: SerializeField] public ElementType ElementType { get; set; }
     }
 }

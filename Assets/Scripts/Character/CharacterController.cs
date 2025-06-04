@@ -3,6 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using TMPro;
+using System.Xml.Linq;
 
 public enum CharacterState { Idle, Move, Detect, Attack }
 

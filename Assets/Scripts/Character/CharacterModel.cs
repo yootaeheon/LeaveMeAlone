@@ -3,10 +3,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Assets.Scripts.Item.ElementTypeEnum;
+
 
 [System.Serializable]
 public class CharacterModel : MonoBehaviour
 {
+    [SerializeField] ElementType _elementType;
+    public ElementType ElementType {  get { return _elementType; } set { _elementType = value; } }
+
+
     [Header("Character Status")]
     [SerializeField] float _curHp;
     public float CurHp { get { return _curHp; } set { _curHp = value; CurHpChanged?.Invoke(); } }
