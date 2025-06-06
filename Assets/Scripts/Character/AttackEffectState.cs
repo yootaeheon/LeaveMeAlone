@@ -49,23 +49,19 @@ public class AttackEffectState : StateMachineBehaviour
 
         if (_timer >= PlayTiming)
         {
-            /* Debug.Log("생성 2");
-             GameObject instance = Instantiate(
-                                         _effectData.AttackEffects[(int)_model.ElementType], 
-                                         _controller._monster.transform.position, 
-                                         Quaternion.identity);
-             Destroy(instance, 1.3f);
-             Debug.Log("생성 3");
-             _isPlaying = true;*/
+            //elementTypeEnum이 비트 마스크 용도이기 때문에 Log를 이용하여 정수형으로 변환해줘야함
             int index = (int)Mathf.Log((int)_model.ElementType, 2);
             if (index >= 0 && index < _effectData.AttackEffects.Length)
             {
-                GameObject instance = GameObject.Instantiate(
-                    _effectData.AttackEffects[index],
-                    _controller._monster.transform.position,
-                    Quaternion.identity
-                );
-                GameObject.Destroy(instance, 1.3f);
+                /*  GameObject instance = GameObject.Instantiate(
+                      _effectData.AttackEffects[index],
+                      _controller._monster.transform.position,
+                      Quaternion.identity
+                  );
+                  GameObject.Destroy(instance, 1.3f);*/
+
+                EffectManager.Instance.PlayEffect(_effectData.AttackEffects[index], _controller._monster.transform.position + new Vector3(0, 1f, 0));
+
                 _isPlaying = true;
             }
         }
