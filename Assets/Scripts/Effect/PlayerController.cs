@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && hit.collider != null)
         {
             // 파티클 재생 위치는 충돌한 위치 기준
-            /*EffectManager.Instance.PlayEffect(, hit.point, hit.collider.transform);*/
+            *//*EffectManager.Instance.PlayEffect(, hit.point, hit.collider.transform);*//*
         }
     }
 }
+*/

@@ -40,7 +40,7 @@ public class PickUpSystem : MonoBehaviour
 
     public void AddElement(ElementType type)
     {
-        Model.ElementType |= type;
+        Model.ElementType = type;
         Console.WriteLine($"속성 추가됨: {type}, 현재 속성: {Model.ElementType}");
     }
 

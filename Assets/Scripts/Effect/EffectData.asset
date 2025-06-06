@@ -21,3 +21,11 @@ MonoBehaviour:
   <MaxHpEffect>k__BackingField: {fileID: 904651187185394017, guid: 4dd331fb59a25234dbec6c9e87083bcc, type: 3}
   <HpItemEffect>k__BackingField: {fileID: 702981894718865960, guid: f2c45c8ee47dc9148a3b2c1e104f0d43, type: 3}
   <DebuffItemEffect>k__BackingField: {fileID: 702981894718865960, guid: f2c45c8ee47dc9148a3b2c1e104f0d43, type: 3}
+  <BloodEffect>k__BackingField: {fileID: 6287680957292511230, guid: f175afc0ab4f162488d3a69815f4bde6, type: 3}
+  <FireEffect>k__BackingField: {fileID: 6681001652336395680, guid: 65e10b681f139874f9ce6f32fcac5aa7, type: 3}
+  <WaterEffect>k__BackingField: {fileID: 199860, guid: 8b158db9a52d92c41bd357624c42ac6f, type: 3}
+  <IceEffet>k__BackingField: {fileID: 3869689066708885676, guid: 5090f7b29e6ea7049884e1bc75e34c37, type: 3}
+  <LightningEffect>k__BackingField: {fileID: 2428907160060246081, guid: 03c5bf2588bc94f49bb74b437f39bb71, type: 3}
+  <BombEffect>k__BackingField: {fileID: 4689330153438509830, guid: 34a05e975b2c01549a54728a8beb0017, type: 3}
+  <Dark>k__BackingField: {fileID: 1678425991723802, guid: bdda79c7e5a594b4a87b7dc93cd73e99, type: 3}
+  <Poison>k__BackingField: {fileID: 6092117211213480904, guid: a18e3a522541b4ade984b6ed092f2e99, type: 3}
