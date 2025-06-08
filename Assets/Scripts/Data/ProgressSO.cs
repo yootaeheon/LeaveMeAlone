@@ -15,7 +15,6 @@ public class ProgressSO : ScriptableObject
     public int Stage { get { return _stage; } set { _stage = value; OnStageChanged?.Invoke(); } }
     public event Action OnStageChanged;
 
-
     [SerializeField] int _killCount;
     public event Action OnClearStage; // FadeIn 효과 연결
     public int KillCount
@@ -31,9 +30,26 @@ public class ProgressSO : ScriptableObject
         }
     }
 
+    private void OnEnable()
+    {
+        if (DatabaseManager.Instance != null &&
+       DatabaseManager.Instance.GameData != null &&
+       DatabaseManager.Instance.GameData.ProgressDataDTO != null)
+        {
+            SetFromDTO(DatabaseManager.Instance.GameData.ProgressDataDTO);
+        }
+    }
+
     public void AllMonsterSpawned()
     {
         OnClearStage?.Invoke();
         KillCount = 5;
+    }
+
+    public void SetFromDTO(ProgressDataDTO dto)
+    {
+        Chapter = dto.Chapter;
+        Stage = dto.Stage;
+        KillCount = dto.KillCount;
     }
 }

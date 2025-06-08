@@ -1,5 +1,16 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+
 public class OfflineRewardCanvas : UIBinder
 {
+    [SerializeField] OfflineRewardManager _offlineRewardManager;
+    [SerializeField] Slider _rewardAmountSlider;
+    private void Start()
+    {
+        UpdateSlider();
+    }
+    
     public void Button_Show()
     {
         gameObject.SetActive(true);
@@ -10,13 +21,8 @@ public class OfflineRewardCanvas : UIBinder
         gameObject.SetActive(false);
     }
 
-    public void Button_GetReward()
+    public void UpdateSlider()
     {
-
-    }
-
-    public void Button_GetRewardx2()
-    {
-
+        _rewardAmountSlider.value = (int)(_offlineRewardManager.calculatedSeconds * 360);
     }
 }

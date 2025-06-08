@@ -23,15 +23,12 @@ public class CharacterModel : MonoBehaviour
     public Action MaxHpChanged;
 
     [SerializeField] float _recoverHpPerSecond;
-    public float RerecoverHpPerSecond { get { return _recoverHpPerSecond; } set { _recoverHpPerSecond = value; RerecoverHpPerSecondChanged?.Invoke(); } }
-    public Action RerecoverHpPerSecondChanged { get; set; }
+    public float RecoverHpPerSecond { get { return _recoverHpPerSecond; } set { _recoverHpPerSecond = value; RecoverHpPerSecondChanged?.Invoke(); } }
+    public Action RecoverHpPerSecondChanged { get; set; }
 
     [SerializeField] float _defensePower;
     public float DefensePower { get { return _defensePower; } set { _defensePower = value; DefensePowerChanged?.Invoke(); } }
     public Action DefensePowerChanged;
-
-
-
 
     [Header("TempAttack")]
     [SerializeField] LayerMask _enemyLayer = 1 << 6;
@@ -49,8 +46,8 @@ public class CharacterModel : MonoBehaviour
     public Action AttackSpeedChanged;
 
     [SerializeField] float _criticalChance;
-    public float CriticalChacnce {  get { return _criticalChance; } set { _criticalChance = value; CriticalChacnceChanged?.Invoke(); } }
-    public Action CriticalChacnceChanged;
+    public float CriticalChance {  get { return _criticalChance; } set { _criticalChance = value; CriticalChanceChanged?.Invoke(); } }
+    public Action CriticalChanceChanged;
 
 
     [Header("Skill")]
@@ -62,6 +59,5 @@ public class CharacterModel : MonoBehaviour
     public float SkillInterval { get { return _skillInterval; } set { _skillInterval = value; SkillIntervalChanged?.Invoke(); } }
     public Action SkillIntervalChanged;
 
-  /*  [Header("Equip")]
-    [SerializeField] EquippableItemSO */
+    
 }

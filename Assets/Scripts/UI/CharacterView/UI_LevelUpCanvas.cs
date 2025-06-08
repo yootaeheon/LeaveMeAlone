@@ -43,7 +43,7 @@ public class UI_LevelUpCanvas : MonoBehaviour
 
         GameManager.Instance.Gold -= 2000;
 
-        _model.RerecoverHpPerSecond += 0.1f;
+        _model.RecoverHpPerSecond += 0.1f;
         EffectManager.Instance.PlayEffect(EffectManager.Instance.EffectData.RecoveryEffect, _playerPos, _player);
     }
 
@@ -87,7 +87,7 @@ public class UI_LevelUpCanvas : MonoBehaviour
 
         GameManager.Instance.Gold -= 2500;
 
-        _model.CriticalChacnce += 0.05f;
+        _model.CriticalChance += 0.05f;
         EffectManager.Instance.PlayEffect(EffectManager.Instance.EffectData.CriticalChanceEffect, _playerPos, _player);
     }
     #endregion

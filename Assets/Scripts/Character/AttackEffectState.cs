@@ -1,6 +1,5 @@
 using Assets.Scripts.Item;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class AttackEffectState : StateMachineBehaviour
 {
@@ -53,14 +52,18 @@ public class AttackEffectState : StateMachineBehaviour
             int index = (int)Mathf.Log((int)_model.ElementType, 2);
             if (index >= 0 && index < _effectData.AttackEffects.Length)
             {
-                /*  GameObject instance = GameObject.Instantiate(
-                      _effectData.AttackEffects[index],
-                      _controller._monster.transform.position,
-                      Quaternion.identity
-                  );
-                  GameObject.Destroy(instance, 1.3f);*/
+                if (_controller == null || _controller._monster == null)
+                    return;
 
-                EffectManager.Instance.PlayEffect(_effectData.AttackEffects[index], _controller._monster.transform.position + new Vector3(0, 1f, 0));
+                GameObject instance = GameObject.Instantiate
+                    (
+                        _effectData.AttackEffects[index],
+                        _controller._monster.transform.position,
+                        Quaternion.identity
+
+                    );
+                GameObject.Destroy(instance, 1.3f);
+                /*EffectManager.Instance.PlayEffect(_effectData.AttackEffects[index], _controller._monster.transform.position + new Vector3(0, 1f, 0));*/
 
                 _isPlaying = true;
             }

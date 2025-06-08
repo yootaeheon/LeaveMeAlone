@@ -116,7 +116,7 @@ public class MonsterController : Monster, IDamageable
 
     /* public void Attack()
      {
-         character.GetComponent<IDamageable>().TakeDamage(Base.AttackDamage);
+         _model.GetComponent<IDamageable>().TakeDamage(Base.AttackDamage);
      }*/
 
     void OnDrawGizmos()

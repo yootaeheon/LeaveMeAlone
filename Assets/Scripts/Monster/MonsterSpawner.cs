@@ -11,18 +11,18 @@ public class MonsterSpawner : MonoBehaviour
 
     [SerializeField] Transform _spawnPoint;
 
-    private void Start()
+    [SerializeField] CharacterController _controller;
+
+    private void OnEnable()
     {
-        Spawn();
+        _controller.OnSettedInit += Spawn;
     }
 
-    private void Update()
+   /* private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Spawn();
-        }
-    }
+        Spawn();
+    }*/
+   
 
     public void Spawn()
     {

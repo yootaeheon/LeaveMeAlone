@@ -64,7 +64,7 @@ public class EquipmentManager : MonoBehaviour
                 _weaponSpriteRenderer.sprite = item.ItemImage;
                 _model.AttackPower += item.AttackPower;
                 _model.AttackSpeed += item.AttackSpeed;
-                _model.CriticalChacnce += item.CriticalChance;
+                _model.CriticalChance += item.CriticalChance;
                 break;
         }
 
@@ -98,14 +98,14 @@ public class EquipmentManager : MonoBehaviour
             {
                 _model.AttackPower -= item.AttackPower;
                 _model.AttackSpeed -= item.AttackSpeed;
-                _model.CriticalChacnce -= item.CriticalChance;
+                _model.CriticalChance -= item.CriticalChance;
             }
             else
             {
                 _model.MaxHp -= item.PlusMaxHp;
                 _model.CurHp = Mathf.Min(_model.CurHp, _model.MaxHp);
                 _model.DefensePower -= item.DefensePower;
-                _model.RerecoverHpPerSecond -= item.RecoverHpPerSecond;
+                _model.RecoverHpPerSecond -= item.RecoverHpPerSecond;
             }
 
             // 스프라이트 초기화
@@ -137,7 +137,7 @@ public class EquipmentManager : MonoBehaviour
         _model.MaxHp += item.PlusMaxHp;
         _model.CurHp += item.PlusMaxHp;
         _model.DefensePower += item.DefensePower;
-        _model.RerecoverHpPerSecond += item.RecoverHpPerSecond;
+        _model.RecoverHpPerSecond += item.RecoverHpPerSecond;
     }
 
     /// <summary>

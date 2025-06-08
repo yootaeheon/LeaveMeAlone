@@ -1,9 +1,8 @@
-using System.Collections;
-using UnityEngine;
 using DG.Tweening;
 using System;
+using System.Collections;
 using TMPro;
-using System.Xml.Linq;
+using UnityEngine;
 
 public enum CharacterState { Idle, Move, Detect, Attack }
 
@@ -22,6 +21,8 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     [SerializeField] ObjectPool _objectPool;
 
+    [SerializeField] DatabaseManager _databaseManager;
+
     private IDamageable _monsterDamageable;
     public IDamageable MonsterDamageable => _monsterDamageable ??= _monster.GetComponent<IDamageable>();
 
@@ -31,29 +32,47 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     public Action OnEncounterMonster { get; set; }       // 몬스터 조우 시, 발생하는 이벤트 (맵 스크롤링 정지)
     public Action OnKillMonster { get; set; }            // 몬스터 처치 시, 발생하는 이벤트 (맵 스크롤링 진행)
+    public Action OnSettedInit { get; set; }
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        Init();
+    }
+
+    private void Start()
+    {
+        _databaseManager.OnGameDataLoaded += Init;
+    }
+
+    private void OnDestroy()
+    {
+        UnSubscribe();
     }
 
     public void Init()
     {
-       Model.CurHp = Model.MaxHp;
+        /*SetFromDTO(DatabaseManager.Instance.GameData.CharacterModelDTO);*/
+        Subscribe();
+        Debug.Log("구독 완료");
+        Model.CurHp = Model.MaxHp;
+        Debug.Log("맥스에이치피 초기화완료");
+        recoveryHpRoutine = StartCoroutine(RecoveryHpRoutine());
+        Debug.Log("체력회복 코루틴 시작 ");
+        OnSettedInit?.Invoke();
+        Debug.Log("모든 초기화 완료 후 몬스터 생성 이벤트 호출!");
     }
 
     #region Subscribe/Unsubscribe
     public void Subscribe()
     {
+        Model.MaxHpChanged += View.UpdateMaxHp;
         Model.CurHpChanged += View.UpdateCurHp;
         Model.CurHpChanged += () => _healthBar.UpdateHealthBar(Model.CurHp, Model.MaxHp);
-        Model.MaxHpChanged += View.UpdateMaxHp;
-        Model.RerecoverHpPerSecondChanged += View.UpdateRerecoverHpPerSecond;
+        Model.RecoverHpPerSecondChanged += View.UpdateRerecoverHpPerSecond;
         Model.DefensePowerChanged += View.UpdateDefensePower;
         Model.AttackPowerChanged += View.UpdateAttackPower;
         Model.AttackSpeedChanged += View.UpdateAttackSpeed;
-        Model.CriticalChacnceChanged += View.UpdateCriticalChance;
+        Model.CriticalChanceChanged += View.UpdateCriticalChance;
         //Model.SkillDamageChanged += View
         //Model.SkillIntervalChanged +=View
     }
@@ -63,27 +82,15 @@ public class CharacterController : MonoBehaviour, IDamageable
         Model.CurHpChanged -= View.UpdateCurHp;
         Model.CurHpChanged -= () => _healthBar.UpdateHealthBar(Model.CurHp, Model.MaxHp);
         Model.MaxHpChanged -= View.UpdateMaxHp;
-        Model.RerecoverHpPerSecondChanged -= View.UpdateRerecoverHpPerSecond;
+        Model.RecoverHpPerSecondChanged -= View.UpdateRerecoverHpPerSecond;
         Model.DefensePowerChanged -= View.UpdateDefensePower;
         Model.AttackPowerChanged -= View.UpdateAttackPower;
         Model.AttackSpeedChanged -= View.UpdateAttackSpeed;
-        Model.CriticalChacnceChanged -= View.UpdateCriticalChance;
+        Model.CriticalChanceChanged -= View.UpdateCriticalChance;
         //Model.SkillDamageChanged -= View
         //Model.SkillIntervalChanged -=View
     }
     #endregion
-
-    private void Start()
-    {
-        Subscribe();
-     
-        recoveryHpRoutine = StartCoroutine(RecoveryHpRoutine());
-    }
-
-    private void OnDestroy()
-    {
-        UnSubscribe();
-    }
 
     /// <summary>
     /// FSM 적용하여 상태 별 행동 실행
@@ -110,6 +117,19 @@ public class CharacterController : MonoBehaviour, IDamageable
                 }
                 break;
         }
+    }
+
+    public void SetFromDTO(CharacterModelDTO dto)
+    {
+        Debug.Log("DTO 초기화 전");
+        Model.MaxHp = dto.MaxHp;
+        Model.RecoverHpPerSecond = dto.RecoverHpPerSecond;
+        Model.DefensePower = dto.DefensePower;
+        Model.AttackPower = dto.AttackPower;
+        Model.AttackSpeed = dto.AttackSpeed;
+        Model.CriticalChance = dto.CriticalChance;
+        Debug.Log("DTO 초기화 후");
+
     }
 
     void SearchForEnemies()
@@ -208,10 +228,10 @@ public class CharacterController : MonoBehaviour, IDamageable
         {
             yield return Util.GetDelay(1f);
 
-            if (Model.CurHp <= 0) 
+            if (Model.CurHp <= 0)
                 yield break;
 
-            Model.CurHp += Model.RerecoverHpPerSecond;
+            Model.CurHp += Model.RecoverHpPerSecond;
 
             if (Model.CurHp > Model.MaxHp)
             {

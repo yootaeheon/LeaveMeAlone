@@ -62,7 +62,6 @@ public class GachaSystem : MonoBehaviour
     public void LevelChanged()
     {
         _characterLevel = (_progressInfo.Chapter - 1) * 10 + _progressInfo.Stage;
-        Debug.Log(_characterLevel);
 
         OnValidate();
     }

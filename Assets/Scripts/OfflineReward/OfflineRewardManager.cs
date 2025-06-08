@@ -1,22 +1,31 @@
-using System;
-using UnityEngine;
 using Firebase.Auth;
 using Firebase.Database;
-
+using System;
+using UnityEngine;
 // 광고 SDK (예: Unity Ads 사용 시)
 using UnityEngine.Advertisements;
 
-public class OfflineRewardManager : MonoBehaviour
+public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
 {
+    [SerializeField] OfflineRewardCanvas _rewardCanvas;
+
+    private const string AD_UID = "rewardedVideo";
+
     private DatabaseReference dbRef;              // Firebase Realtime Database 참조
     private int goldPerSecond = 10;               // 초당 보상 골드
     private readonly long maxRewardSeconds = 21600; // 최대 보상 가능 시간: 6시간 = 21,600초
 
-    private long calculatedSeconds = 0;           // 실제 경과 시간 (초)
+    public long calculatedSeconds = 0;           // 실제 경과 시간 (초)
     private int baseReward = 0;                   // 기본 보상량
 
     void Start()
     {
+        // 광고 초기화 (테스트 ID와 프로덕션 ID는 대시보드에서 확인 가능)
+        if (!Advertisement.isInitialized)
+        {
+            Advertisement.Initialize("5871255", true); // true는 테스트 모드 (릴리즈 시 false)
+        }
+
         // Firebase Database 초기화
         dbRef = FirebaseDatabase.DefaultInstance.RootReference;
 
@@ -42,12 +51,16 @@ public class OfflineRewardManager : MonoBehaviour
 
     /// <summary>
     /// 현재 UTC 시간을 유닉스 타임스탬프로 저장 (로그아웃 시간)
+    /// UTC 시간 : 1970년 1월 1일 00:00:00 UTC를 기준으로 지금까지 흐른 시간을 '초 단위'로 나타낸 숫자
+    /// 시간 비교가 쉽고 빠르기 때문에 사용
+    /// 사용 방법 : 현재 시간(유닉스 타임스탬프) - 마지막 접속 시간(유닉스 타임스탬프)
     /// </summary>
     void SaveLogoutTime()
     {
         string uid = FirebaseAuth.DefaultInstance.CurrentUser?.UserId;
         if (string.IsNullOrEmpty(uid)) return;
 
+        // 유닉스 타임스탬프 형식으로 바꿔 시간을 숫자로 표현
         long nowUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         dbRef.Child("users").Child(uid).Child("lastLogoutTime").SetValueAsync(nowUnixTime);
     }
@@ -84,7 +97,7 @@ public class OfflineRewardManager : MonoBehaviour
                     Debug.Log($"[오프라인 보상] 경과 시간: {calculatedSeconds}초, 기본 보상: {baseReward}");
 
                     // 사용자에게 광고 보기 여부를 묻는 팝업 표시
-                    ShowOfflineRewardPopup(baseReward, OnAdWatchSelected, OnAdDeclined);
+                    _rewardCanvas.Button_Show();
                 }
                 else
                 {
@@ -93,10 +106,15 @@ public class OfflineRewardManager : MonoBehaviour
             });
     }
 
+
+    //===============
+    //    광고
+    //===============
+
     /// <summary>
     /// 사용자가 광고 시청을 하지 않고 그냥 보상을 받을 경우
     /// </summary>
-    void OnAdDeclined()
+    public void Button_NoWatchingAD()
     {
         GiveReward(baseReward);
     }
@@ -104,37 +122,9 @@ public class OfflineRewardManager : MonoBehaviour
     /// <summary>
     /// 사용자가 광고 시청을 선택했을 경우
     /// </summary>
-    void OnAdWatchSelected()
+    public void Button_WatchAD()
     {
-        if (Advertisement.isInitialized) /*("rewardedVideo")*/
-        {
-            Advertisement.Show("rewardedVideo", new ShowOptions
-            {
-                /*resultCallback = HandleAdResult*//* 여기 수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-            });
-        }
-        else
-        {
-            Debug.Log("[광고] 광고가 준비되지 않았습니다. 기본 보상을 지급합니다.");
-            GiveReward(baseReward);
-        }
-    }
-
-    /// <summary>
-    /// 광고 시청 결과에 따라 보상 처리
-    /// </summary>
-    void HandleAdResult(ShowResult result)
-    {
-        if (result == ShowResult.Finished)
-        {
-            Debug.Log("[광고] 광고 시청 완료 - 2배 보상 지급");
-            GiveReward(baseReward * 2);
-        }
-        else
-        {
-            Debug.Log("[광고] 광고 스킵 또는 실패 - 기본 보상 지급");
-            GiveReward(baseReward);
-        }
+        Advertisement.Show(AD_UID, this);
     }
 
     /// <summary>
@@ -142,22 +132,28 @@ public class OfflineRewardManager : MonoBehaviour
     /// </summary>
     void GiveReward(int rewardAmount)
     {
-        GameManager.Instance.Gold += (rewardAmount);                        // 골드 증가
-        ShowFinalRewardToast(rewardAmount);            // UI로 보상 알림 표시
+        GameManager.Instance.Gold += (rewardAmount);                      
         Debug.Log($"[오프라인 보상] 최종 지급: {rewardAmount} 골드");
+        _rewardCanvas.Button_Hide();
     }
 
-    public void ShowOfflineRewardPopup(int baseReward, Action onAdWatch, Action onDecline)
+    public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-        // 예시:
-        // "6시간 동안 3600 골드를 벌었습니다!"
-        // [광고 보고 2배 받기] → onAdWatch()
-        // [그냥 받기] → onDecline()
+        if (placementId == AD_UID)
+        {
+            if (showCompletionState == UnityAdsShowCompletionState.COMPLETED)
+            {
+                Debug.Log("[광고] 광고 시청 완료 - 2배 보상 지급");
+                GiveReward(baseReward * 2);
+            }
+            else
+            {
+                Debug.Log("[광고] 광고 스킵 또는 실패 - 기본 보상 지급");
+                GiveReward(baseReward);
+            }
+        }
     }
-
-    // 최종 보상 지급 후 토스트 메시지 또는 팝업
-    public void ShowFinalRewardToast(int reward)
-    {
-        // 예시: "총 7200 골드를 획득했습니다!"
-    }
+    public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message) { }
+    public void OnUnityAdsShowStart(string placementId) { }
+    public void OnUnityAdsShowClick(string placementId) { }
 }

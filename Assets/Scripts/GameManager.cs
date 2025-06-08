@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
         UpdateGem();
     }
 
+    
+
     private void UpdateGold()
     {
         _goldText.text = $"{Gold}";
