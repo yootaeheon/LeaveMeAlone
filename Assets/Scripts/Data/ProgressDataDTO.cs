@@ -1,12 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ProgressDataDTO : MonoBehaviour
+[System.Serializable]
+public class ProgressDataDTO
 {
     public int Chapter;
     public int Stage;
     public int KillCount;
+
+    public ProgressDataDTO() { }
 
     public ProgressDataDTO(int chapter, int stage, int killCount)
     {

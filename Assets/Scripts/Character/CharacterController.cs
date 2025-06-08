@@ -21,8 +21,6 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     [SerializeField] ObjectPool _objectPool;
 
-    [SerializeField] DatabaseManager _databaseManager;
-
     private IDamageable _monsterDamageable;
     public IDamageable MonsterDamageable => _monsterDamageable ??= _monster.GetComponent<IDamageable>();
 
@@ -39,9 +37,17 @@ public class CharacterController : MonoBehaviour, IDamageable
         _animator = GetComponent<Animator>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        _databaseManager.OnGameDataLoaded += Init;
+        DatabaseManager.Instance.OnGameDataLoaded += () =>
+        {
+            Subscribe();
+            Debug.Log("구독 완료");
+            recoveryHpRoutine = StartCoroutine(RecoveryHpRoutine());
+            Debug.Log("체력회복 코루틴 시작 ");
+            OnSettedInit?.Invoke();
+            Debug.Log("모든 초기화 완료 후 몬스터 생성 이벤트 호출!");
+        };
     }
 
     private void OnDestroy()
@@ -54,8 +60,6 @@ public class CharacterController : MonoBehaviour, IDamageable
         /*SetFromDTO(DatabaseManager.Instance.GameData.CharacterModelDTO);*/
         Subscribe();
         Debug.Log("구독 완료");
-        Model.CurHp = Model.MaxHp;
-        Debug.Log("맥스에이치피 초기화완료");
         recoveryHpRoutine = StartCoroutine(RecoveryHpRoutine());
         Debug.Log("체력회복 코루틴 시작 ");
         OnSettedInit?.Invoke();

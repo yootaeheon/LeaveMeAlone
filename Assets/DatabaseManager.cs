@@ -2,6 +2,12 @@ using Firebase.Database;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using Firebase.Extensions;
+
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -11,12 +17,11 @@ public class DatabaseManager : MonoBehaviour
 
     public DatabaseReference userDataRef { get; private set; }
 
-
     [SerializeField] CharacterModel _model;
     public CharacterModel Model => _model ??= FindAnyObjectByType<CharacterModel>();
 
     [SerializeField] ProgressSO _progressData;
-    public ProgressSO ProgressData => _progressData ??= FindAnyObjectByType<ChapterManager>()?.ProgressInfo;
+    public ProgressSO ProgressData => _progressData ??= Resources.Load<ProgressSO>("ProgressData");
 
 
     public bool IsGameDataLoaded { get; private set; }
@@ -25,12 +30,18 @@ public class DatabaseManager : MonoBehaviour
     private void Awake()
     {
         SetSingleton();
+
+        // 에디터 모드에서 종료 감지
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged += OnPlayModeChanged;
+#endif
     }
 
     private void Start()
     {
         if (BackendManager.Instance.OnFirebaseReady)
         {
+            Debug.Log("부른다!!");
             LoadAllGameData();
         }
     }
@@ -58,6 +69,22 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        SaveAllGameData();
+    }
+
+#if UNITY_EDITOR
+    private void OnPlayModeChanged(PlayModeStateChange state)
+    {
+        if (state == PlayModeStateChange.ExitingPlayMode)
+        {
+            SaveAllGameData();
+            Debug.Log("에디터 실행 종료 시 SaveAllGameData 호출");
+        }
+    }
+#endif
+
     public void SaveAllGameData()
     {
         string userId = BackendManager.Auth?.CurrentUser?.UserId;
@@ -75,7 +102,7 @@ public class DatabaseManager : MonoBehaviour
             return;
         }
 
-        userDataRef = BackendManager.Database.GetReference("users").Child(userId);
+        userDataRef = BackendManager.Database.RootReference.Child(userId);
 
         CharacterModelDTO characterDTO = new CharacterModelDTO
         (
@@ -112,47 +139,77 @@ public class DatabaseManager : MonoBehaviour
     public void LoadAllGameData()
     {
         Debug.Log("LOAD ALL GAMEDATA 1");
-        string uid = BackendManager.Auth?.CurrentUser?.UserId;
+        string userId = BackendManager.Auth?.CurrentUser?.UserId;
         Debug.Log("LOAD ALL GAMEDATA 2");
-        if (string.IsNullOrEmpty(uid)) return;
+        if (string.IsNullOrEmpty(userId)) return;
         Debug.Log("LOAD ALL GAMEDATA 3");
 
-        BackendManager.Database
-            .GetReference("users").Child(uid).Child("gameData")
-            .GetValueAsync()
-            .ContinueWith(task =>
+        BackendManager.Database.RootReference.Child(userId).Child("gameData").GetValueAsync()
+            .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCompleted && task.Result.Exists)
                 {
+                    Debug.Log($"_model: {_model}, _progressData: {_progressData}");
+                    Debug.Log("LOAD ALL GAMEDATA 4");
                     if (_model == null || _progressData == null) return;
-
+                    Debug.Log("LOAD ALL GAMEDATA 5");
                     string json = task.Result.GetRawJsonValue();
+                    Debug.Log("LOAD ALL GAMEDATA 6");
                     GameData = JsonUtility.FromJson<UserGameDataDTO>(json);
-
+                    Debug.Log("LOAD ALL GAMEDATA 7");
 
                     Model.MaxHp = GameData.CharacterModelDTO.MaxHp;
+                    Model.CurHp = Model.MaxHp;
                     Model.RecoverHpPerSecond = GameData.CharacterModelDTO.RecoverHpPerSecond;
                     Model.DefensePower = GameData.CharacterModelDTO.DefensePower;
                     Model.AttackPower = GameData.CharacterModelDTO.AttackPower;
                     Model.AttackSpeed = GameData.CharacterModelDTO.AttackSpeed;
                     Model.CriticalChance = GameData.CharacterModelDTO.CriticalChance;
 
+
+                    Debug.Log("LOAD ALL GAMEDATA 8");
+                    Debug.Log($"{ProgressData}이 널이냐 제발 알려줘");
                     ProgressData.Chapter = GameData.ProgressDataDTO.Chapter;
+                    Debug.Log("LOAD ALL GAMEDATA 8-1");
                     ProgressData.Stage = GameData.ProgressDataDTO.Stage;
+                    Debug.Log("LOAD ALL GAMEDATA 8-2");
                     ProgressData.KillCount = GameData.ProgressDataDTO.KillCount;
-
+                    Debug.Log("LOAD ALL GAMEDATA 9");
                     IsGameDataLoaded = true;
-                    OnGameDataLoaded.Invoke();
-
+                    OnGameDataLoaded?.Invoke();
+                    Debug.Log("LOAD ALL GAMEDATA 10");
 
                     Debug.Log("모든 게임 데이터 불러오기 완료!");
                 }
+                /* if (task.IsCompleted && task.Result.Exists)
+                 {
+                     var snapshot = task.Result;
+
+                     var characterModel = snapshot.Child("CharacterModelDTO");
+                     Model.MaxHp = Convert.ToInt32(characterModel.Child("MaxHp").Value);
+                     Model.CurHp = Model.MaxHp;
+                     Debug.Log("잘되가는중 1");
+                     Model.RecoverHpPerSecond = Convert.ToSingle(characterModel.Child("RecoverHpPerSecond").Value);
+                     Model.DefensePower = Convert.ToInt32(characterModel.Child("DefensePower").Value);
+                     Model.AttackPower = Convert.ToInt32(characterModel.Child("AttackPower").Value);
+                     Model.AttackSpeed = Convert.ToSingle(characterModel.Child("AttackSpeed").Value);
+                     Model.CriticalChance = Convert.ToSingle(characterModel.Child("CriticalChance").Value);
+
+                     var progressData = snapshot.Child("ProgressDataDTO");
+                     ProgressData.Chapter = Convert.ToInt32(progressData.Child("Chapter").Value);
+                     ProgressData.Stage = Convert.ToInt32(progressData.Child("Stage").Value);
+                     ProgressData.KillCount = Convert.ToInt32(progressData.Child("KillCount").Value);
+
+                     OnGameDataLoaded?.Invoke();
+                     Debug.Log("LOAD ALL GAMEDATA 10");
+
+                     Debug.Log("직접 접근 방식으로 데이터 로딩 완료");
+                 }*/
                 else
                 {
                     Debug.LogWarning("게임 데이터 불러오기 실패: " + task.Exception);
                 }
             });
     }
-
     #endregion
 }

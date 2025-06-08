@@ -13,9 +13,10 @@ public class MonsterSpawner : MonoBehaviour
 
     [SerializeField] CharacterController _controller;
 
-    private void OnEnable()
+    private void Start()
     {
-        _controller.OnSettedInit += Spawn;
+        /*_controller.OnSettedInit += Spawn;*/
+        Spawn();
     }
 
    /* private void Start()

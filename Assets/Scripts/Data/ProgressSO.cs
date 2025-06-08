@@ -22,15 +22,19 @@ public class ProgressSO : ScriptableObject
         get { return _killCount; }
         set
         {
+            if (_killCount == value) return;
+
             _killCount = value;
+
             if (_killCount == 0)
             {
-                AllMonsterSpawned();
+                OnClearStage?.Invoke();
+                _killCount = 5;
             }
         }
     }
 
-    private void OnEnable()
+   /* private void OnEnable()
     {
         if (DatabaseManager.Instance != null &&
        DatabaseManager.Instance.GameData != null &&
@@ -38,12 +42,11 @@ public class ProgressSO : ScriptableObject
         {
             SetFromDTO(DatabaseManager.Instance.GameData.ProgressDataDTO);
         }
-    }
+    }*/
 
     public void AllMonsterSpawned()
     {
-        OnClearStage?.Invoke();
-        KillCount = 5;
+      
     }
 
     public void SetFromDTO(ProgressDataDTO dto)
