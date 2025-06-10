@@ -16,37 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 44eb6080c4ff5e94498731a7867b1e2d
-  m_SerializeEntries:
-  - m_GUID: 1bdd31a26bb0e4a5085ea676817a295d
-    m_Address: Assets/Import/SPUM
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2d55677ad12e48f4490249f2d0fdf7f3
-    m_Address: Assets/Import/2D Fantasy sprite bundle/Island pack
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6e9dbe7d52a5e449596fd541821ec60a
-    m_Address: Assets/Import/2D Pixel RPG Icon Pack/Icons/Postion
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a805533a7b43d504d99c4bc5e33b51a8
-    m_Address: Assets/Import/StateEffect
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d4d24ea62e2c148c2aa224a6970a7f59
-    m_Address: Assets/Import/2D Pixel RPG Icon Pack/Icons/Food
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 10ca668a64be4dc4dae112b130e599bc, type: 2}
   m_SchemaSet:

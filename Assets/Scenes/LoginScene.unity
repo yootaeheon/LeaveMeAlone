@@ -6258,6 +6258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b59e5407ce63934a8a1f71266af8d92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnFirebaseReady: 0
 --- !u!4 &1815995321
 Transform:
   m_ObjectHideFlags: 0
