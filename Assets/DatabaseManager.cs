@@ -126,7 +126,7 @@ public class DatabaseManager : MonoBehaviour
 
         userDataRef.Child("gameData")
             .SetRawJsonValueAsync(json)
-            .ContinueWith(task =>
+            .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCompleted)
                     Debug.Log("모든 게임 데이터 저장 완료!");
@@ -138,25 +138,18 @@ public class DatabaseManager : MonoBehaviour
     #region 모든 데이터 업데이트
     public void LoadAllGameData()
     {
-        Debug.Log("LOAD ALL GAMEDATA 1");
         string userId = BackendManager.Auth?.CurrentUser?.UserId;
-        Debug.Log("LOAD ALL GAMEDATA 2");
         if (string.IsNullOrEmpty(userId)) return;
-        Debug.Log("LOAD ALL GAMEDATA 3");
 
         BackendManager.Database.RootReference.Child(userId).Child("gameData").GetValueAsync()
             .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCompleted && task.Result.Exists)
                 {
-                    Debug.Log($"_model: {_model}, _progressData: {_progressData}");
-                    Debug.Log("LOAD ALL GAMEDATA 4");
                     if (_model == null || _progressData == null) return;
-                    Debug.Log("LOAD ALL GAMEDATA 5");
+
                     string json = task.Result.GetRawJsonValue();
-                    Debug.Log("LOAD ALL GAMEDATA 6");
                     GameData = JsonUtility.FromJson<UserGameDataDTO>(json);
-                    Debug.Log("LOAD ALL GAMEDATA 7");
 
                     Model.MaxHp = GameData.CharacterModelDTO.MaxHp;
                     Model.CurHp = Model.MaxHp;
@@ -165,46 +158,16 @@ public class DatabaseManager : MonoBehaviour
                     Model.AttackPower = GameData.CharacterModelDTO.AttackPower;
                     Model.AttackSpeed = GameData.CharacterModelDTO.AttackSpeed;
                     Model.CriticalChance = GameData.CharacterModelDTO.CriticalChance;
+                    Debug.Log("모델 데이터 불러오기 완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-
-                    Debug.Log("LOAD ALL GAMEDATA 8");
-                    Debug.Log($"{ProgressData}이 널이냐 제발 알려줘");
                     ProgressData.Chapter = GameData.ProgressDataDTO.Chapter;
-                    Debug.Log("LOAD ALL GAMEDATA 8-1");
                     ProgressData.Stage = GameData.ProgressDataDTO.Stage;
-                    Debug.Log("LOAD ALL GAMEDATA 8-2");
                     ProgressData.KillCount = GameData.ProgressDataDTO.KillCount;
-                    Debug.Log("LOAD ALL GAMEDATA 9");
                     IsGameDataLoaded = true;
                     OnGameDataLoaded?.Invoke();
-                    Debug.Log("LOAD ALL GAMEDATA 10");
 
                     Debug.Log("모든 게임 데이터 불러오기 완료!");
                 }
-                /* if (task.IsCompleted && task.Result.Exists)
-                 {
-                     var snapshot = task.Result;
-
-                     var characterModel = snapshot.Child("CharacterModelDTO");
-                     Model.MaxHp = Convert.ToInt32(characterModel.Child("MaxHp").Value);
-                     Model.CurHp = Model.MaxHp;
-                     Debug.Log("잘되가는중 1");
-                     Model.RecoverHpPerSecond = Convert.ToSingle(characterModel.Child("RecoverHpPerSecond").Value);
-                     Model.DefensePower = Convert.ToInt32(characterModel.Child("DefensePower").Value);
-                     Model.AttackPower = Convert.ToInt32(characterModel.Child("AttackPower").Value);
-                     Model.AttackSpeed = Convert.ToSingle(characterModel.Child("AttackSpeed").Value);
-                     Model.CriticalChance = Convert.ToSingle(characterModel.Child("CriticalChance").Value);
-
-                     var progressData = snapshot.Child("ProgressDataDTO");
-                     ProgressData.Chapter = Convert.ToInt32(progressData.Child("Chapter").Value);
-                     ProgressData.Stage = Convert.ToInt32(progressData.Child("Stage").Value);
-                     ProgressData.KillCount = Convert.ToInt32(progressData.Child("KillCount").Value);
-
-                     OnGameDataLoaded?.Invoke();
-                     Debug.Log("LOAD ALL GAMEDATA 10");
-
-                     Debug.Log("직접 접근 방식으로 데이터 로딩 완료");
-                 }*/
                 else
                 {
                     Debug.LogWarning("게임 데이터 불러오기 실패: " + task.Exception);
