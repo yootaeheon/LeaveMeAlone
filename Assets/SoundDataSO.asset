@@ -20,7 +20,7 @@ MonoBehaviour:
     GameClear: {fileID: 0}
     HPLowBGM: {fileID: 0}
     StoreBGM: {fileID: 0}
-    OnUI: {fileID: 0}
+    OnUI: {fileID: 8300000, guid: 5ec5fa2b93f21cf4d9bec7e45b5ba16e, type: 3}
     OffUI: {fileID: 0}
     MoveUI: {fileID: 0}
     SelectUI: {fileID: 0}
