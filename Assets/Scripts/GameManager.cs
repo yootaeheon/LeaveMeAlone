@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int _gem;
     public int Gem {  get { return _gem; } set {  _gem = value; UpdateGem(); } }
 
-
+    public List<float> floats = new List<float>(2);
 
 
 
