@@ -56,6 +56,7 @@ public class BackendManager : MonoBehaviour
                 app = FirebaseApp.DefaultInstance;
                 auth = FirebaseAuth.DefaultInstance;
                 database = FirebaseDatabase.DefaultInstance;
+                database.GoOnline();
 
                 OnFirebaseReady = true;
             }
