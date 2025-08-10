@@ -3,6 +3,7 @@ using Firebase.Database;
 using System;
 using UnityEngine;
 // 광고 SDK (예: Unity Ads 사용 시)
+using GoogleMobileAds.Api;
 using UnityEngine.Advertisements;
 
 public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
@@ -18,7 +19,12 @@ public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
     public long calculatedSeconds = 0;           // 실제 경과 시간 (초)
     private int baseReward = 0;                   // 기본 보상량
 
-    void Start()
+    private void Awake()
+    {
+        InitAdmob();
+    }
+
+    private void Start()
     {
         // 광고 초기화 (테스트 ID와 프로덕션 ID는 대시보드에서 확인 가능)
         if (!Advertisement.isInitialized)
@@ -36,8 +42,14 @@ public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
         }
     }
 
+    private void InitAdmob()
+    {
+        // AdMob 초기화 (Google Mobile Ads SDK 사용 시)
+        MobileAds.Initialize(initStatus => { });
+    }
+
     // 앱이 백그라운드로 전환될 때 로그아웃 시간 저장
-    void OnApplicationPause(bool pause)
+    private void OnApplicationPause(bool pause)
     {
         if (pause)
             SaveLogoutTime();
@@ -55,7 +67,7 @@ public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
     /// 시간 비교가 쉽고 빠르기 때문에 사용
     /// 사용 방법 : 현재 시간(유닉스 타임스탬프) - 마지막 접속 시간(유닉스 타임스탬프)
     /// </summary>
-    void SaveLogoutTime()
+    private void SaveLogoutTime()
     {
         string uid = FirebaseAuth.DefaultInstance.CurrentUser?.UserId;
         if (string.IsNullOrEmpty(uid)) return;
