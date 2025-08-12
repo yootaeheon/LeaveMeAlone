@@ -21,9 +21,9 @@ public class UI_Progress : UIBinder
 
     private void Start()
     {
-        ChapterManager.Instance.ProgressInfo.OnStageChanged += UpdateProgressUI;
-        ChapterManager.Instance.ProgressInfo.OnChapterChanged += UpdateProgressUI;
-        ChapterManager.Instance.ProgressInfo.OnKillCountChanged += () => UpdateProgressSlider();
+        _progressData.OnStageChanged += UpdateProgressUI;
+        _progressData.OnChapterChanged += UpdateProgressUI;
+        _progressData.OnKillCountChanged += () => UpdateProgressSlider();
 
 
         Init();
@@ -31,9 +31,9 @@ public class UI_Progress : UIBinder
 
     private void OnDestroy()
     {
-        ChapterManager.Instance.ProgressInfo.OnStageChanged -= UpdateProgressUI;
-        ChapterManager.Instance.ProgressInfo.OnChapterChanged -= UpdateProgressUI;
-        ChapterManager.Instance.ProgressInfo.OnKillCountChanged -= () => UpdateProgressSlider();
+        _progressData.OnStageChanged -= UpdateProgressUI;
+        _progressData.OnChapterChanged -= UpdateProgressUI;
+        _progressData.OnKillCountChanged -= () => UpdateProgressSlider();
     }
 
     private void Init()
@@ -45,14 +45,14 @@ public class UI_Progress : UIBinder
 
     public void UpdateProgressUI()
     {
-        _progressText.text = $"{ChapterManager.Instance.ProgressInfo.Chapter} - {ChapterManager.Instance.ProgressInfo.Stage}";
+        _progressText.text = $"{_progressData.Chapter} - {_progressData.Stage}";
     }
 
     public void UpdateProgressSlider()
     {
         /*float targetValue = ChapterManager.Instance.ProgressInfo.KillCount;
         _progressSlider.value = Mathf.Lerp(_progressSlider.value, targetValue, Time.deltaTime * _lerpSpeed);*/
-        _progressSlider.value = ChapterManager.Instance.ProgressInfo.KillCount;
+        _progressSlider.value = _progressData.KillCount;
         Debug.Log("»£√‚«ﬂ¥Ÿ¿◊");
     }
 }

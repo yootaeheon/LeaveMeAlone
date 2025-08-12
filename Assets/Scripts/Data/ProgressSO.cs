@@ -23,9 +23,7 @@ public class ProgressSO : ScriptableObject
         get { return _killCount; }
         set
         {
-            OnKillCountChanged?.Invoke();
-
-            if (_killCount == value) return;
+           /* if (_killCount == value) return;*/
 
             _killCount = value;
 
@@ -34,6 +32,8 @@ public class ProgressSO : ScriptableObject
                 OnClearStage?.Invoke();
                 _killCount = 5;
             }
+
+            OnKillCountChanged?.Invoke();
         }
     }
 }

@@ -9708,6 +9708,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2047656885508138774, guid: 3b3fa719517c0404dabe1e4241479268, type: 3}
+      propertyPath: _progressData
+      value: 
+      objectReference: {fileID: 11400000, guid: 853e23b21268ed8429eaa9213ebe5db0, type: 2}
+    - target: {fileID: 2047656885508138774, guid: 3b3fa719517c0404dabe1e4241479268, type: 3}
       propertyPath: _progressSlider
       value: 
       objectReference: {fileID: 589979083}
