@@ -17,11 +17,14 @@ public class ProgressSO : ScriptableObject
 
     [SerializeField] int _killCount;
     public event Action OnClearStage; // FadeIn 효과 연결
+    public event Action OnKillCountChanged;
     public int KillCount
     {
         get { return _killCount; }
         set
         {
+            OnKillCountChanged?.Invoke();
+
             if (_killCount == value) return;
 
             _killCount = value;
@@ -32,21 +35,6 @@ public class ProgressSO : ScriptableObject
                 _killCount = 5;
             }
         }
-    }
-
-   /* private void OnEnable()
-    {
-        if (DatabaseManager.Instance != null &&
-       DatabaseManager.Instance.GameData != null &&
-       DatabaseManager.Instance.GameData.ProgressDataDTO != null)
-        {
-            SetFromDTO(DatabaseManager.Instance.GameData.ProgressDataDTO);
-        }
-    }*/
-
-    public void AllMonsterSpawned()
-    {
-      
     }
 
     public void SetFromDTO(ProgressDataDTO dto)
