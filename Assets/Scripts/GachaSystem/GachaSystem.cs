@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
 public class GachaSystem : MonoBehaviour
@@ -12,6 +13,10 @@ public class GachaSystem : MonoBehaviour
     [SerializeField] EquipItemData _equipItemData;
     [SerializeField] GameObject _item;
     [SerializeField] Transform _spawnPos;
+
+    [SerializeField] Canvas _gachaCanvas;
+    [SerializeField] GameObject _gachaPrefabOnCanvas;
+    [SerializeField] GameObject _gachaParentObj;
 
     [Header("캐릭터 레벨 설정 (1~100)")]
     /*[Range(1, 100)]*/
@@ -97,10 +102,16 @@ public class GachaSystem : MonoBehaviour
         var (itemType, level) = GetRandomItem();
         var list = EqipItemDataDic[itemType];
 
+        _gachaCanvas.gameObject.SetActive(true); // 가챠 UI 활성화
+
         // 아이템 생성
         if (level >= 1 && level <= list.Count)
         {
-            GameObject item = Instantiate(_item, _spawnPos.position, Quaternion.identity);
+            GameObject item = Instantiate(_gachaPrefabOnCanvas);
+            _gachaParentObj.transform.SetParent(_gachaCanvas.transform);
+
+            //TODO: 생성한 프리팹에 가차결과 아이템 이미지와 정보 수량 넣어주기
+
             item.GetComponent<Item>().InventoryItem = list[level-1];
             Debug.Log($"[소환됨] {itemType} Lv.{level}");
         }
