@@ -36,11 +36,4 @@ public class ProgressSO : ScriptableObject
             }
         }
     }
-
-    public void SetFromDTO(ProgressDataDTO dto)
-    {
-        Chapter = dto.Chapter;
-        Stage = dto.Stage;
-        KillCount = dto.KillCount;
-    }
 }

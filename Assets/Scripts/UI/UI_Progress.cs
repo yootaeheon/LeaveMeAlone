@@ -1,26 +1,30 @@
-using System.Collections;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
 public class UI_Progress : UIBinder
 {
-    private Slider _progressSlider => GetUI<Slider>("ProgressSlider");
+    public Slider _progressSlider;
 
-    private TMP_Text _progressText => GetUI<TMP_Text>("ProgressText");
+    private TMP_Text _progressText;
 
-    private float _lerpSpeed = 1.0f;
+    [SerializeField] ProgressSO _progressData;
 
     private void Awake()
     {
         BindAll();
+        
+        /*_progressSlider = GetUI<Slider>("ProgressSlider");*/
+
+        _progressText = GetUI<TMP_Text>("ProgressText");
     }
 
     private void Start()
     {
         ChapterManager.Instance.ProgressInfo.OnStageChanged += UpdateProgressUI;
         ChapterManager.Instance.ProgressInfo.OnChapterChanged += UpdateProgressUI;
-        ChapterManager.Instance.ProgressInfo.OnKillCountChanged += UpdateProgressSlider;
+        ChapterManager.Instance.ProgressInfo.OnKillCountChanged += () => UpdateProgressSlider();
+
 
         Init();
     }
@@ -29,7 +33,7 @@ public class UI_Progress : UIBinder
     {
         ChapterManager.Instance.ProgressInfo.OnStageChanged -= UpdateProgressUI;
         ChapterManager.Instance.ProgressInfo.OnChapterChanged -= UpdateProgressUI;
-        ChapterManager.Instance.ProgressInfo.OnKillCountChanged -= UpdateProgressSlider;
+        ChapterManager.Instance.ProgressInfo.OnKillCountChanged -= () => UpdateProgressSlider();
     }
 
     private void Init()
@@ -37,7 +41,6 @@ public class UI_Progress : UIBinder
         UpdateProgressUI();
 
         _progressSlider.maxValue = 5;
-        _progressSlider.value = ChapterManager.Instance.ProgressInfo.KillCount;
     }
 
     public void UpdateProgressUI()
@@ -47,18 +50,9 @@ public class UI_Progress : UIBinder
 
     public void UpdateProgressSlider()
     {
-        StartCoroutine(SliderRoutine());
-    }
-
-    IEnumerator SliderRoutine()
-    {
-        float targetValue = ChapterManager.Instance.ProgressInfo.KillCount;
-
-        do
-        {
-            _progressSlider.value = Mathf.Lerp(_progressSlider.value, targetValue, Time.deltaTime * _lerpSpeed);
-        } while (_progressSlider.value == targetValue);
-
-        yield return null;
+        /*float targetValue = ChapterManager.Instance.ProgressInfo.KillCount;
+        _progressSlider.value = Mathf.Lerp(_progressSlider.value, targetValue, Time.deltaTime * _lerpSpeed);*/
+        _progressSlider.value = ChapterManager.Instance.ProgressInfo.KillCount;
+        Debug.Log("»£√‚«ﬂ¥Ÿ¿◊");
     }
 }

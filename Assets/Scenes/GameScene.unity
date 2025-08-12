@@ -3541,7 +3541,7 @@ MonoBehaviour:
   m_MinValue: 1
   m_MaxValue: 5
   m_WholeNumbers: 0
-  m_Value: 5
+  m_Value: 2.69
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6170,6 +6170,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367733941}
   m_CullTransparentMesh: 1
+--- !u!114 &1368673851 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2047656885508138774, guid: 3b3fa719517c0404dabe1e4241479268, type: 3}
+  m_PrefabInstance: {fileID: 3509252448555374085}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd94796957b2124aa4b96f1738cd44c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1379217944
 GameObject:
   m_ObjectHideFlags: 0
@@ -6393,6 +6404,7 @@ MonoBehaviour:
       KillCount: 0
   _model: {fileID: 5140215395633502038}
   _progressData: {fileID: 11400000, guid: 853e23b21268ed8429eaa9213ebe5db0, type: 2}
+  _progressUI: {fileID: 1368673851}
 --- !u!4 &1391788629
 Transform:
   m_ObjectHideFlags: 0
@@ -9695,6 +9707,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2047656885508138774, guid: 3b3fa719517c0404dabe1e4241479268, type: 3}
+      propertyPath: _progressSlider
+      value: 
+      objectReference: {fileID: 589979083}
     - target: {fileID: 2209288226350955047, guid: 3b3fa719517c0404dabe1e4241479268, type: 3}
       propertyPath: m_Name
       value: DefaultCanvas

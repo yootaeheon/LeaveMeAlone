@@ -42,11 +42,8 @@ public class CharacterController : MonoBehaviour, IDamageable
         DatabaseManager.Instance.OnGameDataLoaded += () =>
         {
             Subscribe();
-            Debug.Log("구독 완료");
             recoveryHpRoutine = StartCoroutine(RecoveryHpRoutine());
-            Debug.Log("체력회복 코루틴 시작 ");
             OnSettedInit?.Invoke();
-            Debug.Log("모든 초기화 완료 후 몬스터 생성 이벤트 호출!");
         };
     }
 

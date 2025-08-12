@@ -23,6 +23,8 @@ public class DatabaseManager : MonoBehaviour
     [SerializeField] ProgressSO _progressData;
     public ProgressSO ProgressData => _progressData ??= Resources.Load<ProgressSO>("ProgressData");
 
+    [SerializeField] UI_Progress _progressUI;
+
 
     public bool IsGameDataLoaded { get; private set; }
     public Action OnGameDataLoaded { get; set; }
@@ -163,6 +165,9 @@ public class DatabaseManager : MonoBehaviour
                     ProgressData.Chapter = GameData.ProgressDataDTO.Chapter;
                     ProgressData.Stage = GameData.ProgressDataDTO.Stage;
                     ProgressData.KillCount = GameData.ProgressDataDTO.KillCount;
+
+                    _progressUI.UpdateProgressSlider();
+
                     IsGameDataLoaded = true;
                     OnGameDataLoaded?.Invoke();
 
