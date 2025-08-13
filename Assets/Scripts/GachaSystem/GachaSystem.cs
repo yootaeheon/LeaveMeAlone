@@ -81,6 +81,10 @@ public class GachaSystem : MonoBehaviour
         Back.GenerateDistribution(_characterLevel, stdDev);
     }
 
+    /// <summary>
+    /// 가챠 버튼 연결 함수
+    /// 랜덤 아이템 생성하여 인벤토리 추가 기능
+    /// </summary>
     public void Button_Gacha()
     {
         if (GameManager.Instance.Gold < 5000)
@@ -102,6 +106,36 @@ public class GachaSystem : MonoBehaviour
         Debug.Log($"[소환됨] {resultItem.Name}");
     }
 
+    /// <summary>
+    /// 10회 가챠 버튼 (연속 10번 뽑기)
+    /// </summary>
+    public void Button_Gacha10()
+    {
+        int cost = 5000 * 10;
+
+        if (GameManager.Instance.Gold < cost)
+            return;
+
+        GameManager.Instance.Gold -= cost;
+
+        _gachaCanvas.gameObject.SetActive(true); // 가챠 UI 활성화
+
+        for (int i = 0; i < 10; i++)
+        {
+            ItemSO resultItem = GetRandomItem();
+
+            // 인벤토리에 추가
+            AddInventory(resultItem, 1);
+
+            // UI 생성
+            GameObject resultUI = Instantiate(_gachaPrefabOnCanvas);
+            resultUI.transform.SetParent(_gachaParentObj.transform, false);
+            resultUI.transform.GetChild(0).GetComponent<Image>().sprite = resultItem.ItemImage;
+
+            Debug.Log($"[10연차 {i + 1}회차] {resultItem.Name}");
+        }
+    }
+
     // 결과물 인벤토리에 추가하는 함수
     public void AddInventory(ItemSO itemSO, int quantity)
     {
@@ -121,6 +155,10 @@ public class GachaSystem : MonoBehaviour
     public void Button_Hide()
     {
         _gachaCanvas.gameObject.SetActive(false); // 가챠 UI 비활성화
+        foreach (Transform child in _gachaParentObj.transform)
+        {
+            Destroy(child.gameObject); // 생성된 가챠 결과 UI 제거
+        }
     }
 
     /// <summary>
