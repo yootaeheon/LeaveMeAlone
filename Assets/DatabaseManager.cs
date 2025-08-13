@@ -3,6 +3,9 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using Firebase.Extensions;
+using Inventory.Model;
+using GoogleMobileAds.Api;
+
 
 
 #if UNITY_EDITOR
@@ -25,6 +28,8 @@ public class DatabaseManager : MonoBehaviour
 
     [SerializeField] UI_Progress _progressUI;
 
+    [SerializeField] InventorySO _inventoryData;
+    public InventorySO InventoryData => _inventoryData ??= Resources.Load<InventorySO>("InventoryData");
 
     public bool IsGameDataLoaded { get; private set; }
     public Action OnGameDataLoaded { get; set; }
@@ -43,7 +48,6 @@ public class DatabaseManager : MonoBehaviour
     {
         if (BackendManager.Instance.OnFirebaseReady)
         {
-            Debug.Log("부른다!!");
             LoadAllGameData();
         }
     }
@@ -92,15 +96,9 @@ public class DatabaseManager : MonoBehaviour
         string userId = BackendManager.Auth?.CurrentUser?.UserId;
         if (string.IsNullOrEmpty(userId)) return;
 
-        if (Model == null)
+        if (Model == null || ProgressData == null || InventoryData == null)
         {
-            Debug.LogWarning("SaveAllGameData 실패: _model이 null입니다.");
-            return;
-        }
-
-        if (ProgressData == null)
-        {
-            Debug.LogWarning("SaveAllGameData 실패: _progressData가 null입니다.");
+            Debug.LogWarning("SaveAllGameData 실패: 무언가 Null임.");
             return;
         }
 
@@ -123,7 +121,9 @@ public class DatabaseManager : MonoBehaviour
             ProgressData.KillCount
         );
 
-        GameData = new UserGameDataDTO(characterDTO, progressDTO);
+        InventoryDTO inventoryDataDTO = new InventoryDTO(InventoryData);
+
+        GameData = new UserGameDataDTO(characterDTO, progressDTO, inventoryDataDTO);
         string json = JsonUtility.ToJson(GameData);
 
         userDataRef.Child("gameData")
@@ -148,11 +148,12 @@ public class DatabaseManager : MonoBehaviour
             {
                 if (task.IsCompleted && task.Result.Exists)
                 {
-                    if (_model == null || _progressData == null) return;
+                    if (_model == null || _progressData == null || _inventoryData == null) return;
 
                     string json = task.Result.GetRawJsonValue();
                     GameData = JsonUtility.FromJson<UserGameDataDTO>(json);
 
+                    // 캐릭터 데이터
                     Model.MaxHp = GameData.CharacterModelDTO.MaxHp;
                     Model.CurHp = Model.MaxHp;
                     Model.RecoverHpPerSecond = GameData.CharacterModelDTO.RecoverHpPerSecond;
@@ -162,11 +163,34 @@ public class DatabaseManager : MonoBehaviour
                     Model.CriticalChance = GameData.CharacterModelDTO.CriticalChance;
                     Debug.Log("모델 데이터 불러오기 완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
+                    // 진행도 데이터
                     ProgressData.Chapter = GameData.ProgressDataDTO.Chapter;
                     ProgressData.Stage = GameData.ProgressDataDTO.Stage;
                     ProgressData.KillCount = GameData.ProgressDataDTO.KillCount;
-
                     _progressUI.UpdateProgressSlider();
+
+                    //인벤토리 데이터
+                    // 인벤토리 데이터 복원
+                    InventoryData.Init(); // 먼저 비움
+                    for (int i = 0; i < GameData.InventoryDataDTO.Items.Count; i++)
+                    {
+                        var itemDTO = GameData.InventoryDataDTO.Items[i];
+                        if (itemDTO.ItemID != 0) // 0이면 빈 슬롯
+                        {
+                            // ItemSO 리소스 로드 (경로나 이름 규칙 필요)
+                            ItemSO itemSO = Resources.Load<ItemSO>($"Items/{itemDTO.ItemID}");
+                            if (itemSO != null)
+                            {
+                                InventoryData.RemoveItem(i, InventoryData.GetItemIndex(i).Quantity); // 기존 제거
+                                InventoryData.AddItem(new InventoryItem
+                                {
+                                    Item = itemSO,
+                                    Quantity = itemDTO.Quantity
+                                });
+                            }
+                        }
+                    }
+
 
                     IsGameDataLoaded = true;
                     OnGameDataLoaded?.Invoke();

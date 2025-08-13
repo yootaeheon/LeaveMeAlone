@@ -12,5 +12,105 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d39b848f584f714bb31c511e700f074, type: 3}
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
-  _inventoryItems: []
+  _inventoryItems:
+  - Quantity: 1
+    Item: {fileID: 11400000, guid: ac70e956e08ff7f469fe5f11470021b5, type: 2}
+  - Quantity: 3
+    Item: {fileID: 11400000, guid: 86b7f9430309c594b820195fb3fb4973, type: 2}
+  - Quantity: 2
+    Item: {fileID: 11400000, guid: 4dba3913f85fde649a376afc1c2eaad0, type: 2}
+  - Quantity: 1
+    Item: {fileID: 11400000, guid: a6fcf3ca09103cf4e9e740042d670841, type: 2}
+  - Quantity: 2
+    Item: {fileID: 11400000, guid: cf9c2936d36969341ae8402ed25fdf0b, type: 2}
+  - Quantity: 1
+    Item: {fileID: 11400000, guid: 8aa7aa27fedb3af4aa83fae5e9f60b99, type: 2}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
+  - Quantity: 0
+    Item: {fileID: 0}
   <Size>k__BackingField: 50

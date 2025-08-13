@@ -6987,9 +6987,12 @@ MonoBehaviour:
       Chapter: 0
       Stage: 0
       KillCount: 0
+    InventoryDataDTO:
+      Items: []
   _model: {fileID: 5140215395633502038}
   _progressData: {fileID: 11400000, guid: 853e23b21268ed8429eaa9213ebe5db0, type: 2}
   _progressUI: {fileID: 1368673851}
+  _inventoryData: {fileID: 11400000, guid: e9192f40c9ddd9142a4f138c8803e920, type: 2}
 --- !u!4 &1391788629
 Transform:
   m_ObjectHideFlags: 0
@@ -10693,12 +10696,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1680053080220399135, guid: ca38c0ca78da4a64ca36a6be48f11627, type: 3}
       propertyPath: m_Type
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1680053080220399135, guid: ca38c0ca78da4a64ca36a6be48f11627, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 8e18b3a86bc10436584b8d995979a65c, type: 3}
+    - target: {fileID: 1680053080220399135, guid: ca38c0ca78da4a64ca36a6be48f11627, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1685452399034621254, guid: ca38c0ca78da4a64ca36a6be48f11627, type: 3}
       propertyPath: m_Transition
       value: 3
