@@ -32,6 +32,7 @@ public class ItemDTO
 {
     public int ItemID;    // ItemSO ID
     public int Quantity;
+    public ItemSO Item;
 
     // 기본 생성자
     public ItemDTO() { }
@@ -43,11 +44,13 @@ public class ItemDTO
         {
             ItemID = 0;
             Quantity = 0;
+            Item = null;
         }
         else
         {
             ItemID = item.Item.ID;
             Quantity = item.Quantity;
+            Item = item.Item; // ItemSO 참조
         }
     }
 }

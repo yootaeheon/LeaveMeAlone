@@ -174,11 +174,12 @@ public class DatabaseManager : MonoBehaviour
                     InventoryData.Init(); // 먼저 비움
                     for (int i = 0; i < GameData.InventoryDataDTO.Items.Count; i++)
                     {
-                        var itemDTO = GameData.InventoryDataDTO.Items[i];
+                        ItemDTO itemDTO = GameData.InventoryDataDTO.Items[i];
                         if (itemDTO.ItemID != 0) // 0이면 빈 슬롯
                         {
                             // ItemSO 리소스 로드 (경로나 이름 규칙 필요)
-                            ItemSO itemSO = Resources.Load<ItemSO>($"Items/{itemDTO.ItemID}");
+                            string equipmentTypeName = ((EquipItemSO)itemDTO.Item).EquipmentType.ToString();
+                            ItemSO itemSO = Resources.Load<ItemSO>($"Prefabs/Item/Equip/{equipmentTypeName}/{itemDTO.ItemID}");
                             if (itemSO != null)
                             {
                                 InventoryData.RemoveItem(i, InventoryData.GetItemIndex(i).Quantity); // 기존 제거
