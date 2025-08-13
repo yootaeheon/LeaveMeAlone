@@ -1,11 +1,7 @@
 using Inventory.Model;
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class GachaSystem : MonoBehaviour
 {
@@ -82,16 +78,6 @@ public class GachaSystem : MonoBehaviour
         Back.GenerateDistribution(_characterLevel, stdDev);
     }
 
-    private void Update()
-    {
-      /*  Debug.Log($"진행도 및 캐릭터 레벨 = {_characterLevel}");*/
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            LevelChanged();
-        }
-    }
-
     public void Button_Gacha()
     {
         if (GameManager.Instance.Gold < 5000)
@@ -99,36 +85,30 @@ public class GachaSystem : MonoBehaviour
 
         GameManager.Instance.Gold -= 5000;
 
-        var (itemType, level) = GetRandomItem();
-        var list = EqipItemDataDic[itemType];
+        ItemSO resultItem = GetRandomItem();
 
         _gachaCanvas.gameObject.SetActive(true); // 가챠 UI 활성화
 
         // 아이템 생성
-        if (level >= 1 && level <= list.Count)
-        {
-            GameObject item = Instantiate(_gachaPrefabOnCanvas);
-            _gachaParentObj.transform.SetParent(_gachaCanvas.transform);
+        GameObject resultUI = Instantiate(_gachaPrefabOnCanvas);
+        resultUI.transform.SetParent(_gachaParentObj.transform, false);
 
-            //TODO: 생성한 프리팹에 가차결과 아이템 이미지와 정보 수량 넣어주기
-
-            item.GetComponent<Item>().InventoryItem = list[level-1];
-            Debug.Log($"[소환됨] {itemType} Lv.{level}");
-        }
-        else
-        {
-            Debug.LogWarning($"레벨 {level}에 해당하는 아이템이 존재하지 않습니다.");
-        }
+        //생성한 프리팹에 가차결과 아이템 이미지와 정보 수량 넣어주기
+        resultUI.transform.GetChild(0).GetComponent<Image>().sprite = resultItem.ItemImage;
+        Debug.Log($"[소환됨] {resultItem.Name}");
     }
 
+    public void Button_AddInventory()
+    {
 
+    }
 
     /// <summary>
     /// 실제 뽑기 실행 함수
     /// 부위 랜덤 선택 → 레벨 확률 계산 → 천장 시스템 적용 → 결과 반환
     /// </summary>
     /// <returns>(부위, 아이템 레벨) 튜플 반환</returns>
-    public (EquipType itemType, int level) GetRandomItem()
+    public ItemSO GetRandomItem()
     {
         // 0~3 사이 랜덤 정수로 부위 선택
         EquipType type = (EquipType)UnityEngine.Random.Range(0, 4);
@@ -154,7 +134,9 @@ public class GachaSystem : MonoBehaviour
         // 디버그 로그 출력
         Debug.Log($"[{type}] Lv.{level} 아이템 획득");
 
-        return (type, level); // 결과 반환
+        var resultItemList = EqipItemDataDic[type];
+
+        return resultItemList[level - 1]; ; // 결과 반환
     }
 
     /// <summary>

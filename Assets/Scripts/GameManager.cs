@@ -16,10 +16,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] int _gem;
     public int Gem {  get { return _gem; } set {  _gem = value; UpdateGem(); } }
 
-    public List<float> floats = new List<float>(2);
-
-
-
     private void Awake()
     {
         SetSingleton();
@@ -52,8 +48,6 @@ public class GameManager : MonoBehaviour
         UpdateGold();
         UpdateGem();
     }
-
-    
 
     private void UpdateGold()
     {
