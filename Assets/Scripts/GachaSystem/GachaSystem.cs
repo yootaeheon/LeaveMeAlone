@@ -2,6 +2,7 @@ using Inventory.Model;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class GachaSystem : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GachaSystem : MonoBehaviour
     [SerializeField] Canvas _gachaCanvas;
     [SerializeField] GameObject _gachaPrefabOnCanvas;
     [SerializeField] GameObject _gachaParentObj;
+
+    [SerializeField] InventorySO InventoryData; // 인벤토리 데이터
 
     [Header("캐릭터 레벨 설정 (1~100)")]
     /*[Range(1, 100)]*/
@@ -86,6 +89,7 @@ public class GachaSystem : MonoBehaviour
         GameManager.Instance.Gold -= 5000;
 
         ItemSO resultItem = GetRandomItem();
+        AddInventory(resultItem, 1);
 
         _gachaCanvas.gameObject.SetActive(true); // 가챠 UI 활성화
 
@@ -98,9 +102,25 @@ public class GachaSystem : MonoBehaviour
         Debug.Log($"[소환됨] {resultItem.Name}");
     }
 
-    public void Button_AddInventory()
+    // 결과물 인벤토리에 추가하는 함수
+    public void AddInventory(ItemSO itemSO, int quantity)
     {
+        int reminder = InventoryData.AddItem(itemSO, quantity);
 
+        if (reminder > 0)
+        {
+            Debug.LogWarning($"인벤토리에 공간이 부족해서 {reminder}개는 들어가지 못했습니다.");
+            // TODO: 우편함, 드롭 등 추가 처리
+        }
+        else
+        {
+            Debug.Log($"인벤토리에 [{itemSO.Name}] {quantity}개 추가 완료");
+        }
+    }
+
+    public void Button_Hide()
+    {
+        _gachaCanvas.gameObject.SetActive(false); // 가챠 UI 비활성화
     }
 
     /// <summary>
