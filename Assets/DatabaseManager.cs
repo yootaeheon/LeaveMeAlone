@@ -171,23 +171,26 @@ public class DatabaseManager : MonoBehaviour
 
                     //인벤토리 데이터
                     // 인벤토리 데이터 복원
-                    InventoryData.Init(); // 먼저 비움
+                    // 인벤토리 전체 초기화
+                    InventoryData.Init();
+
                     for (int i = 0; i < GameData.InventoryDataDTO.Items.Count; i++)
                     {
                         ItemDTO itemDTO = GameData.InventoryDataDTO.Items[i];
-                        if (itemDTO.ItemID != 0) // 0이면 빈 슬롯
+                        if (itemDTO.ItemID != 0)
                         {
-                            // ItemSO 리소스 로드 (경로나 이름 규칙 필요)
-                            string equipmentTypeName = ((EquipItemSO)itemDTO.Item).EquipmentType.ToString();
-                            ItemSO itemSO = Resources.Load<ItemSO>($"Prefabs/Item/Equip/{equipmentTypeName}/{itemDTO.ItemID}");
+                            ItemSO itemSO = Resources.Load<ItemSO>($"Prefabs/Item/Equip/{itemDTO.ItemID}");
                             if (itemSO != null)
                             {
-                                InventoryData.RemoveItem(i, InventoryData.GetItemIndex(i).Quantity); // 기존 제거
                                 InventoryData.AddItem(new InventoryItem
                                 {
                                     Item = itemSO,
                                     Quantity = itemDTO.Quantity
                                 });
+                            }
+                            else
+                            {
+                                Debug.LogWarning($"아이템 리소스를 찾을 수 없습니다: {itemDTO.ItemID}");
                             }
                         }
                     }
