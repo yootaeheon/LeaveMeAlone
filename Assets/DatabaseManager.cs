@@ -158,51 +158,9 @@ public class DatabaseManager : MonoBehaviour
                     string json = task.Result.GetRawJsonValue();
                     GameData = JsonUtility.FromJson<UserGameDataDTO>(json);
 
-                    // 캐릭터 데이터
-                    Model.MaxHp = GameData.CharacterModelDTO.MaxHp;
-                    Model.CurHp = Model.MaxHp;
-                    Model.RecoverHpPerSecond = GameData.CharacterModelDTO.RecoverHpPerSecond;
-                    Model.DefensePower = GameData.CharacterModelDTO.DefensePower;
-                    Model.AttackPower = GameData.CharacterModelDTO.AttackPower;
-                    Model.AttackSpeed = GameData.CharacterModelDTO.AttackSpeed;
-                    Model.CriticalChance = GameData.CharacterModelDTO.CriticalChance;
-
-                    // 진행도 데이터
-                    ProgressData.Chapter = GameData.ProgressDataDTO.Chapter;
-                    ProgressData.Stage = GameData.ProgressDataDTO.Stage;
-                    ProgressData.KillCount = GameData.ProgressDataDTO.KillCount;
-                    _progressUI.UpdateProgressSlider();
-
-                    //인벤토리 데이터
-                    // 인벤토리 데이터 복원
-                    // 인벤토리 전체 초기화
-                    InventoryData.Init();
-
-                    for (int i = 0; i < GameData.InventoryDataDTO.Items.Count; i++)
-                    {
-                        ItemDTO itemDTO = GameData.InventoryDataDTO.Items[i];
-                        ItemSO itemSO = itemDTO.Item;
-                        EquipItemSO equipItemSO = itemSO as EquipItemSO;
-
-                        if (itemDTO.ItemIndex != 0)
-                        {
-                            EquipItemSO LoadItem = Resources.Load<EquipItemSO>($"Item/Equip/{equipItemSO.EquipmentType}/{equipItemSO.EquipmentType}_{itemDTO.ItemIndex}");
-                            if (LoadItem != null)
-                            {
-                                InventoryData.AddItem(new InventoryItem
-                                {
-                                    Item = LoadItem,
-                                    Quantity = itemDTO.Quantity
-                                });
-                            }
-                            else
-                            {
-                                Debug.LogWarning($"아이템 리소스를 찾을 수 없습니다: {equipItemSO.EquipmentType}_{itemDTO.ItemIndex}");
-                            }
-                        }
-                        
-                    }
-
+                    LoadModelData();
+                    LoadProgressData();
+                    LoadInventoryData();
 
                     IsGameDataLoaded = true;
                     OnGameDataLoaded?.Invoke();
@@ -214,5 +172,54 @@ public class DatabaseManager : MonoBehaviour
                     Debug.LogWarning("게임 데이터 불러오기 실패: " + task.Exception);
                 }
             });
+    }
+
+    public void LoadModelData()
+    {
+        Model.MaxHp = GameData.CharacterModelDTO.MaxHp;
+        Model.CurHp = Model.MaxHp;
+        Model.RecoverHpPerSecond = GameData.CharacterModelDTO.RecoverHpPerSecond;
+        Model.DefensePower = GameData.CharacterModelDTO.DefensePower;
+        Model.AttackPower = GameData.CharacterModelDTO.AttackPower;
+        Model.AttackSpeed = GameData.CharacterModelDTO.AttackSpeed;
+        Model.CriticalChance = GameData.CharacterModelDTO.CriticalChance;
+    }
+
+    public void LoadProgressData()
+    {
+        ProgressData.Chapter = GameData.ProgressDataDTO.Chapter;
+        ProgressData.Stage = GameData.ProgressDataDTO.Stage;
+        ProgressData.KillCount = GameData.ProgressDataDTO.KillCount;
+        _progressUI.UpdateProgressSlider();
+    }
+
+    public void LoadInventoryData()
+    {
+        InventoryData.Init();
+
+        for (int i = 0; i < GameData.InventoryDataDTO.Items.Count; i++)
+        {
+            ItemDTO itemDTO = GameData.InventoryDataDTO.Items[i];
+            ItemSO itemSO = itemDTO.Item;
+            EquipItemSO equipItemSO = itemSO as EquipItemSO;
+
+            if (itemDTO.ItemIndex != 0)
+            {
+                EquipItemSO LoadItem = Resources.Load<EquipItemSO>($"Item/Equip/{equipItemSO.EquipmentType}/{equipItemSO.EquipmentType}_{itemDTO.ItemIndex}");
+                if (LoadItem != null)
+                {
+                    InventoryData.AddItem(new InventoryItem
+                    {
+                        Item = LoadItem,
+                        Quantity = itemDTO.Quantity
+                    });
+                }
+                else
+                {
+                    Debug.LogWarning($"아이템 리소스를 찾을 수 없습니다: {equipItemSO.EquipmentType}_{itemDTO.ItemIndex}");
+                }
+            }
+
+        }
     }
 }
