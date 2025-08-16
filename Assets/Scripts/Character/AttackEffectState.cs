@@ -42,8 +42,6 @@ public class AttackEffectState : StateMachineBehaviour
         if (_model.ElementType == ElementTypeEnum.ElementType.None)
             return;
 
-        Debug.Log($"加己 牢飘 : {(int)_model.ElementType}");
-        Debug.Log("积己 1");
         _timer += Time.deltaTime;
 
         if (_timer >= PlayTiming)

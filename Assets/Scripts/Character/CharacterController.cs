@@ -54,11 +54,8 @@ public class CharacterController : MonoBehaviour, IDamageable
 
     public void Init()
     {
-        /*SetFromDTO(DatabaseManager.Instance.GameData.CharacterModelDTO);*/
         Subscribe();
-        Debug.Log("구독 완료");
         recoveryHpRoutine = StartCoroutine(RecoveryHpRoutine());
-        Debug.Log("체력회복 코루틴 시작 ");
         OnSettedInit?.Invoke();
         Debug.Log("모든 초기화 완료 후 몬스터 생성 이벤트 호출!");
     }
@@ -118,19 +115,6 @@ public class CharacterController : MonoBehaviour, IDamageable
                 }
                 break;
         }
-    }
-
-    public void SetFromDTO(CharacterModelDTO dto)
-    {
-        Debug.Log("DTO 초기화 전");
-        Model.MaxHp = dto.MaxHp;
-        Model.RecoverHpPerSecond = dto.RecoverHpPerSecond;
-        Model.DefensePower = dto.DefensePower;
-        Model.AttackPower = dto.AttackPower;
-        Model.AttackSpeed = dto.AttackSpeed;
-        Model.CriticalChance = dto.CriticalChance;
-        Debug.Log("DTO 초기화 후");
-
     }
 
     void SearchForEnemies()

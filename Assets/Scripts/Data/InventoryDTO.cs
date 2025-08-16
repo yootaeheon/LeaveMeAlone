@@ -1,6 +1,6 @@
+using Inventory.Model;
 using System;
 using System.Collections.Generic;
-using Inventory.Model;
 
 [Serializable]
 public class InventoryDTO
@@ -30,7 +30,7 @@ public class InventoryDTO
 [Serializable]
 public class ItemDTO
 {
-    public int ItemID;    // ItemSO ID
+    public int ItemIndex;    // ItemSO ItemIndex   
     public int Quantity;
     public ItemSO Item;
 
@@ -42,13 +42,13 @@ public class ItemDTO
     {
         if (item.IsEmpty)
         {
-            ItemID = 0;
+            ItemIndex = 0;
             Quantity = 0;
             Item = null;
         }
         else
         {
-            ItemID = item.Item.ID;
+            ItemIndex = item.Item.ItemIndex;
             Quantity = item.Quantity;
             Item = item.Item; // ItemSO ÂüÁ¶
         }

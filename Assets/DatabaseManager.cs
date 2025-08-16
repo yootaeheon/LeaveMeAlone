@@ -91,6 +91,9 @@ public class DatabaseManager : MonoBehaviour
     }
 #endif
 
+    /// <summary>
+    /// 데이터 저장
+    /// </summary>
     public void SaveAllGameData()
     {
         string userId = BackendManager.Auth?.CurrentUser?.UserId;
@@ -137,8 +140,10 @@ public class DatabaseManager : MonoBehaviour
             });
     }
 
-    #region 모든 데이터 업데이트
-    public void LoadAllGameData()
+    /// <summary>
+    /// 모든 데이터 불러오기 
+    /// </summary>
+    public void LoadAllGameData() 
     {
         string userId = BackendManager.Auth?.CurrentUser?.UserId;
         if (string.IsNullOrEmpty(userId)) return;
@@ -161,7 +166,6 @@ public class DatabaseManager : MonoBehaviour
                     Model.AttackPower = GameData.CharacterModelDTO.AttackPower;
                     Model.AttackSpeed = GameData.CharacterModelDTO.AttackSpeed;
                     Model.CriticalChance = GameData.CharacterModelDTO.CriticalChance;
-                    Debug.Log("모델 데이터 불러오기 완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
                     // 진행도 데이터
                     ProgressData.Chapter = GameData.ProgressDataDTO.Chapter;
@@ -177,22 +181,26 @@ public class DatabaseManager : MonoBehaviour
                     for (int i = 0; i < GameData.InventoryDataDTO.Items.Count; i++)
                     {
                         ItemDTO itemDTO = GameData.InventoryDataDTO.Items[i];
-                        if (itemDTO.ItemID != 0)
+                        ItemSO itemSO = itemDTO.Item;
+                        EquipItemSO equipItemSO = itemSO as EquipItemSO;
+
+                        if (itemDTO.ItemIndex != 0)
                         {
-                            ItemSO itemSO = Resources.Load<ItemSO>($"Prefabs/Item/Equip/{itemDTO.ItemID}");
-                            if (itemSO != null)
+                            EquipItemSO LoadItem = Resources.Load<EquipItemSO>($"Item/Equip/{equipItemSO.EquipmentType}/{equipItemSO.EquipmentType}_{itemDTO.ItemIndex}");
+                            if (LoadItem != null)
                             {
                                 InventoryData.AddItem(new InventoryItem
                                 {
-                                    Item = itemSO,
+                                    Item = LoadItem,
                                     Quantity = itemDTO.Quantity
                                 });
                             }
                             else
                             {
-                                Debug.LogWarning($"아이템 리소스를 찾을 수 없습니다: {itemDTO.ItemID}");
+                                Debug.LogWarning($"아이템 리소스를 찾을 수 없습니다: {equipItemSO.EquipmentType}_{itemDTO.ItemIndex}");
                             }
                         }
+                        
                     }
 
 
@@ -207,5 +215,4 @@ public class DatabaseManager : MonoBehaviour
                 }
             });
     }
-    #endregion
 }

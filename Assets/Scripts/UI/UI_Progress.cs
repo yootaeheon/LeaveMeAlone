@@ -50,9 +50,6 @@ public class UI_Progress : UIBinder
 
     public void UpdateProgressSlider()
     {
-        /*float targetValue = ChapterManager.Instance.ProgressInfo.KillCount;
-        _progressSlider.value = Mathf.Lerp(_progressSlider.value, targetValue, Time.deltaTime * _lerpSpeed);*/
         _progressSlider.value = _progressData.KillCount;
-        Debug.Log("호출했다잉");
     }
 }

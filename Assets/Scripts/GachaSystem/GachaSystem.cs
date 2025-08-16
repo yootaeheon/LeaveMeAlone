@@ -103,7 +103,6 @@ public class GachaSystem : MonoBehaviour
 
         //생성한 프리팹에 가차결과 아이템 이미지와 정보 수량 넣어주기
         resultUI.transform.GetChild(0).GetComponent<Image>().sprite = resultItem.ItemImage;
-        Debug.Log($"[소환됨] {resultItem.Name}");
     }
 
     /// <summary>
