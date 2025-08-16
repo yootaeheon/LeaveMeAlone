@@ -4,9 +4,8 @@ using System;
 using UnityEngine;
 // 광고 SDK (예: Unity Ads 사용 시)
 using GoogleMobileAds.Api;
-using UnityEngine.Advertisements;
 
-public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
+public class OfflineRewardManager : MonoBehaviour
 {
     [SerializeField] OfflineRewardCanvas _rewardCanvas;
 
@@ -19,6 +18,19 @@ public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
     public long calculatedSeconds = 0;           // 실제 경과 시간 (초)
     private int baseReward = 0;                   // 기본 보상량
 
+    // 리워드형 인터스티셜 광고 객체
+    private RewardedInterstitialAd _rewardedInterstitialAd;
+
+#if UNITY_ANDROID
+    private const string AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
+#elif UNITY_IPHONE
+    private const string AD_UNIT_ID = "ca-app-pub-3940256099942544/1712485313";
+#else
+    private const string AD_UNIT_ID = "unexpected_platform";
+#endif
+
+
+
     private void Awake()
     {
         InitAdmob();
@@ -26,12 +38,6 @@ public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
 
     private void Start()
     {
-        // 광고 초기화 (테스트 ID와 프로덕션 ID는 대시보드에서 확인 가능)
-        if (!Advertisement.isInitialized)
-        {
-            Advertisement.Initialize("5871255", true); // true는 테스트 모드 (릴리즈 시 false)
-        }
-
         // Firebase Database 초기화
         dbRef = FirebaseDatabase.DefaultInstance.RootReference;
 
@@ -44,8 +50,43 @@ public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
 
     private void InitAdmob()
     {
-        // AdMob 초기화 (Google Mobile Ads SDK 사용 시)
-        MobileAds.Initialize(initStatus => { });
+        // Google Mobile Ads SDK 초기화
+        MobileAds.Initialize((InitializationStatus initStatus) =>
+        {
+            // SDK 초기화가 완료된 후 호출되는 콜백
+        });
+    }
+
+    // 리워드형 인터스티셜 광고 로드
+    public void LoadRewardedInterstitialAd()
+    {
+        // 새로운 광고를 로드하기 전에 기존 광고를 정리
+        if (_rewardedInterstitialAd != null)
+        {
+            _rewardedInterstitialAd.Destroy();
+            _rewardedInterstitialAd = null;
+        }
+
+        Debug.Log("리워드형 인터스티셜 광고를 로드합니다.");
+
+        // 광고 요청 객체 생성
+        var adRequest = new AdRequest();
+        adRequest.Keywords.Add("unity-admob-sample");
+
+        // 광고 로드 요청
+        RewardedInterstitialAd.Load(AD_UNIT_ID, adRequest,
+            (RewardedInterstitialAd ad, LoadAdError error) =>
+            {
+                // 오류가 발생했는지 확인
+                if (error != null || ad == null)
+                {
+                    Debug.LogError("리워드형 인터스티셜 광고 로드 실패, 오류: " + error);
+                    return;
+                }
+
+                Debug.Log("리워드형 인터스티셜 광고 로드 성공: " + ad.GetResponseInfo());
+                _rewardedInterstitialAd = ad;
+            });
     }
 
     // 앱이 백그라운드로 전환될 때 로그아웃 시간 저장
@@ -136,7 +177,8 @@ public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
     /// </summary>
     public void Button_WatchAD()
     {
-        Advertisement.Show(AD_UID, this);
+        Debug.Log("[오프라인 보상] 광고 시청을 선택했습니다.");
+        ShowRewardedInterstitialAd();
     }
 
     /// <summary>
@@ -149,23 +191,20 @@ public class OfflineRewardManager : MonoBehaviour, IUnityAdsShowListener
         _rewardCanvas.Button_Hide();
     }
 
-    public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
+    // 리워드형 인터스티셜 광고 표시
+    public void ShowRewardedInterstitialAd()
     {
-        if (placementId == AD_UID)
+        const string rewardMsg =
+            "리워드형 인터스티셜 광고로 유저가 보상을 받았습니다. 유형: {0}, 수량: {1}.";
+
+        // 광고를 표시할 수 있는지 확인
+        if (_rewardedInterstitialAd != null && _rewardedInterstitialAd.CanShowAd())
         {
-            if (showCompletionState == UnityAdsShowCompletionState.COMPLETED)
+            _rewardedInterstitialAd.Show((Reward reward) =>
             {
-                Debug.Log("[광고] 광고 시청 완료 - 2배 보상 지급");
-                GiveReward(baseReward * 2);
-            }
-            else
-            {
-                Debug.Log("[광고] 광고 스킵 또는 실패 - 기본 보상 지급");
-                GiveReward(baseReward);
-            }
+                // TODO: 사용자에게 보상을 지급
+                Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
+            });
         }
     }
-    public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message) { }
-    public void OnUnityAdsShowStart(string placementId) { }
-    public void OnUnityAdsShowClick(string placementId) { }
 }

@@ -16,7 +16,7 @@ public class DatabaseManager : MonoBehaviour
 {
     public static DatabaseManager Instance { get; private set; }
 
-    public UserGameDataDTO GameData;
+    public UserGameDataDTO LoadData;
 
     public DatabaseReference userDataRef { get; private set; }
 
@@ -126,8 +126,8 @@ public class DatabaseManager : MonoBehaviour
 
         InventoryDTO inventoryDataDTO = new InventoryDTO(InventoryData);
 
-        GameData = new UserGameDataDTO(characterDTO, progressDTO, inventoryDataDTO);
-        string json = JsonUtility.ToJson(GameData);
+        LoadData = new UserGameDataDTO(characterDTO, progressDTO, inventoryDataDTO);
+        string json = JsonUtility.ToJson(LoadData);
 
         userDataRef.Child("gameData")
             .SetRawJsonValueAsync(json)
@@ -156,7 +156,7 @@ public class DatabaseManager : MonoBehaviour
                     if (_model == null || _progressData == null || _inventoryData == null) return;
 
                     string json = task.Result.GetRawJsonValue();
-                    GameData = JsonUtility.FromJson<UserGameDataDTO>(json);
+                    LoadData = JsonUtility.FromJson<UserGameDataDTO>(json);
 
                     LoadModelData();
                     LoadProgressData();
@@ -176,20 +176,20 @@ public class DatabaseManager : MonoBehaviour
 
     public void LoadModelData()
     {
-        Model.MaxHp = GameData.CharacterModelDTO.MaxHp;
+        Model.MaxHp = LoadData.CharacterModelDTO.MaxHp;
         Model.CurHp = Model.MaxHp;
-        Model.RecoverHpPerSecond = GameData.CharacterModelDTO.RecoverHpPerSecond;
-        Model.DefensePower = GameData.CharacterModelDTO.DefensePower;
-        Model.AttackPower = GameData.CharacterModelDTO.AttackPower;
-        Model.AttackSpeed = GameData.CharacterModelDTO.AttackSpeed;
-        Model.CriticalChance = GameData.CharacterModelDTO.CriticalChance;
+        Model.RecoverHpPerSecond = LoadData.CharacterModelDTO.RecoverHpPerSecond;
+        Model.DefensePower = LoadData.CharacterModelDTO.DefensePower;
+        Model.AttackPower = LoadData.CharacterModelDTO.AttackPower;
+        Model.AttackSpeed = LoadData.CharacterModelDTO.AttackSpeed;
+        Model.CriticalChance = LoadData.CharacterModelDTO.CriticalChance;
     }
 
     public void LoadProgressData()
     {
-        ProgressData.Chapter = GameData.ProgressDataDTO.Chapter;
-        ProgressData.Stage = GameData.ProgressDataDTO.Stage;
-        ProgressData.KillCount = GameData.ProgressDataDTO.KillCount;
+        ProgressData.Chapter = LoadData.ProgressDataDTO.Chapter;
+        ProgressData.Stage = LoadData.ProgressDataDTO.Stage;
+        ProgressData.KillCount = LoadData.ProgressDataDTO.KillCount;
         _progressUI.UpdateProgressSlider();
     }
 
@@ -197,9 +197,9 @@ public class DatabaseManager : MonoBehaviour
     {
         InventoryData.Init();
 
-        for (int i = 0; i < GameData.InventoryDataDTO.Items.Count; i++)
+        for (int i = 0; i < LoadData.InventoryDataDTO.Items.Count; i++)
         {
-            ItemDTO itemDTO = GameData.InventoryDataDTO.Items[i];
+            ItemDTO itemDTO = LoadData.InventoryDataDTO.Items[i];
             ItemSO itemSO = itemDTO.Item;
             EquipItemSO equipItemSO = itemSO as EquipItemSO;
 
