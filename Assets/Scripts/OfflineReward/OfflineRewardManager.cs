@@ -11,7 +11,7 @@ public class OfflineRewardManager : MonoBehaviour
 
     private const string AD_UID = "rewardedVideo";
 
-    private DatabaseReference dbRef;              // Firebase Realtime Database 참조
+    private DatabaseReference userDataRef;              // Firebase Realtime Database 참조
     private int goldPerSecond = 10;               // 초당 보상 골드
     private readonly long maxRewardSeconds = 21600; // 최대 보상 가능 시간: 6시간 = 21,600초
 
@@ -39,7 +39,8 @@ public class OfflineRewardManager : MonoBehaviour
     private void Start()
     {
         // Firebase Database 초기화
-        dbRef = FirebaseDatabase.DefaultInstance.RootReference;
+        string userId = BackendManager.Auth?.CurrentUser?.UserId;
+        userDataRef = FirebaseDatabase.DefaultInstance.RootReference.Child(userId);
 
         // 로그인된 유저일 경우 오프라인 보상 체크
         if (FirebaseAuth.DefaultInstance.CurrentUser != null)
@@ -115,7 +116,7 @@ public class OfflineRewardManager : MonoBehaviour
 
         // 유닉스 타임스탬프 형식으로 바꿔 시간을 숫자로 표현
         long nowUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        dbRef.Child("users").Child(uid).Child("lastLogoutTime").SetValueAsync(nowUnixTime);
+        userDataRef.Child("gameData").Child("lastLogoutTime").SetValueAsync(nowUnixTime);
     }
 
     /// <summary>
@@ -191,7 +192,7 @@ public class OfflineRewardManager : MonoBehaviour
         _rewardCanvas.Button_Hide();
     }
 
-    // 리워드형 인터스티셜 광고 표시
+    // 리워드형 광고 재생 함수
     public void ShowRewardedInterstitialAd()
     {
         const string rewardMsg =
@@ -200,11 +201,21 @@ public class OfflineRewardManager : MonoBehaviour
         // 광고를 표시할 수 있는지 확인
         if (_rewardedInterstitialAd != null && _rewardedInterstitialAd.CanShowAd())
         {
-            _rewardedInterstitialAd.Show((Reward reward) =>
+            _rewardedInterstitialAd.Show(reward =>
             {
-                // TODO: 사용자에게 보상을 지급
-                Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
+                // 광고 보상 객체 가져오기
+                 reward = _rewardedInterstitialAd.GetRewardItem();
+
+                // 보상 로그 출력
+                Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
+
+                // 보상 지급
+                GiveReward(baseReward * 2);
             });
+        }
+        else
+        {
+            Debug.Log("광고 재생 불가");
         }
     }
 }
