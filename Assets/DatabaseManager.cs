@@ -1,10 +1,8 @@
 using Firebase.Database;
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 using Firebase.Extensions;
 using Inventory.Model;
-using GoogleMobileAds.Api;
 
 
 
@@ -126,7 +124,13 @@ public class DatabaseManager : MonoBehaviour
 
         InventoryDTO inventoryDataDTO = new InventoryDTO(InventoryData);
 
-        LoadData = new UserGameDataDTO(characterDTO, progressDTO, inventoryDataDTO);
+        GoldDataDTO goldDataDTO = new GoldDataDTO
+        (
+            GameManager.Instance.Gold,
+            GameManager.Instance.Gem
+        );
+
+        LoadData = new UserGameDataDTO(characterDTO, progressDTO, inventoryDataDTO, goldDataDTO);
         string json = JsonUtility.ToJson(LoadData);
 
         userDataRef.Child("gameData")
@@ -143,7 +147,7 @@ public class DatabaseManager : MonoBehaviour
     /// <summary>
     /// 모든 데이터 불러오기 
     /// </summary>
-    public void LoadAllGameData() 
+    public void LoadAllGameData()
     {
         string userId = BackendManager.Auth?.CurrentUser?.UserId;
         if (string.IsNullOrEmpty(userId)) return;
@@ -161,6 +165,7 @@ public class DatabaseManager : MonoBehaviour
                     LoadModelData();
                     LoadProgressData();
                     LoadInventoryData();
+                    LoadGoldData();
 
                     IsGameDataLoaded = true;
                     OnGameDataLoaded?.Invoke();
@@ -221,5 +226,11 @@ public class DatabaseManager : MonoBehaviour
             }
 
         }
+    }
+
+    public void LoadGoldData()
+    {
+        GameManager.Instance.Gold = LoadData.GoldDataDTO.Gold;
+        GameManager.Instance.Gem = LoadData.GoldDataDTO.Gem;
     }
 }
