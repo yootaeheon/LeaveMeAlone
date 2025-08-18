@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class LogInPanel : MonoBehaviour 
 {
-    [SerializeField] TMP_InputField emialInputField;
+    [SerializeField] TMP_InputField emailInputField;
     [SerializeField] TMP_InputField passwordInputField;
 
     [SerializeField] NickNamePanel nickNamePanel;
@@ -49,7 +49,7 @@ public class LogInPanel : MonoBehaviour
     /// </summary>
     public void LogIn()
     {
-        string email = emialInputField.text;
+        string email = emailInputField.text;
         string password = passwordInputField.text;
 
         BackendManager.Auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
