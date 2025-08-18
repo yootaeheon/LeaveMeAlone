@@ -1,9 +1,10 @@
 using Firebase.Auth;
 using Firebase.Database;
-using System;
-using UnityEngine;
+using Firebase.Extensions;
 // 광고 SDK (예: Unity Ads 사용 시)
 using GoogleMobileAds.Api;
+using System;
+using UnityEngine;
 
 public class OfflineRewardManager : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class OfflineRewardManager : MonoBehaviour
         // 로그인된 유저일 경우 오프라인 보상 체크
         if (FirebaseAuth.DefaultInstance.CurrentUser != null)
         {
+            Debug.Log("[오프라인 보상] 로그인된 유저가 있습니다. 오프라인 보상 체크 시작.");
             CheckOfflineReward();
         }
     }
@@ -130,16 +132,16 @@ public class OfflineRewardManager : MonoBehaviour
         long nowUnix = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
         // Firebase에서 마지막 로그아웃 시간 가져오기
-        FirebaseDatabase.DefaultInstance
-            .GetReference("users").Child(uid).Child("lastLogoutTime")
-            .GetValueAsync().ContinueWith(task =>
+        userDataRef.Child("gameData").Child("lastLogoutTime").GetValueAsync().ContinueWithOnMainThread(task =>
             {
-                if (task.IsCompleted && task.Result.Exists)
+                if (task.IsCompleted)
                 {
                     long lastLogoutUnix = Convert.ToInt64(task.Result.Value);
 
                     // 실제 경과 시간 계산
                     calculatedSeconds = nowUnix - lastLogoutUnix;
+                    _rewardCanvas.UpdateSlider();
+                    Debug.Log($"[오프라인 보상] 마지막 로그아웃 시간: {lastLogoutUnix}, 현재 시간: {nowUnix}, 경과 시간: {calculatedSeconds}초");
 
                     // 최대 보상 시간(6시간)을 초과하면 잘라냄
                     if (calculatedSeconds > maxRewardSeconds)
@@ -187,7 +189,7 @@ public class OfflineRewardManager : MonoBehaviour
     /// </summary>
     void GiveReward(int rewardAmount)
     {
-        GameManager.Instance.Gold += (rewardAmount);                      
+        GameManager.Instance.Gold += (rewardAmount);
         Debug.Log($"[오프라인 보상] 최종 지급: {rewardAmount} 골드");
         _rewardCanvas.Button_Hide();
     }
@@ -204,7 +206,7 @@ public class OfflineRewardManager : MonoBehaviour
             _rewardedInterstitialAd.Show(reward =>
             {
                 // 광고 보상 객체 가져오기
-                 reward = _rewardedInterstitialAd.GetRewardItem();
+                reward = _rewardedInterstitialAd.GetRewardItem();
 
                 // 보상 로그 출력
                 Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
