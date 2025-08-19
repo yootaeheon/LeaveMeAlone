@@ -481,6 +481,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44633d0e49ad5fa42b84ccdca3d2cc6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _prefab: {fileID: 0}
+  _material: {fileID: 0}
+  _audioClip: {fileID: 0}
   _gameObjs: []
 --- !u!1 &55769888
 GameObject:
