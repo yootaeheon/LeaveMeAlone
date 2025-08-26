@@ -48,6 +48,8 @@ public class AdmobManager : MonoBehaviour
 
                 Debug.Log("광고 로드 성공.");
                 loadedAD = ad;
+                loadedAD.OnAdFullScreenContentClosed -= LoadAd;
+                loadedAD.OnAdFullScreenContentClosed += LoadAd; // 전면 광고 객체는 일회성이기 때문에 광고가 닫히면 새로운 광고 로드
             }
         );
     }
