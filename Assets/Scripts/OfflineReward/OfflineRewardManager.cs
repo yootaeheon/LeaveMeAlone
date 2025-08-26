@@ -10,7 +10,7 @@ public class OfflineRewardManager : MonoBehaviour
 {
     [SerializeField] OfflineRewardCanvas _rewardCanvas;
 
-    private const string AD_UID = "rewardedVideo";
+    private AdmobManager _admobManager;
 
     private DatabaseReference userDataRef;              // Firebase Realtime Database 참조
     private int goldPerSecond = 10;               // 초당 보상 골드
@@ -34,8 +34,9 @@ public class OfflineRewardManager : MonoBehaviour
 
     private void Awake()
     {
-        InitAdmob();
+        _admobManager = GetComponent<AdmobManager>();
     }
+
 
     private void Start()
     {
@@ -181,7 +182,8 @@ public class OfflineRewardManager : MonoBehaviour
     public void Button_WatchAD()
     {
         Debug.Log("[오프라인 보상] 광고 시청을 선택했습니다.");
-        ShowRewardedInterstitialAd();
+       /* ShowRewardedInterstitialAd();*/
+       _admobManager.ShowAd();
     }
 
     /// <summary>
