@@ -6,9 +6,9 @@ using Inventory.Model;
 
 
 
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
 using UnityEditor;
-#endif
+#endif*/
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -36,10 +36,13 @@ public class DatabaseManager : MonoBehaviour
     {
         SetSingleton();
 
-        // 에디터 모드에서 종료 감지
-#if UNITY_EDITOR
-        EditorApplication.playModeStateChanged += OnPlayModeChanged;
-#endif
+        // 모든 플랫폼에서 앱 종료 감지
+        Application.quitting += OnApplicationQuit;
+    }
+
+    private void OnDestroy()
+    {
+        Application.quitting -= OnApplicationQuit;
     }
 
     private void Start()
@@ -78,7 +81,7 @@ public class DatabaseManager : MonoBehaviour
         SaveAllGameData();
     }
 
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
     private void OnPlayModeChanged(PlayModeStateChange state)
     {
         if (state == PlayModeStateChange.ExitingPlayMode)
@@ -87,7 +90,7 @@ public class DatabaseManager : MonoBehaviour
             Debug.Log("에디터 실행 종료 시 SaveAllGameData 호출");
         }
     }
-#endif
+#endif*/
 
     /// <summary>
     /// 데이터 저장
