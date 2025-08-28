@@ -7931,7 +7931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f1aa100b13df641867c4287d996255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emailInputField: {fileID: 0}
+  emailInputField: {fileID: 1082460908}
   passwordInputField: {fileID: 586124399}
   nickNamePanel: {fileID: 1848179196}
   verifyPanel: {fileID: 2040933085}

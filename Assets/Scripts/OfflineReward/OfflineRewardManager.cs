@@ -17,7 +17,7 @@ public class OfflineRewardManager : MonoBehaviour
     private readonly long maxRewardSeconds = 21600; // 최대 보상 가능 시간: 6시간 = 21,600초
 
     public long calculatedSeconds = 0;           // 실제 경과 시간 (초)
-    private int baseReward = 0;                   // 기본 보상량
+    public int baseReward = 0;                   // 기본 보상량
 
     // 리워드형 인터스티셜 광고 객체
     private RewardedInterstitialAd _rewardedInterstitialAd;
@@ -189,37 +189,10 @@ public class OfflineRewardManager : MonoBehaviour
     /// <summary>
     /// 실제 골드 보상 지급 및 UI 알림
     /// </summary>
-    void GiveReward(int rewardAmount)
+    public void  GiveReward(int rewardAmount)
     {
         GameManager.Instance.Gold += (rewardAmount);
         Debug.Log($"[오프라인 보상] 최종 지급: {rewardAmount} 골드");
         _rewardCanvas.Button_Hide();
-    }
-
-    // 리워드형 광고 재생 함수
-    public void ShowRewardedInterstitialAd()
-    {
-        const string rewardMsg =
-            "리워드형 인터스티셜 광고로 유저가 보상을 받았습니다. 유형: {0}, 수량: {1}.";
-
-        // 광고를 표시할 수 있는지 확인
-        if (_rewardedInterstitialAd != null && _rewardedInterstitialAd.CanShowAd())
-        {
-            _rewardedInterstitialAd.Show(reward =>
-            {
-                // 광고 보상 객체 가져오기
-                reward = _rewardedInterstitialAd.GetRewardItem();
-
-                // 보상 로그 출력
-                Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
-
-                // 보상 지급
-                GiveReward(baseReward * 2);
-            });
-        }
-        else
-        {
-            Debug.Log("광고 재생 불가");
-        }
     }
 }
