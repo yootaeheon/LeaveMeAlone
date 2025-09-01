@@ -72,7 +72,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /Assets/Import
 /Assets/Invent
-/Assets/Plugins
 /Assets/Editor Default Resources
 Assets/Firebase/Editor/FirebaseAuth_version-12.9.0_manifest.txt
 Assets/Firebase/Editor/FirebaseAuth_version-12.9.0_manifest.txt.meta
