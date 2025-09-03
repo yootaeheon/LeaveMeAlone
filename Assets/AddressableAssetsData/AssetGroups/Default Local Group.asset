@@ -16,7 +16,187 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 5cf81a1a967a7c346861d593b9a507d5
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 027b4589ccc0c60499301d1d9fdecccb
+    m_Address: Assets/MyAddressable/Backgrounds.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 04d64a8c724728644b65066165d0ca3d
+    m_Address: Item/Consumable/Consume_Meat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 11ce7641fa92cba46b56abb5bf474699
+    m_Address: Item/Consumable/Consume_Apple
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35dbc05c848e1204fbb882ddcd56d934
+    m_Address: Assets/Prefabs/Monster/Monster3.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37eba8ccd41965e42b4e78e20752f8ba
+    m_Address: Item/Consumable/Consume_Potion1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 393fc59099cd8644a9cc12dbad4a5e02
+    m_Address: Item/Consumable/Consume_HpPotion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b3fa719517c0404dabe1e4241479268
+    m_Address: Assets/MyAddressable/DefaultCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4132d5db5672a9d41b5ad3ca71aaa354
+    m_Address: Assets/MyAddressable/OfflineRewardCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57ce4d4bb9a319543ac2d9f03831ef12
+    m_Address: Assets/MyAddressable/LevelUpCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 587b024cda58cd64793c6af57e96f2cd
+    m_Address: Item/Consumable/Consume_Milk
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e0d6b6443e31a049bfb65e184ba8445
+    m_Address: Item/Equip/Helmet
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 632c78e14a2305f4981bfbe7f48cea3a
+    m_Address: Item/Equip/Back
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7119e9d92525cfa468861bfaee9af63b
+    m_Address: Assets/MyAddressable/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7cd8cb569c59d204e835e004f92d8160
+    m_Address: Assets/Prefabs/Inventory.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7fb50bf437e64574689f211a3034d004
+    m_Address: Item/Consumable/Consume_Toast
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 878a9e1070064ec4f8695375980c735e
+    m_Address: Item/Equip/Armor
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ee337cca9d909743b354674d3181880
+    m_Address: Assets/MyAddressable/CurCharacterCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8f11342bebfb441429cd6f1abe1380d1
+    m_Address: Assets/Prefabs/GachaResult.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9108f21538f63cb418625183490844b4
+    m_Address: Assets/Prefabs/Item.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 920f0f4ed848e604cbe431c691f925c8
+    m_Address: Assets/Prefabs/ItemUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97934a7f8be40d643a28c75f74f602c0
+    m_Address: "Assets/Scenes/\uC0B0\uC545 \uD48D\uACBD\uC758 \uD53D\uC140 \uC544\uD2B8.png"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e27ccf0e674c6e41b22f0a588b588f6
+    m_Address: Assets/MyAddressable/GachaCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9fc7e36277590054a9cb771aacf517b9
+    m_Address: Item/Consumable/Consume_Potion2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a189f9371ab3caa40a00140112d49dab
+    m_Address: Assets/MyAddressable/ShopCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a46c34278b6b2ba4091a8f4a81c33b20
+    m_Address: Item/Consumable/Consume_Icecream
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c439dac398f5d3c4e88ecedeedf2db23
+    m_Address: Assets/SoundDataSO.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca38c0ca78da4a64ca36a6be48f11627
+    m_Address: Assets/MyAddressable/InventoryCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de3a1ca492bfc1246b94d7b904083d6e
+    m_Address: Item/Equip/Weapon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee93b0c1ab2c9c74280e0274f34a69bf
+    m_Address: Assets/Scripts/Effect/EffectData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2d79d6cb4de92c4da35fc698099101e
+    m_Address: Assets/DataTable/MonsterTable.csv
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 10ca668a64be4dc4dae112b130e599bc, type: 2}
   m_SchemaSet:
