@@ -17,9 +17,13 @@ android {
     }
 
    defaultConfig {
-        minSdkVersion 28
-        targetSdkVersion 33 // 또는 34, 35 등 최신 SDK
-    }
+    applicationId '**APPLICATIONID**'
+    minSdkVersion 28
+    targetSdkVersion 36
+    versionCode **VERSIONCODE**
+    versionName '**VERSIONNAME**'
+}
+
 
     aaptOptions {
         noCompress = **BUILTIN_NOCOMPRESS** + unityStreamingAssets.tokenize(', ')
