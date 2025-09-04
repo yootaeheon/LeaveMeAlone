@@ -120,6 +120,8 @@ public class LogInPanel : MonoBehaviour
             Debug.LogFormat($"¼º°ø: {result.User.DisplayName}, {result.User.UserId}");
 
             BackendManager.User = BackendManager.Auth.CurrentUser;
+
+            SceneManager.LoadScene(1);
         });
     }
     #endregion
