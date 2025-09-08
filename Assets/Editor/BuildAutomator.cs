@@ -16,7 +16,7 @@ public class BuildAutomator : MonoBehaviour
 
         // 번들 버전 코드 +1
         // 플레이스토어 버전업을 위한 기능
-        PlayerSettings.Android.bundleVersionCode++;
+        /*PlayerSettings.Android.bundleVersionCode++;*/
 
         // AAB 빌드 옵션
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();

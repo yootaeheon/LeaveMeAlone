@@ -34,6 +34,8 @@ public class UI_LevelUpCanvas : MonoBehaviour
 
         _model.MaxHp += 0.5f;
         EffectManager.Instance.PlayEffect(EffectManager.Instance.EffectData.MaxHpEffect, _playerPos, _player);
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Button_MaxHp");
     }
 
     public void Button_RecoveryHp()
@@ -45,6 +47,8 @@ public class UI_LevelUpCanvas : MonoBehaviour
 
         _model.RecoverHpPerSecond += 0.1f;
         EffectManager.Instance.PlayEffect(EffectManager.Instance.EffectData.RecoveryEffect, _playerPos, _player);
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Button_RecoveryHp");
     }
 
     public void Button_DefensePower()
@@ -56,6 +60,8 @@ public class UI_LevelUpCanvas : MonoBehaviour
 
         _model.DefensePower += 0.1f;
         EffectManager.Instance.PlayEffect(EffectManager.Instance.EffectData.DefensePowerEffect, _playerPos, _player);
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Button_DefensePower");
     }
 
     public void Button_AttackPower()
@@ -67,6 +73,8 @@ public class UI_LevelUpCanvas : MonoBehaviour
 
         _model.AttackPower += 0.1f;
         EffectManager.Instance.PlayEffect(EffectManager.Instance.EffectData.AttackPowerEffect, _playerPos, _player);
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Button_AttackPower");
     }
 
     public void Button_AttackSpeed()
@@ -78,6 +86,8 @@ public class UI_LevelUpCanvas : MonoBehaviour
 
         _model.AttackSpeed += 0.05f;
         EffectManager.Instance.PlayEffect(EffectManager.Instance.EffectData.AttackSpeedEffect, _playerPos, _player);
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Button_AttackSpeed");
     }
 
     public void Button_CriticalChance()
@@ -89,6 +99,8 @@ public class UI_LevelUpCanvas : MonoBehaviour
 
         _model.CriticalChance += 0.05f;
         EffectManager.Instance.PlayEffect(EffectManager.Instance.EffectData.CriticalChanceEffect, _playerPos, _player);
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Button_CriticalChance");
     }
     #endregion
 }
