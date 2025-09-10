@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "40377125664-857k1a6mts1cctad49g6gsku16g1mnav.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taroni.IDLERPG",
+            "certificate_hash": "54d10533678a6370c755a4086f26db57f9e24d28"
+          }
+        },
+        {
           "client_id": "40377125664-1r1e1doid7jb1gggf5r2dm6q16od6dlp.apps.googleusercontent.com",
           "client_type": 3
         }

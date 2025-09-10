@@ -191,6 +191,8 @@ public class DatabaseManager : MonoBehaviour
         Model.AttackPower = LoadData.CharacterModelDTO.AttackPower;
         Model.AttackSpeed = LoadData.CharacterModelDTO.AttackSpeed;
         Model.CriticalChance = LoadData.CharacterModelDTO.CriticalChance;
+
+        Debug.Log("1. 플레이어 모델 데이터 로드 완료");
     }
 
     public void LoadProgressData()
@@ -199,6 +201,8 @@ public class DatabaseManager : MonoBehaviour
         ProgressData.Stage = LoadData.ProgressDataDTO.Stage;
         ProgressData.KillCount = LoadData.ProgressDataDTO.KillCount;
         _progressUI.UpdateProgressSlider();
+
+        Debug.Log("2. 진행도 로드 완료");
     }
 
     public void LoadInventoryData()
@@ -227,13 +231,15 @@ public class DatabaseManager : MonoBehaviour
                     Debug.LogWarning($"아이템 리소스를 찾을 수 없습니다: {equipItemSO.EquipmentType}_{itemDTO.ItemIndex}");
                 }
             }
-
         }
+        Debug.Log("3. 인벤토리 로드 완료");
     }
 
     public void LoadGoldData()
     {
         GameManager.Instance.Gold = LoadData.GoldDataDTO.Gold;
         GameManager.Instance.Gem = LoadData.GoldDataDTO.Gem;
+
+        Debug.Log("4. 재화 데이터 로드 완료");
     }
 }
