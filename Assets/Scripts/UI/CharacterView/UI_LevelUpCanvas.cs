@@ -84,7 +84,8 @@ public class UI_LevelUpCanvas : MonoBehaviour
 
         GameManager.Instance.Gold -= 2500;
 
-        _model.AttackSpeed += 0.05f;
+        //TODO: 현재 AttackSpeed가 더 느려지는 상황임. 수정 필요
+        _model.AttackSpeed -= 0.02f;
         EffectManager.Instance.PlayEffect(EffectManager.Instance.EffectData.AttackSpeedEffect, _playerPos, _player);
 
         Firebase.Analytics.FirebaseAnalytics.LogEvent("Button_AttackSpeed");
