@@ -42,7 +42,7 @@
 
 ### 이슈 및 해결사항
 
-[1. Android SDK 버전이 인식되지 않아 빌드가 되지 않는 문제 발생](https://www.notion.so/1-Android-SDK-247f51ab999e803a93dcc1c27f8cca49?pvs=21)
+1. Android SDK 버전이 인식되지 않아 빌드가 되지 않는 문제 발생
 
 # **Ⅱ**. 구현 컨텐츠
 
