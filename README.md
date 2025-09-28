@@ -12,15 +12,8 @@
 
 인원 : 1인
 
-사용 툴 : `Unity Engine 2022.3.54f1`, `Visual Studio 2022`, `Git`, `Github`, `Firebase` , `DoTween`, `UniTask` , `GooglePlayStore` 
+사용 툴 : Unity Engine 2022.3.54f1, Visual Studio 2022, Git, Github, Firebase , DoTween, UniTask , GooglePlayStore , Jenkins, Addressables, AWS S3 
 
-## 링크
-
-~~Github : [**깃허브 링크**](https://github.com/yootaeheon/UnityLastProject)~~
-
-~~시연영상 : [**시연영상 링크**](https://youtu.be/G4_rCyhQjaw)~~
-
-~~플레이스토어 링크 :  **[출시 스토어 링크](https://youtu.be/G4_rCyhQjaw)**~~
 
 ## 목차
 
@@ -37,7 +30,7 @@
 
 6. UTC, 유닉스 타임스탬프 이용한 오프라인 보상
 
-7. 비트플래그 및 **StateMachineBehaviour
+7. 비트플래그 및 StateMachineBehaviour를 통한 속성 공격
 
 8. MVP 패턴 기반 인벤토리 시스템 구현
 
