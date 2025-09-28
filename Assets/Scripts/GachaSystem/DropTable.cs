@@ -67,10 +67,6 @@ public class DropTable
     /// <summary>
     /// 정규분포(가우스) 확률 밀도 함수
     /// </summary>
-    /// <param name="x">평가할 지점 (아이템 레벨)</param>
-    /// <param name="mean">평균 (중심값)</param>
-    /// <param name="stdDev">표준편차</param>
-    /// <returns>해당 지점의 확률 값</returns>
     float Gaussian(float x, float mean, float stdDev)
     {
         float a = 1.0f / (stdDev * Mathf.Sqrt(2.0f * Mathf.PI)); // 정규화 계수

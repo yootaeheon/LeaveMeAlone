@@ -14,7 +14,7 @@ public class GachaSystem : MonoBehaviour
     [SerializeField] GameObject _gachaPrefabOnCanvas;
     [SerializeField] GameObject _gachaParentObj;
 
-    [SerializeField] InventorySO InventoryData; // 인벤토리 데이터
+    [SerializeField] InventorySO InventoryData; 
 
     [Header("캐릭터 레벨 설정 (1~100)")]
     /*[Range(1, 100)]*/
@@ -24,10 +24,10 @@ public class GachaSystem : MonoBehaviour
     public float stdDev;  // 정규분포의 표준편차, 높을수록 더 다양한 레벨 등장
 
     [Header("아이템 부위별 커스텀 확률 테이블")]
-    public DropTable helmetTable = new DropTable("Helmet"); // 헬멧 아이템 드롭 테이블
-    public DropTable armorTable = new DropTable("Armor");   // 갑옷 아이템 드롭 테이블
-    public DropTable weaponTable = new DropTable("Weapon"); // 무기 아이템 드롭 테이블
-    public DropTable Back = new DropTable("Back");          // 망토 아이템 드롭 테이블
+    public DropTable helmetTable = new DropTable("Helmet"); 
+    public DropTable armorTable = new DropTable("Armor");   
+    public DropTable weaponTable = new DropTable("Weapon"); 
+    public DropTable Back = new DropTable("Back");          
 
     [Header("천장 시스템: 실패 누적 시 보상")]
     public int pityThreshold = 10; // 낮은 레벨 아이템이 연속으로 나올 수 있는 최대 횟수
@@ -96,11 +96,10 @@ public class GachaSystem : MonoBehaviour
 
         _gachaCanvas.gameObject.SetActive(true); // 가챠 UI 활성화
 
-        // 아이템 생성
+        // 아이템 생성 프리팹에 가차결과 아이템 이미지와 정보 수량 넣어주기
         GameObject resultUI = Instantiate(_gachaPrefabOnCanvas);
         resultUI.transform.SetParent(_gachaParentObj.transform, false);
 
-        //생성한 프리팹에 가차결과 아이템 이미지와 정보 수량 넣어주기
         resultUI.transform.GetChild(0).GetComponent<Image>().sprite = resultItem.ItemImage;
     }
 
@@ -116,16 +115,14 @@ public class GachaSystem : MonoBehaviour
 
         GameManager.Instance.Gold -= cost;
 
-        _gachaCanvas.gameObject.SetActive(true); // 가챠 UI 활성화
+        _gachaCanvas.gameObject.SetActive(true); 
 
         for (int i = 0; i < 10; i++)
         {
             ItemSO resultItem = GetRandomItem();
 
-            // 인벤토리에 추가
             AddInventory(resultItem, 1);
 
-            // UI 생성
             GameObject resultUI = Instantiate(_gachaPrefabOnCanvas);
             resultUI.transform.SetParent(_gachaParentObj.transform, false);
             resultUI.transform.GetChild(0).GetComponent<Image>().sprite = resultItem.ItemImage;
@@ -172,11 +169,11 @@ public class GachaSystem : MonoBehaviour
         int level = _characterLevel; // 기본 아이템 레벨
         DropTable table = GetTable(type); // 해당 부위의 드롭 테이블 가져오기
 
-        // 천장 시스템: 연속으로 낮은 레벨이 나오면 최고 레벨 지급
+        // 천장 시스템
         if (pityCounter >= pityThreshold)
         {
-            level = 10;          // 최고 레벨 아이템 보상
-            pityCounter = 0;     // pity 초기화
+            level = 10;          
+            pityCounter = 0;     
         }
         else
         {
@@ -187,12 +184,11 @@ public class GachaSystem : MonoBehaviour
             pityCounter = level >= 9 ? 0 : pityCounter + 1;
         }
 
-        // 디버그 로그 출력
         Debug.Log($"[{type}] Lv.{level} 아이템 획득");
 
         var resultItemList = EqipItemDataDic[type];
 
-        return resultItemList[level - 1]; ; // 결과 반환
+        return resultItemList[level - 1]; ; 
     }
 
     /// <summary>
