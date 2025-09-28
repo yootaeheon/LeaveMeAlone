@@ -21,6 +21,14 @@ public class LogInPanel : MonoBehaviour
         InitGoogleConfigu();
     }
 
+    private void Start()
+    {
+        if (BackendManager.Auth.CurrentUser != null)
+        {
+            CheckUserInfo();
+        }
+    }
+
     public void CheckUserInfo()
     {
         FirebaseUser user = BackendManager.Auth.CurrentUser;
@@ -125,4 +133,15 @@ public class LogInPanel : MonoBehaviour
         });
     }
     #endregion
+
+    /// <summary>
+    /// ·Î±×¾Æ¿ô ÇÔ¼ö
+    /// </Summary>
+    public async void LogOut()
+    {
+        BackendManager.Auth.SignOut();
+        Debug.Log("·Î±×¾Æ¿ô");
+        await Task.CompletedTask;
+        SceneManager.LoadScene(0);
+    }
 }

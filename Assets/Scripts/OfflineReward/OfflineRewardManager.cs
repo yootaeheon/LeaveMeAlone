@@ -192,6 +192,7 @@ public class OfflineRewardManager : MonoBehaviour
     public void  GiveReward(int rewardAmount)
     {
         GameManager.Instance.Gold += (rewardAmount);
+        GameManager.Instance.Gem += (int)(calculatedSeconds / 3600f); // 시청 시간에 비례한 보너스 젬 지급
         Debug.Log($"[오프라인 보상] 최종 지급: {rewardAmount} 골드");
         _rewardCanvas.Button_Hide();
     }

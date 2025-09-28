@@ -1,13 +1,13 @@
-using System;
-using System.Collections;
+ï»¿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
-/// ·ÎµåÇÑ ¿¡¼ÂÀº »ç¿ëÇÏÁö ¾ÊÀ» ½Ã ReleaseÇØÁà¾ß ¸Ş¸ğ¸® ¾Æ³¥ ¼ö ÀÖÀ½
-/// ReleaseInstance() <-> InstantiateAsync
-/// ReleaseAsset() <-> LoadAssetAsync
 public class AddressableManager : MonoBehaviour
 {
     [SerializeField] GameObject _prefab;
@@ -15,96 +15,235 @@ public class AddressableManager : MonoBehaviour
     [SerializeField] AudioClip _audioClip;
     [SerializeField] Dictionary<string, GameObject> _prefabDict = new Dictionary<string, GameObject>();
 
-    private void Test()
-    {
-        // prefab = Resources.Load<GameObject>("Prefabs/Player");
-        _prefab = Addressables.LoadAssetAsync<GameObject>("Playe").WaitForCompletion();
-        Addressables.LoadAssetAsync<GameObject>("Playe").Completed += OnCompleted;
-    }
+    public static AddressableManager _instance;
+    public static AddressableManager Instance { get { return _instance; } set { _instance = value; } }
 
+    [SerializeField] private List<AssetLabelReference> _label;
+    private List<string> _labels;
+    private long _downSize;
+    private Dictionary<string, long> _patchMap = new Dictionary<string, long>();
 
-    // ±âÁ¸: private Action OnCompleted()
-    // ¼öÁ¤: Completed ÀÌº¥Æ® ÇÚµé·¯´Â Action<AsyncOperationHandle<GameObject>> ½Ã±×´ÏÃ³¿©¾ß ÇÔ
-    private void OnCompleted(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<GameObject> handle)
+    [SerializeField] private float _delayToStartCheckDownLoad;
+    [SerializeField] private float _delayTofinishDownLoad;
+
+    private void Awake()
     {
-        if (handle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+        if (_instance == null)
         {
-            // ¼º°øÀûÀ¸·Î ·ÎµåµÊ
-            GameObject loadedObj = handle.Result;
-            // ÇÊ¿äÇÑ Ã³¸® ÀÛ¼º
+            _instance = this;
+            Init();
+            DontDestroyOnLoad(gameObject);
+            Debug.Log("ì–´ë“œë ˆì„œë¸” ì´ˆê¸°í™”!");
         }
         else
         {
-            // ·Îµå ½ÇÆĞ Ã³¸®
-            Debug.LogError("Addressable ·Îµå ½ÇÆĞ: " + handle.OperationException);
+            Destroy(gameObject);
         }
     }
 
-    //=====================================================================================================================
-    // À§´Â Å×½ºÆ®¿ë ÄÚµå
-    //=====================================================================================================================
-
-
-    [SerializeField] AssetReferenceGameObject[] _gameObjs;
-
-   /* private AssetReferenceT<AudioClip> SoundBGM;
-    private GameObject BGMobj;
-
-    private AssetReferenceSprite FlagSprite;
-    private Image flagImage;*/
-
-
-    private List<GameObject> gameObjects = new List<GameObject>();
-
-    // DownManager¿¡¼­ ·Îµù ÇØ³õ°í
-    // Star¿¡¼­ ¹Ù·Î ½ºÆù
     private void Start()
     {
-        Button_SpawnObj();
+        InitAddressableAsync().Forget();
     }
-  
-    public void Button_SpawnObj()
-    {
-       /* _gameObj.InstantiateAsync().Completed += (obj) =>
-        {
-            gameObjects.Add(obj.Result);
-        };*/
 
-        for (int i = 0; i < _gameObjs.Length; i++)
+    private void Init()
+    {
+        _labels = new List<string>();
+        for (int i = 0; i < _label.Count; i++)
         {
-            _gameObjs[i].InstantiateAsync().Completed += (obj) =>
-            {
-                gameObjects.Add(obj.Result);
-            };
+            _labels.Add(_label[i].labelString);
         }
-      
-
-        /*// °ÔÀÓ¿ÀºêÁ§Æ® ÇüÅÂ°¡ ¾Æ´Ï¶ó¸é
-        SoundBGM.LoadAssetAsync().Completed += (clip) =>
-        {
-            AudioSource bgmSound = BGMobj.GetComponent<AudioSource>();
-            bgmSound.clip = clip.Result;
-            bgmSound.loop = true;
-            bgmSound.Play();
-        };
-
-        FlagSprite.LoadAssetAsync().Completed += (img) =>
-        {
-            Image image = flagImage.GetComponent<Image>();
-            image.sprite = img.Result;
-        };*/
     }
 
-   /* public void Button_ReleaseObj()
+    // ì–´ë“œë ˆì„œë¸” ì´ˆê¸°í™” (UniTask)
+    private async UniTaskVoid InitAddressableAsync()
     {
-       *//* SoundBGM.ReleaseAsset();
-        FlagSprite.ReleaseAsset();*//*
+        var init = Addressables.InitializeAsync();
+        await init.ToUniTask();
+        Debug.Log("ì–´ë“œë ˆì„œë¸” ì´ˆê¸°í™” ì™„ë£Œ");
+    }
 
-        if (gameObjects.Count == 0)
-            return;
+    // ë‹¨ìˆœ Object ìƒì„±
+    public async UniTask<GameObject> GetObjectAsync(AssetReferenceGameObject assetObject)
+    {
+        var handle = assetObject.InstantiateAsync();
+        await handle.ToUniTask();
+        return handle.Result;
+    }
 
-        var index = gameObjects.Count - 1;
-        Addressables.ReleaseInstance(gameObjects[index]);
-        gameObjects.RemoveAt(index);
-    }*/
+    // ë‹¨ìˆœ Object ìƒì„± í›„ Listì— ì €ì¥
+    public async UniTask GetObjectAndSaveAsync(AssetReferenceGameObject assetObject, List<GameObject> realObjects)
+    {
+        var handle = assetObject.InstantiateAsync();
+        await handle.ToUniTask();
+        realObjects.Add(handle.Result);
+    }
+
+    // Listì— ì €ì¥ëœ Objectë“¤ ìƒì„± í›„ Listì— ì €ì¥
+    public async UniTask GetObjectsAndSaveAsync(List<AssetReferenceGameObject> assetObjects, List<GameObject> realObjects)
+    {
+        foreach (var assetObject in assetObjects)
+        {
+            var handle = assetObject.InstantiateAsync();
+            await handle.ToUniTask();
+            realObjects.Add(handle.Result);
+        }
+    }
+
+    // Sound ê°€ì ¸ì˜¤ê¸°
+    public async UniTask LoadSoundAsync(AssetReferenceT<AudioClip> assetAudioClip, AudioSource audio)
+    {
+        var handle = assetAudioClip.LoadAssetAsync();
+        await handle.ToUniTask();
+        audio.clip = handle.Result;
+    }
+
+    // Sprite ê°€ì ¸ì™€ì„œ ì´ë¯¸ì§€ì— ì°¸ì¡°
+    public async UniTask LoadSpriteAsync(AssetReferenceSprite assetImageSprite, Image image)
+    {
+        var handle = assetImageSprite.LoadAssetAsync();
+        await handle.ToUniTask();
+        image.sprite = handle.Result;
+        image.gameObject.SetActive(true);
+    }
+
+    // Sprite ê°€ì ¸ì™€ì„œ Spriteì— ì°¸ì¡°
+    public async UniTask<Sprite> LoadOnlySpriteAsync(AssetReferenceSprite assetImageSprite)
+    {
+        var handle = assetImageSprite.LoadAssetAsync();
+        await handle.ToUniTask();
+        return handle.Result;
+    }
+
+    // ê°€ì ¸ì˜¨ ì—ì…‹ í•´ì œ
+    public void ReleaseObject(AssetReference asset)
+    {
+        asset.ReleaseAsset();
+    }
+
+    // ìƒì„±í•œ ì—ì…‹ í•´ì œ
+    public void ReleaseInstance(GameObject assetObjects)
+    {
+        Addressables.ReleaseInstance(assetObjects);
+    }
+
+    public void ReleaseInstances(List<GameObject> assetObjects)
+    {
+        for (int i = assetObjects.Count; i > 0; i--)
+        {
+            Addressables.ReleaseInstance(assetObjects[i - 1]);
+            assetObjects.RemoveAt(i - 1);
+        }
+    }
+
+    // ë‹¤ìš´ë°›ì„ íŒŒì¼ ì—¬ë¶€ í™•ì¸
+    public async UniTask<long> CheckDownLoadFileAsync()
+    {
+        _downSize = 0;
+        await UniTask.Delay(TimeSpan.FromSeconds(_delayToStartCheckDownLoad));
+
+        foreach (string label in _labels)
+        {
+            var handle = Addressables.GetDownloadSizeAsync(label);
+            await handle.ToUniTask();
+            _downSize += handle.Result;
+        }
+        return _downSize;
+    }
+
+    // íŒŒì¼ ì‚¬ì´ì¦ˆ ë‹¨ìœ„ ë³€í™˜
+    public StringBuilder GetFileSize(long byteCnt)
+    {
+        StringBuilder sb = new StringBuilder();
+        Debug.Log($"ì´ ì‚¬ì´ì¦ˆ: {byteCnt}");
+
+        if ((byteCnt >= 1073741824.0))
+        {
+            sb.Append(string.Format("{0: ##.##}", byteCnt / 1073741824.0));
+            sb.Append("Gb");
+        }
+        else if ((byteCnt >= 1048576.0))
+        {
+            sb.Append(string.Format("{0: ##.##}", byteCnt / 1048576.0));
+            sb.Append("Mb");
+        }
+        else if ((byteCnt >= 1024.0))
+        {
+            sb.Append(string.Format("{0: ##.##}", byteCnt / 1024.0));
+            sb.Append("Kb");
+        }
+        else if ((byteCnt > 0 && byteCnt < 1024.0))
+        {
+            sb.Append(byteCnt.ToString());
+            sb.Append("Bytes");
+        }
+        return sb;
+    }
+
+    // ë‹¤ìš´ë¡œë“œ ì‹œì‘
+    public async UniTask DownLoadAsync(Slider downPercentSlider, TextMeshProUGUI downPercentText, Action<bool> callback)
+    {
+        foreach (string label in _labels)
+        {
+            var handle = Addressables.GetDownloadSizeAsync(label);
+            await handle.ToUniTask();
+
+            if (handle.Result != decimal.Zero)
+            {
+                await OnDownLoadPerLabelAsync(label);
+            }
+        }
+        await OnCheckDownLoadStatusAsync(downPercentSlider, downPercentText, callback);
+    }
+
+    // ì–´ë“œë ˆì„œë¸” ë¼ë²¨ ë³„ë¡œ ë‹¤ìš´ë¡œë“œ ë°›ê¸°
+    private async UniTask OnDownLoadPerLabelAsync(string label)
+    {
+        _patchMap.Add(label, 0);
+        var handle = Addressables.DownloadDependenciesAsync(label, false);
+
+        while (!handle.IsDone)
+        {
+            _patchMap[label] = handle.GetDownloadStatus().DownloadedBytes;
+            await UniTask.Yield();
+        }
+
+        _patchMap[label] = handle.GetDownloadStatus().TotalBytes;
+        Addressables.Release(handle);
+        Debug.Log("í•˜ë‚˜ì˜ Label ë‹¤ìš´ë!");
+    }
+
+    // í˜„ì¬ ë‹¤ìš´ë¡œë“œ ìƒí™© ì•Œë ¤ì£¼ê¸°
+    private async UniTask OnCheckDownLoadStatusAsync(Slider downPercentSlider, TextMeshProUGUI downPercentText, Action<bool> finishDownLoadCallback)
+    {
+        StringBuilder sb = new StringBuilder();
+        long total = 0;
+        bool isFinishDownLad;
+
+        while (true)
+        {
+            total += _patchMap.Sum(tmp => tmp.Value);
+            downPercentSlider.value = (float)total / (float)_downSize;
+
+            int curPatchValue = (int)(downPercentSlider.value * 100);
+            sb.Clear();
+            sb.Append(curPatchValue);
+            sb.Append(" %");
+            downPercentText.SetText(sb);
+
+            Debug.Log($"check ì¤‘! í˜„ì¬ {downPercentSlider.value}%, {total}Sizeë§Œí¼ ë‹¤ìš´ë°›ìŒ");
+
+            if (total == _downSize)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(_delayTofinishDownLoad));
+                isFinishDownLad = true;
+                finishDownLoadCallback(isFinishDownLad);
+                Debug.Log("ë‹¤ìš´ë¡œë“œ ë!");
+                break;
+            }
+
+            total = 0;
+            await UniTask.Yield();
+        }
+    }
 }
