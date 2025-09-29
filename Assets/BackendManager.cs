@@ -46,7 +46,7 @@ public class BackendManager : MonoBehaviour
         }
     }
 
-    private void CheckDependency()
+    public void CheckDependency()
     {
         FirebaseApp.CheckAndFixDependenciesAsync()
             .ContinueWithOnMainThread(task =>

@@ -22,22 +22,25 @@ public class LogInPanel : MonoBehaviour
         InitGoogleConfigu();
     }
 
-    private void Start()
+    private async void Start()
     {
+        // Firebase 초기화 완료될 때까지 대기
+        await UniTask.WaitUntil(() => BackendManager.Instance != null && BackendManager.Instance.OnFirebaseReady);
+
+        // 이후 자동 로그인 루프 실행
         CheckUserInfoLoopAsync().Forget();
     }
 
-    // 일정 간격마다 CurrentUser를 확인하여 자동 로그인 처리
     private async UniTaskVoid CheckUserInfoLoopAsync()
     {
         while (true)
         {
-            if (BackendManager.Auth.CurrentUser != null)
+            if (BackendManager.Auth != null && BackendManager.Auth.CurrentUser != null)
             {
                 CheckUserInfo();
-                break; // 자동 로그인 성공 시 루프 종료
+                break;
             }
-            await UniTask.Delay(1000); // 1초마다 체크
+            await UniTask.Delay(1000);
         }
     }
 
