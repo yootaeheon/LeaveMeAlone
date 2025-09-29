@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Firebase.Auth;
 using Firebase.Extensions;
 using Google;
@@ -23,9 +24,20 @@ public class LogInPanel : MonoBehaviour
 
     private void Start()
     {
-        if (BackendManager.Auth.CurrentUser != null)
+        CheckUserInfoLoopAsync().Forget();
+    }
+
+    // 일정 간격마다 CurrentUser를 확인하여 자동 로그인 처리
+    private async UniTaskVoid CheckUserInfoLoopAsync()
+    {
+        while (true)
         {
-            CheckUserInfo();
+            if (BackendManager.Auth.CurrentUser != null)
+            {
+                CheckUserInfo();
+                break; // 자동 로그인 성공 시 루프 종료
+            }
+            await UniTask.Delay(1000); // 1초마다 체크
         }
     }
 

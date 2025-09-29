@@ -5,6 +5,7 @@ public class UserGameDataDTO
     public ProgressDataDTO ProgressDataDTO;
     public InventoryDTO InventoryDataDTO;
     public GoldDataDTO GoldDataDTO;
+    public EquipmentDTO EquipmentDTO;
 
     /// <summary>
     ///  기본 생성자
@@ -19,11 +20,12 @@ public class UserGameDataDTO
     /// <param name="progressDataDTO"></param>
     /// <param name="inventoryDataDTO"></param>
     /// <param name="goldDataDTO"></param>
-    public UserGameDataDTO(CharacterModelDTO characterStatusDTO, ProgressDataDTO progressDataDTO, InventoryDTO inventoryDataDTO, GoldDataDTO goldDataDTO)
+    public UserGameDataDTO(CharacterModelDTO characterStatusDTO, ProgressDataDTO progressDataDTO, InventoryDTO inventoryDataDTO, GoldDataDTO goldDataDTO, EquipmentDTO equipmentDTO)
     {
         this.CharacterModelDTO = characterStatusDTO;
         this.ProgressDataDTO = progressDataDTO;
         this.InventoryDataDTO = inventoryDataDTO;
         this.GoldDataDTO = goldDataDTO;
+        this.EquipmentDTO = equipmentDTO;
     }
 }

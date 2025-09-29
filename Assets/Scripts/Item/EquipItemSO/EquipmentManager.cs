@@ -16,7 +16,7 @@ public class EquipmentManager : MonoBehaviour
     [SerializeField] SpriteRenderer _backSpriteRenderer;
     [SerializeField] SpriteRenderer _weaponSpriteRenderer;
 
-    private Dictionary<EquipmentType, EquipItemSO> _equippedItems = new();
+    public Dictionary<EquipmentType, EquipItemSO> _equippedItems = new();
 
     public EquipItemSO SelectedItem { get; set;}
 

@@ -1,8 +1,8 @@
 using Firebase.Database;
-using System;
-using UnityEngine;
 using Firebase.Extensions;
 using Inventory.Model;
+using System;
+using UnityEngine;
 
 
 
@@ -28,6 +28,9 @@ public class DatabaseManager : MonoBehaviour
 
     [SerializeField] InventorySO _inventoryData;
     public InventorySO InventoryData => _inventoryData ??= Resources.Load<InventorySO>("InventoryData");
+
+    [SerializeField] EquipmentManager _equipmentManager;
+    public EquipmentManager EquipmentManager => _equipmentManager ??= FindAnyObjectByType<EquipmentManager>();
 
     public bool IsGameDataLoaded { get; private set; }
     public Action OnGameDataLoaded { get; set; }
@@ -81,16 +84,16 @@ public class DatabaseManager : MonoBehaviour
         SaveAllGameData();
     }
 
-/*#if UNITY_EDITOR
-    private void OnPlayModeChanged(PlayModeStateChange state)
-    {
-        if (state == PlayModeStateChange.ExitingPlayMode)
+    /*#if UNITY_EDITOR
+        private void OnPlayModeChanged(PlayModeStateChange state)
         {
-            SaveAllGameData();
-            Debug.Log("에디터 실행 종료 시 SaveAllGameData 호출");
+            if (state == PlayModeStateChange.ExitingPlayMode)
+            {
+                SaveAllGameData();
+                Debug.Log("에디터 실행 종료 시 SaveAllGameData 호출");
+            }
         }
-    }
-#endif*/
+    #endif*/
 
     /// <summary>
     /// 데이터 저장
@@ -133,7 +136,12 @@ public class DatabaseManager : MonoBehaviour
             GameManager.Instance.Gem
         );
 
-        LoadData = new UserGameDataDTO(characterDTO, progressDTO, inventoryDataDTO, goldDataDTO);
+        EquipmentDTO equipmentDTO = new EquipmentDTO
+            (
+            _equipmentManager._equippedItems
+            );
+
+        LoadData = new UserGameDataDTO(characterDTO, progressDTO, inventoryDataDTO, goldDataDTO, equipmentDTO);
         string json = JsonUtility.ToJson(LoadData);
 
         userDataRef.Child("gameData")
@@ -169,6 +177,7 @@ public class DatabaseManager : MonoBehaviour
                     LoadProgressData();
                     LoadInventoryData();
                     LoadGoldData();
+                    LoadEquipmentData();
 
                     IsGameDataLoaded = true;
                     OnGameDataLoaded?.Invoke();
@@ -241,5 +250,24 @@ public class DatabaseManager : MonoBehaviour
         GameManager.Instance.Gem = LoadData.GoldDataDTO.Gem;
 
         Debug.Log("4. 재화 데이터 로드 완료");
+    }
+
+    public void LoadEquipmentData()
+    {
+        if (LoadData.EquipmentDTO?.EquippedItems == null) return;
+
+        EquipmentManager._equippedItems.Clear();
+        foreach (var slot in LoadData.EquipmentDTO.EquippedItems)
+        {
+            if (slot.ItemID != 0)
+            {
+                EquipItemSO item = Resources.Load<EquipItemSO>($"Item/Equip/{slot.Type}/{slot.Type}_{slot.ItemID}");
+                if (item != null)
+                {
+                    EquipmentManager.EquipItem(item);
+                }
+            }
+        }
+        Debug.Log("5. 장비 데이터 로드 완료");
     }
 }
