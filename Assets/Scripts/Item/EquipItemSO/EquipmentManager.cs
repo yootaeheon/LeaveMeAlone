@@ -194,4 +194,15 @@ public class EquipmentManager : MonoBehaviour
             return null;
         }
     }
+
+    public void ApplyAllEquippedItemsToCharacter()
+    {
+        foreach (var kvp in _equippedItems)
+        {
+            EquipItem(kvp.Value);
+        }
+
+        _UIequip.UpdateAllSlots();
+        Debug.Log("[EquipmentManager] 모든 장비 적용 완료");
+    }
 }

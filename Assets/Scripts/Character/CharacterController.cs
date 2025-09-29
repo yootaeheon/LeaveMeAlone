@@ -37,13 +37,15 @@ public class CharacterController : MonoBehaviour, IDamageable
         _animator = GetComponent<Animator>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
+        OnSettedInit += View.Init;
+
         DatabaseManager.Instance.OnGameDataLoaded += () =>
         {
             Subscribe();
             recoveryHpRoutine = StartCoroutine(RecoveryHpRoutine());
-            OnSettedInit?.Invoke();
+            OnSettedInit?.Invoke(); // 이 시점에 데이터가 세팅됨
         };
     }
 

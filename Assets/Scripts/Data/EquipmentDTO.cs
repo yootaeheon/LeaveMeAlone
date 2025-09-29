@@ -3,33 +3,34 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 현재 장착중인 아이템 정보를 저장하는 DTO
-[Serializable]
-public class EquipmentSlot
-{
-    public EquipmentType Type;
-    public int ItemID;
-}
 
 [Serializable]
 public class EquipmentDTO
 {
-    public List<EquipmentSlot> EquippedItems = new();
+    public List<ItemDTO> EquippedItems = new();
 
     // 기본 생성자
-    public EquipmentDTO() { }
+    public EquipmentDTO()
+    {
+        EquippedItems = new List<ItemDTO>();
+    }
 
     // EquipmentManager의 _equippedItems를 기반으로 DTO 생성
     public EquipmentDTO(Dictionary<EquipmentType, EquipItemSO> equippedItems)
     {
-        EquippedItems = new List<EquipmentSlot>();
+        EquippedItems = new List<ItemDTO>();
         foreach (var kvp in equippedItems)
         {
-            EquippedItems.Add(new EquipmentSlot
+            EquipItemSO item = kvp.Value;
+            if (item != null)
             {
-                Type = kvp.Key,
-                ItemID = kvp.Value != null ? kvp.Value.ID : 0
-            });
+                EquippedItems.Add(new ItemDTO
+                {
+                    ItemIndex = item.ID,
+                    Quantity = 1, // 장비 아이템은 일반적으로 수량이 1
+                    Item = item
+                });
+            }
         }
     }
 }

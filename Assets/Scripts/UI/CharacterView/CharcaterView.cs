@@ -11,10 +11,10 @@ public class CharcaterView : UIBinder
         BindAll();
     }
 
-    private void Start()
+   /* private void Start()
     {
         Init();
-    }
+    }*/
 
     #region Subscrigbe/UnSubscribe/Init
     public void Init()

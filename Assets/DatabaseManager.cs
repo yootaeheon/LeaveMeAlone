@@ -128,7 +128,7 @@ public class DatabaseManager : MonoBehaviour
             ProgressData.KillCount
         );
 
-        InventoryDTO inventoryDataDTO = new InventoryDTO(InventoryData);
+        InventoryDTO inventoryDataDTO = new InventoryDTO(InventoryData, EquipmentManager._equippedItems);
 
         GoldDataDTO goldDataDTO = new GoldDataDTO
         (
@@ -137,9 +137,9 @@ public class DatabaseManager : MonoBehaviour
         );
 
         EquipmentDTO equipmentDTO = new EquipmentDTO
-            (
+        (
             _equipmentManager._equippedItems
-            );
+        );
 
         LoadData = new UserGameDataDTO(characterDTO, progressDTO, inventoryDataDTO, goldDataDTO, equipmentDTO);
         string json = JsonUtility.ToJson(LoadData);
@@ -177,7 +177,7 @@ public class DatabaseManager : MonoBehaviour
                     LoadProgressData();
                     LoadInventoryData();
                     LoadGoldData();
-                    LoadEquipmentData();
+                    //LoadEquipmentData();
 
                     IsGameDataLoaded = true;
                     OnGameDataLoaded?.Invoke();
@@ -186,7 +186,7 @@ public class DatabaseManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("게임 데이터 불러오기 실패: " + task.Exception);
+                    InitNewGameData();
                 }
             });
     }
@@ -242,6 +242,30 @@ public class DatabaseManager : MonoBehaviour
             }
         }
         Debug.Log("3. 인벤토리 로드 완료");
+
+        if (LoadData.InventoryDataDTO.EquipItems != null)
+        {
+            foreach (var equipDTO in LoadData.InventoryDataDTO.EquipItems)
+            {
+                ItemDTO itemDTO = LoadData.InventoryDataDTO.EquipItems.Find(i => i.ItemIndex == equipDTO.ItemIndex);
+                ItemSO itemSO = itemDTO.Item;
+                EquipItemSO equipItemSO = itemSO as EquipItemSO;
+
+                if (equipDTO.Item != null && equipDTO.ItemIndex != 0)
+                {
+                    EquipItemSO LoadItem = Resources.Load<EquipItemSO>($"Item/Equip/{equipItemSO.EquipmentType}/{equipItemSO.EquipmentType}_{itemDTO.ItemIndex}");
+                    if (LoadItem != null)
+                    {
+                        EquipmentManager._equippedItems[LoadItem.EquipmentType] = LoadItem;
+                    }
+                    else
+                    {
+                        Debug.LogWarning("장비 리소스를 찾을 수 없습니다: " + equipItemSO.EquipmentType + "_" + itemDTO.ItemIndex);
+                    }
+                }
+            }
+        }
+        EquipmentManager.ApplyAllEquippedItemsToCharacter();
     }
 
     public void LoadGoldData()
@@ -252,22 +276,53 @@ public class DatabaseManager : MonoBehaviour
         Debug.Log("4. 재화 데이터 로드 완료");
     }
 
-    public void LoadEquipmentData()
+    /*public void LoadEquipmentData()
     {
         if (LoadData.EquipmentDTO?.EquippedItems == null) return;
 
         EquipmentManager._equippedItems.Clear();
         foreach (var slot in LoadData.EquipmentDTO.EquippedItems)
         {
-            if (slot.ItemID != 0)
+            EquipItemSO item = Resources.Load<EquipItemSO>($"Item/Equip/{slot.Type}/{slot.Type}_{slot.ItemID}");
+            if (item != null)
             {
-                EquipItemSO item = Resources.Load<EquipItemSO>($"Item/Equip/{slot.Type}/{slot.Type}_{slot.ItemID}");
-                if (item != null)
-                {
-                    EquipmentManager.EquipItem(item);
-                }
+                EquipmentManager._equippedItems[slot.Type] = item;
+            }
+            else
+            {
+                Debug.LogWarning($"장비 리소스를 찾을 수 없습니다: {slot.Type}_{slot.ItemID}");
             }
         }
-        Debug.Log("5. 장비 데이터 로드 완료");
+
+        EquipmentManager.ApplyAllEquippedItemsToCharacter();
+
+        Debug.Log("5. 장비 데이터 로드 및 적용 완료");
+    }*/
+
+    public void InitNewGameData()
+    {
+        Debug.Log("새 유저 → 기본 데이터 생성");
+
+        // 기본 캐릭터 값 지정
+        Model.MaxHp = 100;
+        Model.CurHp = 100;
+        Model.AttackPower = 10;
+        Model.DefensePower = 5;
+        Model.AttackSpeed = 1.0f;
+        Model.CriticalChance = 0.1f;
+
+        ProgressData.Chapter = 1;
+        ProgressData.Stage = 1;
+        ProgressData.KillCount = 0;
+
+        GameManager.Instance.Gold = 0;
+        GameManager.Instance.Gem = 0;
+
+        InventoryData.Init();
+
+        IsGameDataLoaded = true;
+        OnGameDataLoaded?.Invoke();
+
+        SaveAllGameData(); // Firebase에 저장
     }
 }
