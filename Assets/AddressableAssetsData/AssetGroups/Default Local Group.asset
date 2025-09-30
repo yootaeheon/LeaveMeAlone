@@ -194,8 +194,7 @@ MonoBehaviour:
   - m_GUID: f2d79d6cb4de92c4da35fc698099101e
     m_Address: Assets/DataTable/MonsterTable.csv
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 10ca668a64be4dc4dae112b130e599bc, type: 2}

@@ -64,7 +64,7 @@ public class LogInPanel : MonoBehaviour
             nickNamePanel.gameObject.SetActive(true);
         }
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ public class LogInPanel : MonoBehaviour
 
             BackendManager.User = BackendManager.Auth.CurrentUser;
 
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         });
     }
     #endregion
