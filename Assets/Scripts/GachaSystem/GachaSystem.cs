@@ -101,6 +101,8 @@ public class GachaSystem : MonoBehaviour
         resultUI.transform.SetParent(_gachaParentObj.transform, false);
 
         resultUI.transform.GetChild(0).GetComponent<Image>().sprite = resultItem.ItemImage;
+
+        DatabaseManager.Instance.SaveAllGameData();
     }
 
     /// <summary>
@@ -129,6 +131,8 @@ public class GachaSystem : MonoBehaviour
 
             Debug.Log($"[10연차 {i + 1}회차] {resultItem.Name}");
         }
+
+        DatabaseManager.Instance.SaveAllGameData(); // 10연차 후 자동 저장
     }
 
     // 결과물 인벤토리에 추가하는 함수

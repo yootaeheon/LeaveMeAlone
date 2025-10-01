@@ -139,6 +139,12 @@ public class OfflineRewardManager : MonoBehaviour
                 {
                     long lastLogoutUnix = Convert.ToInt64(task.Result.Value);
 
+                   if (task.Result.Value == null)
+                    {
+                        Debug.Log("[오프라인 보상] 마지막 로그아웃 시간이 없습니다.");
+                        return;
+                    }
+
                     // 실제 경과 시간 계산
                     calculatedSeconds = nowUnix - lastLogoutUnix;
                     _rewardCanvas.UpdateSlider();

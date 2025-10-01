@@ -5,14 +5,20 @@ using UnityEngine.UI;
 public class OfflineRewardCanvas : UIBinder
 {
     [SerializeField] OfflineRewardManager _offlineRewardManager;
+    [SerializeField] AdmobManager _admobManager;
 
     [SerializeField] Slider _rewardAmountSlider;
+
+    [SerializeField] Button _rewardButton;
+    [SerializeField] Button _reward_Ad_Button;
 
     public TMPro.TMP_Text _rewardGoldText;
     public TMPro.TMP_Text _rewardGemText;
 
     private void Awake()
     {
+        BindAll();
+
         if (_rewardGoldText == null)
         {
             _rewardGoldText = GetUI<TMPro.TMP_Text>("_rewardGoldText");
@@ -22,6 +28,32 @@ public class OfflineRewardCanvas : UIBinder
         {
             _rewardGemText = GetUI<TMPro.TMP_Text>("_rewardGemText");
         }
+
+        if (_rewardAmountSlider == null)
+        {
+            _rewardAmountSlider = GetUI<Slider>("RewardAmount_Slider");
+        }
+
+        if (_rewardButton == null)
+        {
+            _rewardButton = GetUI<Button>("GetReward_Button");
+        }
+        if (_reward_Ad_Button == null)
+        {
+            _reward_Ad_Button = GetUI<Button>("GetReward*2_Button");
+        }
+    }
+
+    private void OnEnable()
+    {
+        _rewardButton.onClick.AddListener(() => _offlineRewardManager.GiveReward(_offlineRewardManager.baseReward));
+        _reward_Ad_Button.onClick.AddListener(() => _admobManager.ShowAd());
+    }
+
+    private void OnDisable()
+    {
+        _rewardButton.onClick.RemoveAllListeners();
+        _reward_Ad_Button.onClick.RemoveAllListeners();
     }
 
     public void Button_Show()

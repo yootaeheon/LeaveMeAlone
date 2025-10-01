@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Firebase.Database;
 using Firebase.Extensions;
 using Inventory.Model;
@@ -48,12 +49,9 @@ public class DatabaseManager : MonoBehaviour
         Application.quitting -= OnApplicationQuit;
     }
 
-    private void Start()
+    private async void Start()
     {
-        if (BackendManager.Instance.OnFirebaseReady)
-        {
-            LoadAllGameData();
-        }
+        LoadAllGameData();
     }
 
     #region 싱글톤 세팅
@@ -158,37 +156,43 @@ public class DatabaseManager : MonoBehaviour
     /// <summary>
     /// 모든 데이터 불러오기 
     /// </summary>
-    public void LoadAllGameData()
+    public async UniTask LoadAllGameData()
     {
+        await UniTask.WaitUntil(() => BackendManager.Instance.OnFirebaseReady);
+
         string userId = BackendManager.Auth?.CurrentUser?.UserId;
         if (string.IsNullOrEmpty(userId)) return;
 
-        BackendManager.Database.RootReference.Child(userId).Child("gameData").GetValueAsync()
-            .ContinueWithOnMainThread(task =>
-            {
-                if (task.IsCompleted && task.Result.Exists)
-                {
-                    if (_model == null || _progressData == null || _inventoryData == null) return;
+        var dataSnapshot = await BackendManager.Database.RootReference.Child(userId).Child("gameData").GetValueAsync();
+        if (dataSnapshot.Exists)
+        {
+            if (_model == null || _progressData == null || _inventoryData == null) return;
 
-                    string json = task.Result.GetRawJsonValue();
-                    LoadData = JsonUtility.FromJson<UserGameDataDTO>(json);
+            string json = dataSnapshot.GetRawJsonValue();
+            LoadData = JsonUtility.FromJson<UserGameDataDTO>(json);
 
-                    LoadModelData();
-                    LoadProgressData();
-                    LoadInventoryData();
-                    LoadGoldData();
-                    //LoadEquipmentData();
+            await UniTask.SwitchToMainThread();
+            LoadModelData();
+            await UniTask.Yield();
 
-                    IsGameDataLoaded = true;
-                    OnGameDataLoaded?.Invoke();
+            LoadProgressData();
+            await UniTask.Yield();
 
-                    Debug.Log("모든 게임 데이터 불러오기 완료!");
-                }
-                else
-                {
-                    InitNewGameData();
-                }
-            });
+            LoadInventoryData();
+            await UniTask.Yield();
+
+            LoadGoldData();
+            await UniTask.Yield();
+
+            IsGameDataLoaded = true;
+            OnGameDataLoaded?.Invoke();
+
+            Debug.Log("모든 게임 데이터 불러오기 완료!");
+        }
+        else
+        {
+            InitNewGameData();
+        }
     }
 
     public void LoadModelData()

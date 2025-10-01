@@ -1690,6 +1690,7 @@ MonoBehaviour:
   DownSlider: {fileID: 1895126043}
   SizeInfoText: {fileID: 62779765}
   DownValueText: {fileID: 734759156}
+  ButtonText: {fileID: 1340467242}
   DefaultLabel:
     m_LabelString: default
 --- !u!4 &2083382023

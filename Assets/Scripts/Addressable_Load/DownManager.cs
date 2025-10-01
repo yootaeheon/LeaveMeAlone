@@ -14,6 +14,7 @@ public class DownManager : MonoBehaviour
     public Slider DownSlider;
     public TMP_Text SizeInfoText;
     public TMP_Text DownValueText;
+    public TMP_Text ButtonText;
 
     [Header("Label")]
     public AssetLabelReference DefaultLabel;
@@ -61,6 +62,8 @@ public class DownManager : MonoBehaviour
         {
             DownValueText.text = "100 %";
             DownSlider.value = 1f;
+            ButtonText.text = "GameStart";
+            SizeInfoText.gameObject.SetActive(false);
             yield return new WaitForSeconds(1f);
 
             LoadingManager.LoadScene("GameScene"); // ? 프로젝트 전용 로딩 매니저 사용
