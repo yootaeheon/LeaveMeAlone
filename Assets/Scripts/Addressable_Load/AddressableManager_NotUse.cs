@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
-public class AddressableManager : MonoBehaviour
+public class AddressableManager_NotUse : MonoBehaviour
 {
 
     public static AddressableManager _instance;
@@ -38,7 +38,7 @@ public class AddressableManager : MonoBehaviour
 
     private void Awake()
     {
-        if(_instance == null)
+       /* if(_instance == null)
         {
             _instance = this;
             Init();
@@ -48,7 +48,7 @@ public class AddressableManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
+        }*/
     }
     void Start()
     {
